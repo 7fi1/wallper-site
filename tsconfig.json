@@ -30,8 +30,7 @@
     "models/user.ts",
     "app/api/register/route.ts",
     "app/api/userExists/route.ts",
-    "app/Providers.js",
-    "next.config.js"
-  ],
+    "app/Providers.js"
+, "next.config.js"  ],
   "exclude": ["node_modules"]
 }

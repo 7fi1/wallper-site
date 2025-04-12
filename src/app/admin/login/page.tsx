@@ -2,8 +2,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { Wrapper } from "@/app/layout/Wrapper/Wrapper";
-import Header from "@/app/layout/Header/Header";
+import { Wrapper } from "../../layout/Wrapper/Wrapper";
+import Header from "../../layout/Header/Header";
 import styles from "./Main.module.css";
 import { IoMdLogIn } from "react-icons/io";
 
@@ -20,7 +20,7 @@ export default function AdminLogin() {
 
     if (res.ok) {
       toast.success("Успешная авторизация");
-      
+
       setTimeout(() => {
         router.push("/admin");
       }, 1000);
