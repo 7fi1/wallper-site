@@ -3,15 +3,9 @@
 import React, { useState } from "react";
 import styles from "./Main.module.css";
 import { Apple } from "react-ios-icons";
-import {
-  FaAppStore,
-  FaCheck,
-  FaChevronDown,
-  FaLaptop,
-  FaStore,
-} from "react-icons/fa";
+import { FaAppStore, FaChevronDown, FaLaptop, FaStore } from "react-icons/fa";
 import { motion } from "framer-motion";
-import { FaMountainSun, FaX } from "react-icons/fa6";
+import { FaMountainSun } from "react-icons/fa6";
 import { PiSpeedometerFill } from "react-icons/pi";
 import { SiMusicbrainz } from "react-icons/si";
 import { IoIosAppstore } from "react-icons/io";
