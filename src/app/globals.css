@@ -8,13 +8,15 @@
 }
 
 :root {
-  --background: #161617;
-  --foreground: #fff;
-  --background-opacity: rgba(255, 255, 255, 0.05);
-  --background-opacity-hover: rgba(255, 255, 255, 0.1);
-  --border: 1.5px solid rgba(255, 255, 255, 0.1);
+  --background: #ffffff;
+  --foreground: rgb(41, 37, 36);
+  --background-opacity: rgba(0, 0, 0, 0.1);
+  --background-opacity-hover: rgba(0, 0, 0, 0.15);
+  --border: 1.5px solid rgba(0, 0, 0, 0.1);
   --blue-color: #007aff;
   --header-height: 122px;
+  --accent-color: rgba(77, 77, 77, 0.9);
+  --secondary-color: rgb(20, 20, 20);
 }
 
 body {
@@ -22,4 +24,5 @@ body {
   color: var(--foreground);
   font-family: "SFProText", sans-serif;
   transition: 0.3s ease;
+  scroll-behavior: smooth;
 }

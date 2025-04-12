@@ -1,5 +1,4 @@
 .main {
-  height: 300vh;
   display: flex;
   align-items: center;
   text-align: center;
@@ -7,22 +6,47 @@
 }
 
 .top {
-  padding-top: 12rem;
   width: 100%;
-  max-width: 1200px;
+  padding-top: 5rem;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.price {
+  background-color: var(--background-opacity-hover);
+  padding-bottom: 0.25rem;
+  padding-top: 0.25rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  border-radius: 0.5rem;
 }
 
 .top h1 {
   font-size: 96px;
   font-weight: 700;
   text-wrap: balance;
-  color: rgb(220, 220, 220);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
   line-height: 1.15;
+  position: relative;
+  z-index: 10;
+}
+
+.top span {
+  color: rgb(41, 37, 36);
+}
+
+.title_box {
+  color: rgb(41, 37, 36);
 }
 
 .flex_row {
@@ -43,7 +67,7 @@
 }
 
 .title_box::after {
-  background-color: #4d4d4de6;
+  background-color: var(--background-opacity-hover);
   border-radius: 0.125rem;
   bottom: 0.2rem;
   height: 0.5em;
@@ -51,11 +75,265 @@
   position: absolute;
   right: 0;
   vertical-align: middle;
-  z-index: -10;
+  z-index: -1;
   content: "";
 }
 
 .apple {
   width: 96px;
   height: 96px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-top: 2rem;
+  width: 100%;
+  z-index: 10;
+  gap: 2rem;
+}
+
+.download {
+  text-align: center;
+  cursor: pointer;
+  border-radius: 1rem;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 1.25rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.75rem;
+  transition: 0.3s;
+  display: flex;
+  background-color: rgb(41, 37, 36);
+  color: #fff;
+  z-index: 10;
+  box-shadow: 0 10px 30px #606060;
+}
+
+.purcase {
+  background-color: var(--blue-color);
+  text-align: center;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 1rem;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 1.25rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.75rem;
+  transition: all 0.3s;
+  display: flex;
+  position: relative;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.apple_s {
+  margin-bottom: 0.25rem;
+  width: 22px;
+  height: 22px;
+}
+
+.video {
+  position: absolute;
+  opacity: 1;
+  pointer-events: none;
+  user-select: none;
+  z-index: -1;
+  overflow: hidden;
+  background: #0e0e0e;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  filter: brightness(20%);
+  transition: filter 0.3s ease;
+}
+
+.video_bottom {
+  background: rgb(0, 0, 0);
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 1) 10%,
+    rgba(169, 169, 169, 0) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  position: absolute;
+  width: 100%;
+  pointer-events: none;
+  bottom: 0;
+  z-index: 2;
+  height: 100%;
+}
+
+.laptop {
+  background-color: #fafafa;
+  margin-top: 5rem;
+  width: 1700px;
+  min-height: 900px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.image {
+  height: 550px;
+  aspect-ratio: 16/9;
+  border-radius: 40px;
+  background-image: url("/laptop.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  display: flex;
+}
+
+.holders {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.holders:last-of-type {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.holders:first-of-type {
+  padding: 120px;
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+  border-bottom: 1px solid rgb(210, 210, 215);
+  height: max-content;
+}
+
+.text {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+}
+
+.text h2 {
+  font-weight: 600;
+  font-size: 28px;
+  padding: 24px 0;
+}
+
+.chevron {
+  width: 24px;
+  height: 24px;
+  color: rgb(134, 134, 139);
+  transition: 0.3s ease;
+}
+
+.selected {
+  rotate: 180deg;
+}
+
+.descrition {
+  display: flex;
+  text-wrap: balance;
+  text-align: left;
+  max-width: 325px;
+  font-size: 17px;
+  line-height: 1.4705882353;
+  font-weight: 400;
+}
+
+.descrition_holder {
+  width: 100%;
+  display: flex;
+  padding-bottom: 24px;
+}
+
+.features {
+  width: 100%;
+  max-width: 1000px;
+  height: 60vh;
+  margin-top: 5rem;
+  display: grid;
+  gap: 3rem;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto;
+  grid-gap: 16px;
+}
+
+.feature {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+  text-align: center;
+  font-weight: 700;
+  font-size: 24px;
+}
+
+.links {
+  display: flex;
+  flex-direction: row;
+  gap: 0.75rem;
+}
+
+.link {
+  width: 40px;
+  height: 40px;
+  border-radius: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  background-color: var(--background-opacity);
+  gap: 0.5rem;
+  font-weight: 600;
+}
+
+.link:last-of-type {
+  width: max-content;
+  padding: 0 8px;
+  background-color: var(--background-opacity) !important;
+}
+
+.footer {
+  padding-top: 120px;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  height: 375px;
+  position: relative;
+}
+
+.wallper {
+  font-size: 18rem;
+  position: absolute;
+  bottom: -10rem;
+  font-weight: 700;
+  background: linear-gradient(to bottom, #007aff 0%, transparent 70%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
