@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
@@ -167,9 +168,11 @@ export const Main = () => {
                     }}
                   >
                     <Player
-                      ref={(el) => {
-                        iconRefs.current[index] = el;
-                      }}
+                      {...({
+                        ref: (el: any) => {
+                          iconRefs.current[index] = el;
+                        },
+                      } as any)}
                       size={96}
                       icon={Icon}
                     />
