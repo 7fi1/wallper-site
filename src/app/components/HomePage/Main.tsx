@@ -7,7 +7,10 @@ import { FaAppStore, FaChevronDown, FaStore } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { BsDiscord, BsGithub, BsTwitterX } from "react-icons/bs";
 
-import { Player } from "@lordicon/react";
+const Player = dynamic(
+  () => import("@lordicon/react").then((mod) => mod.Player),
+  { ssr: false }
+);
 
 import COIN_ICON from "../../../../public/icons/coin.json";
 import FINGERPRINT_ICON from "../../../../public/icons/fingerprint.json";
@@ -18,12 +21,14 @@ import GLOBE_ICON from "../../../../public/icons/globe.json";
 import PYRAMIDS_ICON from "../../../../public/icons/pyramids.json";
 import CONFETTI_ICON from "../../../../public/icons/confetti.json";
 
+import dynamic from "next/dynamic";
+
 export const Main = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
-  const playerRef = useRef<Player>(null);
+  const playerRef = useRef(null);
   const cooldownRef = useRef<boolean[]>([]);
 
-  const iconRefs = useRef<(Player | null)[]>([]);
+  const iconRefs = useRef([]);
 
   const toggleBlock = (index: number) => {
     if (openIndex !== index) {
