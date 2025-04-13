@@ -116,6 +116,10 @@
   box-shadow: 0 10px 30px #606060;
 }
 
+.download:hover {
+  background-color: var(--blue-color);
+}
+
 .purcase {
   background-color: var(--blue-color);
   text-align: center;

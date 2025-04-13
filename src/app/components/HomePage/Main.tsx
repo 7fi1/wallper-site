@@ -1,25 +1,29 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./Main.module.css";
 import { Apple } from "react-ios-icons";
-import { FaAppStore, FaChevronDown, FaLaptop, FaStore } from "react-icons/fa";
+import { FaAppStore, FaChevronDown, FaStore } from "react-icons/fa";
 import { motion } from "framer-motion";
-import { FaMountainSun } from "react-icons/fa6";
-import { PiSpeedometerFill } from "react-icons/pi";
-import { SiMusicbrainz } from "react-icons/si";
-import { IoIosAppstore } from "react-icons/io";
-import {
-  BsCollectionFill,
-  BsDiscord,
-  BsGithub,
-  BsTwitterX,
-} from "react-icons/bs";
-import { MdPhotoLibrary } from "react-icons/md";
-import { TbFreeRights } from "react-icons/tb";
+import { BsDiscord, BsGithub, BsTwitterX } from "react-icons/bs";
+
+import { Player } from "@lordicon/react";
+
+import COIN_ICON from "../../../../public/icons/coin.json";
+import FINGERPRINT_ICON from "../../../../public/icons/fingerprint.json";
+import COMPUTER_ICON from "../../../../public/icons/computer.json";
+import WAND_ICON from "../../../../public/icons/wand.json";
+import BATTERY_ICON from "../../../../public/icons/battery.json";
+import GLOBE_ICON from "../../../../public/icons/globe.json";
+import PYRAMIDS_ICON from "../../../../public/icons/pyramids.json";
+import CONFETTI_ICON from "../../../../public/icons/confetti.json";
 
 export const Main = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const playerRef = useRef<Player>(null);
+  const cooldownRef = useRef<boolean[]>([]);
+
+  const iconRefs = useRef<(Player | null)[]>([]);
 
   const toggleBlock = (index: number) => {
     if (openIndex !== index) {
@@ -27,33 +31,37 @@ export const Main = () => {
     }
   };
 
+  useEffect(() => {
+    playerRef.current?.playFromBeginning();
+  }, []);
+
   const blocks = [
     {
-      title: "prrfff",
+      title: "4K Live Wallpapers",
       description:
-        "Answer calls or messages from your iPhone directly on your Mac. See and control what’s on your iPhone from your Mac with iPhone Mirroring. Use Universal Clipboard to copy images, video, or text from your iPhone, then paste into another app on your nearby Mac. And thanks to iCloud, you can access your files from either your iPhone or your Mac. And so much more.",
+        "Not just pretty. These are cinematic, ultra-fluid scenes crafted to transform your Mac into something alive. Every motion is intentional. Every loop, seamless.",
     },
     {
-      title: "Exclusive for Mac2",
+      title: "Blazing macOS App",
       description:
-        "Sketch on your iPad and have it appear instantly on your Mac. Or use your iPad as a second display, so you can work on one screen while you reference the other. You can even start a Final Cut Pro project on your iPad and continue it on your Mac.",
+        "No clunky web views, no lag. Built natively for macOS with buttery-smooth transitions, swipe gestures, and full Lock Screen support. It just feels right.",
     },
     {
-      title: "Exclusive for Mac3",
+      title: "Upload Your Own",
       description:
-        "Automatically log in to your Mac when you’re wearing your Apple Watch with Auto Unlock. No password typing required.",
+        "Got a drone shot? A dreamy video loop? Make it your wallpaper in seconds. Your screen, your story.",
     },
   ];
 
   const features = [
-    { icon: FaMountainSun, title: "Stunning 4K Live Wallpapers" },
-    { icon: PiSpeedometerFill, title: "Ultra-Smooth Performance" },
-    { icon: SiMusicbrainz, title: "Smart System Optimization" },
-    { icon: IoIosAppstore, title: "Available on the App Store" },
-    { icon: BsCollectionFill, title: "Private Collections" },
-    { icon: FaLaptop, title: "Up to 3 Devices per License" },
-    { icon: MdPhotoLibrary, title: "User-Generated Library" },
-    { icon: TbFreeRights, title: "Free Version Available" },
+    { icon: PYRAMIDS_ICON, title: "Stunning 4K Live Wallpapers" },
+    { icon: WAND_ICON, title: "Ultra-Smooth Performance" },
+    { icon: BATTERY_ICON, title: "Smart System Optimization" },
+    { icon: CONFETTI_ICON, title: "Available on the App Store" },
+    { icon: FINGERPRINT_ICON, title: "Private Collections" },
+    { icon: COMPUTER_ICON, title: "Up to 3 Devices per License" },
+    { icon: GLOBE_ICON, title: "User-Generated Library" },
+    { icon: COIN_ICON, title: "Free Version Available" },
   ];
 
   return (
@@ -141,11 +149,26 @@ export const Main = () => {
                 transition={{ duration: 1, delay: index * 0.3 }}
               >
                 {Icon && (
-                  <Icon
-                    className={styles.icon_feature}
-                    size={64}
-                    // color="#007aff"
-                  />
+                  <div
+                    onMouseEnter={() => {
+                      if (cooldownRef.current[index]) return;
+
+                      iconRefs.current[index]?.playFromBeginning();
+                      cooldownRef.current[index] = true;
+
+                      setTimeout(() => {
+                        cooldownRef.current[index] = false;
+                      }, 2000);
+                    }}
+                  >
+                    <Player
+                      ref={(el) => {
+                        iconRefs.current[index] = el;
+                      }}
+                      size={96}
+                      icon={Icon}
+                    />
+                  </div>
                 )}
                 <h2>{feature.title}</h2>
               </motion.div>

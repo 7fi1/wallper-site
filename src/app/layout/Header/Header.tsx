@@ -5,8 +5,11 @@ import styles from "./Header.module.css";
 import Image from "next/image";
 import { Apple, Message } from "react-ios-icons";
 import { motion } from "framer-motion"; // импортируем библиотеку для анимаций
+import { useRouter } from "next/navigation";
 
 const Header = () => {
+  const router = useRouter();
+
   return (
     <motion.header
       className={styles.header}
@@ -15,7 +18,12 @@ const Header = () => {
       transition={{ duration: 1 }}
     >
       <div className={styles.container}>
-        <div className={styles.logo_container}>
+        <div
+          className={styles.logo_container}
+          onClick={() => {
+            router.push("/");
+          }}
+        >
           <div className={styles.logo}>
             <Image
               alt="123"
@@ -36,6 +44,7 @@ const Header = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.2 }}
+            onClick={() => router.push("mailto:support@wallper.app")}
           >
             <Message filled className={styles.message} />
             FAQs
@@ -52,7 +61,6 @@ const Header = () => {
           </motion.button>
         </div>
       </div>
-      
     </motion.header>
   );
 };

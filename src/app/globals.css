@@ -9,7 +9,7 @@
 
 :root {
   --background: #ffffff;
-  --foreground: rgb(41, 37, 36);
+  --foreground: #292524;
   --background-opacity: rgba(0, 0, 0, 0.1);
   --background-opacity-hover: rgba(0, 0, 0, 0.15);
   --border: 1.5px solid rgba(0, 0, 0, 0.1);
