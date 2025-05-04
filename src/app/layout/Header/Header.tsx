@@ -1,14 +1,35 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Header.module.css";
 import Image from "next/image";
-import { Apple, Message } from "react-ios-icons";
-import { motion } from "framer-motion"; // импортируем библиотеку для анимаций
+import { Apple } from "react-ios-icons";
+import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { FaKey } from "react-icons/fa";
+import { useModalStore } from "../../../store/ModalStore";
+
+const navItems = ["Community", "PRO", "Features", "FAQ", "Help"];
 
 const Header = () => {
   const router = useRouter();
+  const { open } = useModalStore();
+  const [totalVideos, setTotalVideos] = useState(0);
+
+  const fetchVideos = async () => {
+    try {
+      const res = await fetch("api/bucketsStatus");
+      const data = await res.json();
+      setTotalVideos(data.totalVideos);
+    } catch (err) {
+      console.error("Failed to fetch video count", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchVideos();
+  }, []);
 
   return (
     <motion.header
@@ -17,49 +38,94 @@ const Header = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
     >
+      <div className={styles.overflow} />
+
       <div className={styles.container}>
-        <div
-          className={styles.logo_container}
-          onClick={() => {
-            router.push("/");
-          }}
-        >
+        <div className={styles.logo_container} onClick={() => router.push("/")}>
           <div className={styles.logo}>
             <Image
-              alt="123"
+              alt="Wallper Logo"
               src="/logo/logo.png"
               width={1024}
               height={1024}
               className={styles.logo_image}
             />
-            <h1 className={styles.title}>Wallper</h1>
+            <h1 className={styles.title}>Wallper 4K Live</h1>
           </div>
-
-          <div className={styles.version}>v1.0</div>
         </div>
 
-        <div className={styles.buttons}>
-          <motion.button
-            className={styles.FAQs}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.2 }}
-            onClick={() => router.push("mailto:support@wallper.app")}
-          >
-            <Message filled className={styles.message} />
-            FAQs
-          </motion.button>
+        <div className={styles.blocks}>
+          <ul className={styles.ul}>
+            {navItems.map((item, idx) => (
+              <motion.li
+                key={idx}
+                className={styles.li}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 + idx * 0.1, duration: 0.4 }}
+              >
+                <Link className={styles.link} href={"#"}>
+                  {item}
+                </Link>
+              </motion.li>
+            ))}
+          </ul>
 
           <motion.button
             className={styles.download}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.4 }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.4 }}
           >
             <Apple className={styles.apple} />
             <span>Download for Mac</span>
           </motion.button>
         </div>
+      </div>
+
+      <div className={styles.status}>
+        {[
+          {
+            label: (
+              <>
+                <FaKey size={10} />
+                <span>My License keys</span>
+              </>
+            ),
+            onClick: () => open("license"),
+          },
+          {
+            label: <span>{totalVideos} videos</span>,
+            onClick: () => open("videos"),
+          },
+          {
+            label: (
+              <>
+                <span>Data Bases status</span>
+                <div className={styles.round} />
+              </>
+            ),
+          },
+          {
+            label: (
+              <>
+                <span>Server status</span>
+                <div className={styles.round} />
+              </>
+            ),
+          },
+        ].map((block, idx) => (
+          <motion.div
+            key={idx}
+            className={styles.status_container}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1 + idx * 0.1, duration: 0.4 }}
+            onClick={block.onClick}
+          >
+            {block.label}
+          </motion.div>
+        ))}
       </div>
     </motion.header>
   );

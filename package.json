@@ -10,8 +10,10 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.787.0",
+    "@fingerprintjs/fingerprintjs": "^4.6.2",
     "@lordicon/react": "^1.10.1",
     "@vercel/analytics": "^1.5.0",
+    "device-uuid": "^1.0.4",
     "framer-motion": "^12.6.5",
     "ios-icons": "^2.0.1",
     "lottie-web": "^5.12.2",
@@ -22,7 +24,9 @@
     "react-hot-toast": "^2.5.2",
     "react-icons": "^5.5.0",
     "react-ios-icons": "^1.1.1",
-    "react-loading-skeleton": "^3.5.0"
+    "react-loading-skeleton": "^3.5.0",
+    "xml2js": "^0.6.2",
+    "zustand": "^5.0.4"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
