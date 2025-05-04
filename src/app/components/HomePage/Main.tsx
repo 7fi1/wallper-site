@@ -37,7 +37,7 @@ const VIDEOS = [
   "/video/green-bmw.mp4",
   "/video/white lines.mp4",
   "/video/check2.mp4",
-  "/video/check3.mp4",
+  "/video/abstract.mp4",
 ];
 
 export const Main = () => {
