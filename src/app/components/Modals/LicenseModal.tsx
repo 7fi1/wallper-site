@@ -58,7 +58,7 @@ const LicenseModal = () => {
           transition={{ delay: 0.2, duration: 0.5 }}
         >
           <div className={styles.dont_have}>
-            You don't have any license keys yet.
+            You do not have any license keys yet.
           </div>
         </motion.div>
 

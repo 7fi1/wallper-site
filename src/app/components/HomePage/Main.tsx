@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/exhaustive-deps */
+
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
@@ -93,7 +95,7 @@ export const Main = () => {
         setVideoIndex(newIndex);
       }
     });
-  }, [scrollYProgress, videoIndex]);
+  }, [scrollYProgress, videoIndex, sectionSteps]);
 
   const width = useTransform(scrollYProgress, [0, 0.2], ["80vw", "100vw"]);
   const height = useTransform(scrollYProgress, [0, 0.2], ["80vw", "100vh"]);

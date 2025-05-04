@@ -14,7 +14,13 @@ function PreloadWrapper({ children }: { children: React.ReactNode }) {
     return () => clearTimeout(timeout);
   }, [pathname]);
 
-  return loading ? <Preloader children={""} /> : <>{children}</>;
+  return loading ? (
+    <Preloader>
+      <></>
+    </Preloader>
+  ) : (
+    <>{children}</>
+  );
 }
 
 export default PreloadWrapper;
