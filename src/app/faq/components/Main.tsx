@@ -5,31 +5,60 @@ import Footer from "../../layout/Footer/Footer";
 import styles from "./Main.module.css";
 import { FaChevronDown } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
+import { useModalStore } from "@/src/store/ModalStore";
+import LicenseModal from "../../components/Modals/LicenseModal";
+import VideosModal from "../../components/Modals/VideosModal";
 
 const QUESTIONS_DATA = [
   {
-    question: "What is the purpose of this FAQ?",
+    question: "1. What is Wallper?",
     answer:
-      "The purpose of this FAQ is to provide answers to common questions.",
+      "Wallper is a macOS app that transforms your desktop into a vibrant visual experience using stunning 4K live video wallpapers. It's lightweight, smooth, and designed to run beautifully on all modern Macs.",
   },
   {
-    question: "How can I contact support?",
+    question: "2. Which macOS versions are supported?",
     answer:
-      "You can contact support via email at today@wallper.com. We will get back to you as soon as possible.",
+      "Wallper supports macOS 14 and later. For the best experience, we recommend using macOS 15 or newer.",
   },
   {
-    question: "How do I change my wallpaper?",
+    question: "3. Will it slow down my Mac or drain the battery?",
     answer:
-      "Go to the settings page and choose a new wallpaper from the gallery.",
+      "No. Wallper is highly optimized and uses almost no battery while running. Wallpapers only play when your desktop is visible - if the screen is covered by windows, playback automatically pauses to save power.",
   },
   {
-    question: "Is Wallper 4K Live free to use?",
-    answer: "Yes, Wallper 4K Live offers a free version with core features.",
+    question: "4. Can I upload my own videos?",
+    answer:
+      "Yes! Alongside our curated collections and a user-submitted gallery, you can upload your own video files and use them as live wallpapers whenever you want (license required).",
   },
   {
-    question: "Can I upload my own wallpapers?",
+    question: "5. Can I set different wallpapers on multiple monitors?",
     answer:
-      "Yes, you can upload your own wallpapers through the upload section.",
+      "Absolutely. Wallper lets you assign different live wallpapers to each screen individually.",
+  },
+  {
+    question: "6. Does Wallper launch automatically at startup?",
+    answer:
+      "Yes. Simply enable the 'Launch at Startup' option in settings and your wallpaper will load every time you boot your Mac.",
+  },
+  {
+    question: "7. Is it a one-time purchase or subscription?",
+    answer:
+      "Wallper is a one-time purchase - no subscriptions. You pay once and get lifetime access, including all future updates.",
+  },
+  {
+    question: "8. How many devices can I use Wallper on?",
+    answer:
+      "Each license allows you to activate Wallper on up to three devices. You can also unlink old devices in the app settings if you want to switch to a new Mac.",
+  },
+  {
+    question: "9. Is there a free version?",
+    answer:
+      "Yes. The free version includes 9 high-quality live wallpapers that you can use without a license. However, uploading your own videos and accessing the full library requires a license.",
+  },
+  {
+    question: "10. How can I contact support?",
+    answer:
+      "If you have any issues or questions, feel free to contact us at support@wallper.app. We're happy to help!",
   },
 ];
 
@@ -40,8 +69,18 @@ export const Main = () => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
+  const { isOpen, modalType } = useModalStore();
+
   return (
     <div className={styles.top_class}>
+      {isOpen && (
+        <div className={styles.license_modal_overlay}>
+          <motion.div className={styles.modal}>
+            {modalType === "license" && <LicenseModal />}
+            {modalType === "videos" && <VideosModal />}
+          </motion.div>
+        </div>
+      )}
       <motion.video
         src={"/video/faq.mp4"}
         autoPlay

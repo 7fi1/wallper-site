@@ -110,3 +110,17 @@
   z-index: -1;
   filter: brightness(0.3);
 }
+
+.license_modal_overlay {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(30px) saturate(180%);
+  z-index: 30;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+}
