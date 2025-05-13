@@ -6,8 +6,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./Main.module.css";
 import { Apple } from "react-ios-icons";
-import { FaAppStore, FaChevronDown, FaStore } from "react-icons/fa";
-import { BsDiscord, BsGithub, BsTwitterX } from "react-icons/bs";
+import { FaChevronDown, FaStore } from "react-icons/fa";
+import Footer from "../../layout/Footer/Footer";
+
 import {
   motion,
   useScroll,
@@ -278,7 +279,6 @@ export const Main = () => {
             </motion.div>
           </motion.div>
         </motion.div>
-
         {/* LAPTOP */}
         <motion.section
           className={styles.laptop}
@@ -333,13 +333,13 @@ export const Main = () => {
             <div className={styles.image} />
           </motion.div>
         </motion.section>
-
         {/* FEATURES */}
         <motion.section
           className={styles.features}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
+          id="features"
         >
           <div className={styles.features_inner}>
             {features.map((feature, index) => {
@@ -369,7 +369,7 @@ export const Main = () => {
                             iconRefs.current[index] = el;
                           },
                         } as any)}
-                        size={96}
+                        size={64}
                         icon={Icon}
                         colorize="#007aff"
                       />
@@ -381,38 +381,7 @@ export const Main = () => {
             })}
           </div>
         </motion.section>
-
-        {/* FOOTER */}
-        <motion.section
-          className={styles.footer}
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-        >
-          <div className={styles.links}>
-            <motion.div className={styles.link}>
-              <BsTwitterX size={24} />
-            </motion.div>
-            <motion.div className={styles.link}>
-              <BsGithub size={24} />
-            </motion.div>
-            <motion.div className={styles.link}>
-              <BsDiscord size={24} />
-            </motion.div>
-            <motion.div className={styles.link}>
-              <FaAppStore size={24} />
-              App Store soon!
-            </motion.div>
-          </div>
-          <motion.div
-            className={styles.wallper}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 1.2 }}
-          >
-            <h3>Wallper</h3>
-          </motion.div>
-        </motion.section>
+        <Footer />
       </section>
     </main>
   );

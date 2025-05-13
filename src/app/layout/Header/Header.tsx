@@ -10,7 +10,13 @@ import Link from "next/link";
 import { FaKey } from "react-icons/fa";
 import { useModalStore } from "../../../store/ModalStore";
 
-const navItems = ["Community", "PRO", "Features", "FAQ", "Help"];
+const navItems = [
+  { name: "Community", link: "/community" },
+  { name: "PRO", link: "/pro" },
+  { name: "Features", link: "/#features" },
+  { name: "FAQ", link: "/faq" },
+  { name: "Help", link: "/help" },
+];
 
 const Header = () => {
   const router = useRouter();
@@ -64,8 +70,8 @@ const Header = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 + idx * 0.1, duration: 0.4 }}
               >
-                <Link className={styles.link} href={"#"}>
-                  {item}
+                <Link className={styles.link} href={item.link}>
+                  {item.name}
                 </Link>
               </motion.li>
             ))}
