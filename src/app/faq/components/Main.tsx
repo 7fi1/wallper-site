@@ -81,17 +81,19 @@ export const Main = () => {
           </motion.div>
         </div>
       )}
-      <motion.video
-        src={"/video/faq.mp4"}
-        autoPlay
-        muted
-        loop
-        playsInline
-        className={styles.video}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1 }}
-      />
+      <div className={styles.overlay}>
+        <motion.video
+          src={"/video/faq.mp4"}
+          autoPlay
+          muted
+          loop
+          playsInline
+          className={styles.video}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+        />
+      </div>
 
       <div className={styles.main}>
         <div className={styles.container}>

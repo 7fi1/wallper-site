@@ -11,7 +11,6 @@ import { FaKey } from "react-icons/fa";
 import { useModalStore } from "../../../store/ModalStore";
 
 const navItems = [
-  { name: "Community", link: "/community" },
   { name: "PRO", link: "/pro" },
   { name: "Features", link: "/#features" },
   { name: "FAQ", link: "/faq" },
