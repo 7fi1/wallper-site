@@ -63,7 +63,7 @@ const QUESTIONS_DATA = [
 ];
 
 export const Main = () => {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const toggleBlock = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);

@@ -49,6 +49,7 @@
   font-weight: 400;
   color: #a1a1a1;
   font-size: 20px;
+  max-width: 700px;
 }
 
 .block_holder {
@@ -74,7 +75,7 @@
 
 .question h3 {
   font-weight: 500;
-  font-size: 24px;
+  font-size: 18px;
   padding: 24px 0;
   text-align: left;
 }
@@ -86,7 +87,7 @@
   display: flex;
   text-wrap: balance;
   text-align: left;
-  font-size: 17px;
+  font-size: 14px;
   line-height: 1.4705882353;
   font-weight: 400;
   opacity: 0.7 !important;
