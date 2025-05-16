@@ -60,7 +60,9 @@ export const Main = () => {
               exit={{ scale: 0.95, opacity: 0 }}
               transition={{ duration: 0.3 }}
             >
-              {modalType === "license" && <LicenseModal />}
+              {modalType === "license" && (
+                <LicenseModal showCloseButton={true} />
+              )}
               {modalType === "videos" && <VideosModal />}
             </motion.div>
           </motion.div>

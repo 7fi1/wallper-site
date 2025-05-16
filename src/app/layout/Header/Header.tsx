@@ -12,7 +12,6 @@ import { useModalStore } from "../../../store/ModalStore";
 
 const navItems = [
   { name: "PRO", link: "/pro" },
-  { name: "Features", link: "/#features" },
   { name: "FAQ", link: "/faq" },
   { name: "Help", link: "/help" },
 ];

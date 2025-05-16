@@ -76,7 +76,7 @@ export const Main = () => {
       {isOpen && (
         <div className={styles.license_modal_overlay}>
           <motion.div className={styles.modal}>
-            {modalType === "license" && <LicenseModal />}
+            {modalType === "license" && <LicenseModal showCloseButton={true} />}
             {modalType === "videos" && <VideosModal />}
           </motion.div>
         </div>

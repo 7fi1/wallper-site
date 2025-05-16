@@ -8,6 +8,11 @@ import styles from "./Main.module.css";
 import { Apple } from "react-ios-icons";
 import { FaChevronDown, FaStore } from "react-icons/fa";
 import Footer from "../../layout/Footer/Footer";
+import { loadStripe } from "@stripe/stripe-js";
+
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+);
 
 import {
   motion,
@@ -148,7 +153,7 @@ export const Main = () => {
       {isOpen && (
         <div className={styles.license_modal_overlay}>
           <motion.div className={styles.modal}>
-            {modalType === "license" && <LicenseModal />}
+            {modalType === "license" && <LicenseModal showCloseButton={true} />}
             {modalType === "videos" && <VideosModal />}
           </motion.div>
         </div>
@@ -266,7 +271,22 @@ export const Main = () => {
                 <Apple className={styles.apple_s} />
                 <div>Download for Mac</div>
               </motion.button>
-              <motion.button className={styles.purchase}>
+              <motion.button
+                className={styles.purchase}
+                onClick={async () => {
+                  const res = await fetch("/api/checkout_session", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                  });
+
+                  const data = await res.json();
+
+                  const stripe = await stripePromise;
+                  await stripe?.redirectToCheckout({
+                    sessionId: data.sessionId,
+                  });
+                }}
+              >
                 <FaStore color="#fff" className={styles.check} size={14} />
                 <p>Purchase</p>
                 <div className={styles.price}>9.99$</div>
