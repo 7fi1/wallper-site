@@ -1,10 +1,11 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextApiRequest, NextApiResponse } from "next";
 import Stripe from "stripe";
+import { buffer } from "micro";
 import nodemailer from "nodemailer";
 
 export const config = {
   api: {
-    bodyParser: false,
+    bodyParser: false, // важно!
   },
 };
 
@@ -31,21 +32,28 @@ async function sendLicenseEmail(to: string, licenseUuid: string) {
   });
 }
 
-export async function POST(req: NextRequest) {
-  const rawBody = await req.arrayBuffer(); // 🧊 получаем СЫРОЕ тело
-  const signature = req.headers.get("stripe-signature")!;
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  if (req.method !== "POST") {
+    return res.status(405).end("Method Not Allowed");
+  }
+
+  const rawBody = await buffer(req); // ⬅️ используем raw-body из micro
+  const signature = req.headers["stripe-signature"] as string;
 
   let event: Stripe.Event;
 
   try {
     event = stripe.webhooks.constructEvent(
-      Buffer.from(rawBody),
+      rawBody,
       signature,
       process.env.STRIPE_WEBHOOK_SECRET!
     );
-  } catch (err) {
-    console.error("Webhook signature verification failed:", err.message);
-    return new NextResponse(`Webhook Error: ${err.message}`, { status: 400 });
+  } catch (err: any) {
+    console.error("❌ Webhook signature verification failed:", err.message);
+    return res.status(400).send(`Webhook Error: ${err.message}`);
   }
 
   // ✅ Обработка события
@@ -56,7 +64,7 @@ export async function POST(req: NextRequest) {
       session.customer_details?.email || session.customer_email;
 
     if (licenseUuid) {
-      const res = await fetch(
+      const saveRes = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/save-license`,
         {
           method: "POST",
@@ -65,21 +73,18 @@ export async function POST(req: NextRequest) {
         }
       );
 
-      if (!res.ok) {
+      if (!saveRes.ok) {
         console.error("Failed to save license via /api/save-license");
       } else if (customerEmail) {
         try {
           await sendLicenseEmail(customerEmail, licenseUuid);
-          console.log("Email sent to", customerEmail);
+          console.log("✅ Email sent to", customerEmail);
         } catch (emailErr) {
-          console.error("Failed to send email:", emailErr);
+          console.error("❌ Failed to send email:", emailErr);
         }
       }
     }
   }
 
-  return new NextResponse(JSON.stringify({ received: true }), {
-    status: 200,
-    headers: { "Content-Type": "application/json" },
-  });
+  res.status(200).json({ received: true });
 }
