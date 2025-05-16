@@ -1,11 +1,10 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
-import { buffer } from "micro";
 import nodemailer from "nodemailer";
 
 export const config = {
   api: {
-    bodyParser: false, // важно!
+    bodyParser: false,
   },
 };
 
@@ -32,31 +31,26 @@ async function sendLicenseEmail(to: string, licenseUuid: string) {
   });
 }
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  if (req.method !== "POST") {
-    return res.status(405).end("Method Not Allowed");
-  }
-
-  const rawBody = await buffer(req); // ⬅️ используем raw-body из micro
-  const signature = req.headers["stripe-signature"] as string;
+export async function POST(req: NextRequest) {
+  const rawBody = await req.arrayBuffer(); // получаем сырой буфер
+  const signature = req.headers.get("stripe-signature") || "";
 
   let event: Stripe.Event;
 
   try {
     event = stripe.webhooks.constructEvent(
-      rawBody,
+      Buffer.from(rawBody),
       signature,
       process.env.STRIPE_WEBHOOK_SECRET!
     );
   } catch (err) {
     console.error("❌ Webhook signature verification failed:", err.message);
-    return res.status(400).send(`Webhook Error: ${err.message}`);
+    return NextResponse.json(
+      { error: `Webhook Error: ${err.message}` },
+      { status: 400 }
+    );
   }
 
-  // ✅ Обработка события
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
     const licenseUuid = session.metadata?.license_uuid;
@@ -64,27 +58,31 @@ export default async function handler(
       session.customer_details?.email || session.customer_email;
 
     if (licenseUuid) {
-      const saveRes = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/save-license`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ licenseUuid }),
-        }
-      );
+      try {
+        const saveRes = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/save-license`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ licenseUuid }),
+          }
+        );
 
-      if (!saveRes.ok) {
-        console.error("Failed to save license via /api/save-license");
-      } else if (customerEmail) {
-        try {
-          await sendLicenseEmail(customerEmail, licenseUuid);
-          console.log("✅ Email sent to", customerEmail);
-        } catch (emailErr) {
-          console.error("❌ Failed to send email:", emailErr);
+        if (!saveRes.ok) {
+          console.error("Failed to save license via /api/save-license");
+        } else if (customerEmail) {
+          try {
+            await sendLicenseEmail(customerEmail, licenseUuid);
+            console.log("✅ Email sent to", customerEmail);
+          } catch (emailErr) {
+            console.error("❌ Failed to send email:", emailErr);
+          }
         }
+      } catch (fetchErr) {
+        console.error("❌ Error while saving license:", fetchErr);
       }
     }
   }
 
-  res.status(200).json({ received: true });
+  return NextResponse.json({ received: true });
 }
