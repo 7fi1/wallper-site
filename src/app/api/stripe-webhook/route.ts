@@ -37,7 +37,7 @@ export async function POST(req: Request) {
   try {
     // Получаем тело как ArrayBuffer
     const buf = await req.arrayBuffer();
-    const rawBody = Buffer.from(buf);
+    const rawBody = Buffer.from(buf).toString("utf8");
 
     const event = stripe.webhooks.constructEvent(
       rawBody,
