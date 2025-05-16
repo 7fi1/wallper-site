@@ -1,12 +1,7 @@
 import Stripe from "stripe";
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
-
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+import { headers } from "next/headers";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-04-30.basil",
@@ -35,23 +30,22 @@ async function sendLicenseEmail(to: string, licenseUuid: string) {
 }
 
 export async function POST(req: Request) {
-  const signature = req.headers.get("stripe-signature");
+  const signature = (await headers()).get("stripe-signature");
   if (!signature) {
     console.error("Missing Stripe signature header");
     return new Response("Missing Stripe signature", { status: 400 });
   }
 
   try {
-    const rawBody = await readRawBody(req);
-
     const event = stripe.webhooks.constructEvent(
-      rawBody,
-      signature,
-      process.env.STRIPE_WEBHOOK_SECRET!
+      await req.text(),
+      signature as string,
+      process.env.STRIPE_WEBHOOK_SECRET as string
     );
 
     if (event.type === "checkout.session.completed") {
       const session = event.data.object as Stripe.Checkout.Session;
+      console.log("metadata:", session.metadata);
 
       const licenseUuid = session.metadata?.license_uuid;
       const customerEmail =
@@ -66,7 +60,6 @@ export async function POST(req: Request) {
             body: JSON.stringify({ licenseUuid }),
           }
         );
-
         if (!res.ok) {
           console.error("Failed to save license via /api/save-license");
         } else if (customerEmail) {
@@ -77,7 +70,6 @@ export async function POST(req: Request) {
             console.error("Failed to send email:", emailErr);
           }
         }
-
         console.log("Payment succeeded, saving license:", licenseUuid);
       }
     }
@@ -87,19 +79,4 @@ export async function POST(req: Request) {
     console.error("Webhook error:", err.message);
     return new Response(`Webhook Error: ${err.message}`, { status: 400 });
   }
-}
-
-async function readRawBody(req: Request): Promise<string> {
-  const reader = req.body!.getReader();
-  let result = "";
-  const decoder = new TextDecoder("utf-8");
-
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    result += decoder.decode(value, { stream: true });
-  }
-
-  result += decoder.decode();
-  return result;
 }
