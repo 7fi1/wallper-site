@@ -2,31 +2,40 @@ import { Stripe } from "stripe";
 import { NextResponse } from "next/server";
 import { headers } from "next/headers";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+  apiVersion: "2025-04-30.basil",
+});
 
 export async function POST(req: Request) {
   let event: Stripe.Event;
 
-  try {
-    const stripeSignature = (await headers()).get("stripe-signature");
+  // Получаем тело запроса как необработанную строку (raw body)
+  const body = await req.text();
 
+  // Получаем заголовок Stripe signature
+  const stripeSignature = (await headers()).get("stripe-signature");
+
+  try {
+    if (!stripeSignature) {
+      throw new Error("Missing stripe-signature header");
+    }
+
+    // Проверяем подпись и конструируем event
     event = stripe.webhooks.constructEvent(
-      await req.text(),
-      stripeSignature as string,
+      body,
+      stripeSignature,
       process.env.STRIPE_WEBHOOK_SECRET as string
     );
   } catch (err) {
     const errorMessage = err instanceof Error ? err.message : "Unknown error";
-    // On error, log and return the error message.
-    if (err! instanceof Error) console.log(err);
     console.log(`❌ Error message: ${errorMessage}`);
+
     return NextResponse.json(
       { message: `Webhook Error: ${errorMessage}` },
       { status: 400 }
     );
   }
 
-  // Successfully constructed event.
   console.log("✅ Success:", event.id);
 
   const permittedEvents: string[] = [
@@ -36,22 +45,23 @@ export async function POST(req: Request) {
   ];
 
   if (permittedEvents.includes(event.type)) {
-    let data;
-
     try {
       switch (event.type) {
-        case "checkout.session.completed":
-          data = event.data.object as Stripe.Checkout.Session;
+        case "checkout.session.completed": {
+          const data = event.data.object as Stripe.Checkout.Session;
           console.log(`💰 CheckoutSession status: ${data.payment_status}`);
           break;
-        case "payment_intent.payment_failed":
-          data = event.data.object as Stripe.PaymentIntent;
+        }
+        case "payment_intent.payment_failed": {
+          const data = event.data.object as Stripe.PaymentIntent;
           console.log(`❌ Payment failed: ${data.last_payment_error?.message}`);
           break;
-        case "payment_intent.succeeded":
-          data = event.data.object as Stripe.PaymentIntent;
+        }
+        case "payment_intent.succeeded": {
+          const data = event.data.object as Stripe.PaymentIntent;
           console.log(`💰 PaymentIntent status: ${data.status}`);
           break;
+        }
         default:
           throw new Error(`Unhandled event: ${event.type}`);
       }
@@ -64,6 +74,5 @@ export async function POST(req: Request) {
     }
   }
 
-  // Return a response to acknowledge receipt of the event.
   return NextResponse.json({ message: "Received" }, { status: 200 });
 }
