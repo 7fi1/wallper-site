@@ -1,7 +1,12 @@
+import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
-import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
-import { headers } from "next/headers";
+
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-04-30.basil",
@@ -18,65 +23,63 @@ const transporter = nodemailer.createTransport({
 });
 
 async function sendLicenseEmail(to: string, licenseUuid: string) {
-  const mailOptions = {
+  await transporter.sendMail({
     from: `"Wallper app" <${process.env.SMTP_USER}>`,
     to,
     subject: "Ваш лицензионный ключ",
-    text: `Спасибо за покупку! Ваш лицензионный ключ: ${licenseUuid}`,
     html: `<p>Спасибо за покупку! Ваш лицензионный ключ:</p><b>${licenseUuid}</b>`,
-  };
-
-  await transporter.sendMail(mailOptions);
+  });
 }
 
-export async function POST(req: Request) {
-  const signature = (await headers()).get("stripe-signature");
-  if (!signature) {
-    console.error("Missing Stripe signature header");
-    return new Response("Missing Stripe signature", { status: 400 });
-  }
+export async function POST(req: NextRequest) {
+  const rawBody = await req.arrayBuffer(); // 🧊 получаем СЫРОЕ тело
+  const signature = req.headers.get("stripe-signature")!;
+
+  let event: Stripe.Event;
 
   try {
-    const event = stripe.webhooks.constructEvent(
-      await req.text(),
-      signature as string,
-      process.env.STRIPE_WEBHOOK_SECRET as string
+    event = stripe.webhooks.constructEvent(
+      Buffer.from(rawBody),
+      signature,
+      process.env.STRIPE_WEBHOOK_SECRET!
     );
+  } catch (err) {
+    console.error("Webhook signature verification failed:", err.message);
+    return new NextResponse(`Webhook Error: ${err.message}`, { status: 400 });
+  }
 
-    if (event.type === "checkout.session.completed") {
-      const session = event.data.object as Stripe.Checkout.Session;
-      console.log("metadata:", session.metadata);
+  // ✅ Обработка события
+  if (event.type === "checkout.session.completed") {
+    const session = event.data.object as Stripe.Checkout.Session;
+    const licenseUuid = session.metadata?.license_uuid;
+    const customerEmail =
+      session.customer_details?.email || session.customer_email;
 
-      const licenseUuid = session.metadata?.license_uuid;
-      const customerEmail =
-        session.customer_details?.email || session.customer_email;
-
-      if (licenseUuid) {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/save-license`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ licenseUuid }),
-          }
-        );
-        if (!res.ok) {
-          console.error("Failed to save license via /api/save-license");
-        } else if (customerEmail) {
-          try {
-            await sendLicenseEmail(customerEmail, licenseUuid);
-            console.log("Email sent to", customerEmail);
-          } catch (emailErr) {
-            console.error("Failed to send email:", emailErr);
-          }
+    if (licenseUuid) {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/save-license`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ licenseUuid }),
         }
-        console.log("Payment succeeded, saving license:", licenseUuid);
+      );
+
+      if (!res.ok) {
+        console.error("Failed to save license via /api/save-license");
+      } else if (customerEmail) {
+        try {
+          await sendLicenseEmail(customerEmail, licenseUuid);
+          console.log("Email sent to", customerEmail);
+        } catch (emailErr) {
+          console.error("Failed to send email:", emailErr);
+        }
       }
     }
-
-    return NextResponse.json({ received: true });
-  } catch (err) {
-    console.error("Webhook error:", err.message);
-    return new Response(`Webhook Error: ${err.message}`, { status: 400 });
   }
+
+  return new NextResponse(JSON.stringify({ received: true }), {
+    status: 200,
+    headers: { "Content-Type": "application/json" },
+  });
 }
