@@ -14,12 +14,7 @@ export async function POST() {
       payment_method_types: ["card"],
       line_items: [
         {
-          price_data: {
-            currency: "usd",
-            product_data: { name: "Wallper PRO License" },
-            unit_amount: 999,
-            product: process.env.STRIPE_PRODUCT_ID!,
-          },
+          price: process.env.STRIPE_PRICE_ID!,
           quantity: 1,
         },
       ],
