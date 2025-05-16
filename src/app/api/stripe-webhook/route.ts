@@ -2,6 +2,12 @@ import Stripe from "stripe";
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-04-30.basil",
 });
@@ -36,11 +42,7 @@ export async function POST(req: Request) {
   }
 
   try {
-    const buf = await req.arrayBuffer();
-    const rawBody = Buffer.from(buf).toString("utf8");
-
-    console.log("Raw request body:", rawBody);
-    console.log("Stripe signature header:", signature);
+    const rawBody = await readRawBody(req);
 
     const event = stripe.webhooks.constructEvent(
       rawBody,
@@ -50,7 +52,6 @@ export async function POST(req: Request) {
 
     if (event.type === "checkout.session.completed") {
       const session = event.data.object as Stripe.Checkout.Session;
-      console.log("metadata:", session.metadata);
 
       const licenseUuid = session.metadata?.license_uuid;
       const customerEmail =
@@ -65,6 +66,7 @@ export async function POST(req: Request) {
             body: JSON.stringify({ licenseUuid }),
           }
         );
+
         if (!res.ok) {
           console.error("Failed to save license via /api/save-license");
         } else if (customerEmail) {
@@ -75,6 +77,7 @@ export async function POST(req: Request) {
             console.error("Failed to send email:", emailErr);
           }
         }
+
         console.log("Payment succeeded, saving license:", licenseUuid);
       }
     }
@@ -84,4 +87,19 @@ export async function POST(req: Request) {
     console.error("Webhook error:", err.message);
     return new Response(`Webhook Error: ${err.message}`, { status: 400 });
   }
+}
+
+async function readRawBody(req: Request): Promise<string> {
+  const reader = req.body!.getReader();
+  let result = "";
+  const decoder = new TextDecoder("utf-8");
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    result += decoder.decode(value, { stream: true });
+  }
+
+  result += decoder.decode();
+  return result;
 }
