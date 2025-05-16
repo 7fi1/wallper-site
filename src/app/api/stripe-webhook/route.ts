@@ -27,15 +27,20 @@ async function sendLicenseEmail(to: string, licenseUuid: string) {
 }
 
 export async function POST(req: Request) {
-  let event: Stripe.Event;
-  const body = await req.text();
+  const buf = await req.arrayBuffer();
+  const body = Buffer.from(buf).toString("utf8");
 
   const stripeSignature = (await headers()).get("stripe-signature");
 
+  if (!stripeSignature) {
+    return NextResponse.json(
+      { message: "Missing stripe-signature header" },
+      { status: 400 }
+    );
+  }
+
+  let event: Stripe.Event;
   try {
-    if (!stripeSignature) {
-      throw new Error("Missing stripe-signature header");
-    }
     event = stripe.webhooks.constructEvent(
       body,
       stripeSignature,
@@ -44,7 +49,6 @@ export async function POST(req: Request) {
   } catch (err) {
     const errorMessage = err instanceof Error ? err.message : "Unknown error";
     console.log(`❌ Error message: ${errorMessage}`);
-
     return NextResponse.json(
       { message: `Webhook Error: ${errorMessage}` },
       { status: 400 }
