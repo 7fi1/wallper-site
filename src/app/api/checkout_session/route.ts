@@ -14,7 +14,11 @@ export async function POST() {
       payment_method_types: ["card"],
       line_items: [
         {
-          price: process.env.STRIPE_PRICE_ID!,
+          price_data: {
+            product: process.env.STRIPE_PRODUCT_ID!,
+            unit_amount: 999,
+            currency: "usd",
+          },
           quantity: 1,
         },
       ],
