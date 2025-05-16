@@ -17,7 +17,8 @@ export async function POST() {
           price_data: {
             currency: "usd",
             product_data: { name: "Wallper PRO License" },
-            unit_amount: 100,
+            unit_amount: 999,
+            product: process.env.STRIPE_PRODUCT_ID!,
           },
           quantity: 1,
         },

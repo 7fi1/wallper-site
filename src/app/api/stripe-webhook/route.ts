@@ -9,7 +9,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
   port: Number(process.env.SMTP_PORT),
-  secure: process.env.SMTP_SECURE,
+  secure: process.env.SMTP_SECURE === "true",
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS,
@@ -29,12 +29,18 @@ async function sendLicenseEmail(to: string, licenseUuid: string) {
 }
 
 export async function POST(req: Request) {
-  const payload = await req.text();
-  const signature = req.headers.get("stripe-signature")!;
+  const signature = req.headers.get("stripe-signature");
+  if (!signature) {
+    return new Response("Missing Stripe signature", { status: 400 });
+  }
 
   try {
+    // Получаем тело как ArrayBuffer
+    const buf = await req.arrayBuffer();
+    const rawBody = Buffer.from(buf);
+
     const event = stripe.webhooks.constructEvent(
-      payload,
+      rawBody,
       signature,
       process.env.STRIPE_WEBHOOK_SECRET!
     );
