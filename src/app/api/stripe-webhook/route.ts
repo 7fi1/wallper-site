@@ -31,13 +31,16 @@ async function sendLicenseEmail(to: string, licenseUuid: string) {
 export async function POST(req: Request) {
   const signature = req.headers.get("stripe-signature");
   if (!signature) {
+    console.error("Missing Stripe signature header");
     return new Response("Missing Stripe signature", { status: 400 });
   }
 
   try {
-    // Получаем тело как ArrayBuffer
     const buf = await req.arrayBuffer();
     const rawBody = Buffer.from(buf).toString("utf8");
+
+    console.log("Raw request body:", rawBody);
+    console.log("Stripe signature header:", signature);
 
     const event = stripe.webhooks.constructEvent(
       rawBody,
