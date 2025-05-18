@@ -9,11 +9,32 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { FaKey } from "react-icons/fa";
 import { useModalStore } from "../../../store/ModalStore";
+import { loadStripe } from "@stripe/stripe-js";
+
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+);
 
 const navItems = [
-  { name: "PRO", link: "/pro" },
-  { name: "FAQ", link: "/faq" },
-  { name: "Help", link: "/help" },
+  {
+    name: "PRO",
+    link: "",
+    onClick: async () => {
+      const res = await fetch("/api/checkout_session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const data = await res.json();
+
+      const stripe = await stripePromise;
+      await stripe?.redirectToCheckout({
+        sessionId: data.sessionId,
+      });
+    },
+  },
+  { name: "FAQ", link: "/faq", onClick: null },
+  { name: "Help", link: "/help", onClick: null },
 ];
 
 const Header = () => {
@@ -68,7 +89,11 @@ const Header = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 + idx * 0.1, duration: 0.4 }}
               >
-                <Link className={styles.link} href={item.link}>
+                <Link
+                  className={styles.link}
+                  href={item.link}
+                  onClick={item.onClick}
+                >
                   {item.name}
                 </Link>
               </motion.li>
@@ -79,6 +104,7 @@ const Header = () => {
             className={styles.download}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
+            whileTap={{ scale: 0.95 }}
             transition={{ delay: 0.8, duration: 0.4 }}
           >
             <Apple className={styles.apple} />
@@ -102,22 +128,22 @@ const Header = () => {
             label: <span>{totalVideos} videos</span>,
             onClick: () => open("videos"),
           },
-          {
-            label: (
-              <>
-                <span>Data Bases status</span>
-                <div className={styles.round} />
-              </>
-            ),
-          },
-          {
-            label: (
-              <>
-                <span>Server status</span>
-                <div className={styles.round} />
-              </>
-            ),
-          },
+          // {
+          //   label: (
+          //     <>
+          //       <span>Data Bases status</span>
+          //       <div className={styles.round} />
+          //     </>
+          //   ),
+          // },
+          // {
+          //   label: (
+          //     <>
+          //       <span>Server status</span>
+          //       <div className={styles.round} />
+          //     </>
+          //   ),
+          // },
         ].map((block, idx) => (
           <motion.div
             key={idx}

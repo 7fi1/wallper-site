@@ -1,7 +1,7 @@
 // store/ModalStore.ts
 import { create } from "zustand";
 
-type ModalType = "license" | "videos" | null;
+type ModalType = "license" | "videos" | "details" | null;
 
 type ModalStore = {
   isOpen: boolean;

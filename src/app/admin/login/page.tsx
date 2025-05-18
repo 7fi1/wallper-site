@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { Wrapper } from "../../layout/Wrapper/Wrapper";
-import Header from "../../layout/Header/Header";
 import styles from "./Main.module.css";
 import { IoMdLogIn } from "react-icons/io";
 
@@ -32,16 +31,17 @@ export default function AdminLogin() {
 
   return (
     <Wrapper>
-      <Header />
       <main className={styles.main}>
         <div className={styles.container}>
-          <h1>Вход в админ-панель</h1>
+          <h1>Вход в админ панель</h1>
           <div className={styles.login_form}>
             <input
               type="password"
               placeholder="Введите пароль"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
             />
             <button onClick={handleLogin} className={styles.login_button}>
               <IoMdLogIn size={24} />

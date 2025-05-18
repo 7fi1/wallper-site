@@ -1,75 +1,58 @@
+// app/api/upload-video/route.ts
+
 import {
   S3Client,
-  GetObjectCommand,
-  PutObjectCommand,
+  CopyObjectCommand,
   DeleteObjectCommand,
 } from "@aws-sdk/client-s3";
+import { NextRequest, NextResponse } from "next/server";
 
-// Инициализация клиента S3
 const s3 = new S3Client({
-  region: "eu-north-1", // Ваш регион
+  region: "eu-north-1",
+  endpoint: process.env.MINIO_PUBLIC_URL,
+  forcePathStyle: true,
   credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+    accessKeyId: process.env.MINIO_ACCESS_KEY!,
+    secretAccessKey: process.env.MINIO_SECRET_KEY!,
   },
 });
 
-const OLD_BUCKET_NAME = "wallper-moderate"; // Исходный бакет
-const NEW_BUCKET_NAME = "wallper-user-generated"; // Новый бакет
+const MODERATE_BUCKET = process.env.MODERATE_BUCKET_NAME!;
+const APPROVED_BUCKET = process.env.USER_GENERATED_BUCKET_NAME!;
 
-// Обработчик для переноса видео
-export async function POST(req: Request) {
+export async function DELETE(req: NextRequest) {
   try {
-    const { name } = await req.json(); // Получаем ключ (name) из тела запроса
+    const { name } = await req.json();
 
     if (!name) {
-      return new Response(
-        JSON.stringify({ error: "Ключ видео не предоставлен" }),
+      return NextResponse.json(
+        { error: "Не указано имя видео" },
         { status: 400 }
       );
     }
 
-    // Шаг 1: Скачиваем видео из старого бакета
-    const getCommand = new GetObjectCommand({
-      Bucket: OLD_BUCKET_NAME,
-      Key: name, // Ключ видео
-    });
+    const key = name.startsWith("/") ? name.slice(1) : name;
 
-    const { Body } = await s3.send(getCommand);
-
-    if (!Body) {
-      return new Response(
-        JSON.stringify({ error: "Не удалось скачать видео из S3" }),
-        { status: 500 }
-      );
-    }
-
-    // Шаг 2: Загружаем видео в новый бакет
-    const putCommand = new PutObjectCommand({
-      Bucket: NEW_BUCKET_NAME,
-      Key: name, // Ключ видео
-      Body: Body, // Тело видео
-    });
-
-    await s3.send(putCommand); // Отправка запроса на загрузку
-
-    // Шаг 3: Удаляем видео из старого бакета
-    const deleteCommand = new DeleteObjectCommand({
-      Bucket: OLD_BUCKET_NAME,
-      Key: name, // Ключ видео
-    });
-
-    await s3.send(deleteCommand); // Отправка запроса на удаление из S3
-
-    return new Response(
-      JSON.stringify({ message: "Видео успешно перенесено и удалено" }),
-      { status: 200 }
+    // 1. Копируем объект в bucket с одобренными видео
+    await s3.send(
+      new CopyObjectCommand({
+        Bucket: APPROVED_BUCKET,
+        CopySource: `${MODERATE_BUCKET}/${key}`,
+        Key: key,
+      })
     );
-  } catch (error) {
-    console.error("Ошибка при перемещении видео:", error);
-    return new Response(
-      JSON.stringify({ error: "Не удалось переместить видео" }),
-      { status: 500 }
+
+    // 2. Удаляем из bucket с модерацией
+    await s3.send(
+      new DeleteObjectCommand({
+        Bucket: MODERATE_BUCKET,
+        Key: key,
+      })
     );
+
+    return NextResponse.json({ message: "Видео одобрено и перемещено" });
+  } catch (err) {
+    console.error("Ошибка при одобрении видео:", err);
+    return NextResponse.json({ error: "Ошибка сервера" }, { status: 500 });
   }
 }

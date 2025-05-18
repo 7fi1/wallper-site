@@ -267,7 +267,10 @@ export const Main = () => {
             transition={{ delay: 0.6, duration: 0.4 }}
           >
             <div className={styles.buttons}>
-              <motion.button className={styles.download}>
+              <motion.button
+                className={styles.download}
+                whileTap={{ scale: 0.95 }}
+              >
                 <Apple className={styles.apple_s} />
                 <div>Download for Mac</div>
               </motion.button>

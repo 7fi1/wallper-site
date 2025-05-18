@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../HomePage/Main.module.css";
 import { FaXmark } from "react-icons/fa6";
 import { motion, AnimatePresence } from "framer-motion";
@@ -18,13 +18,8 @@ const fadeIn = {
 
 const checkLicenseKeys = () => {
   const keys = localStorage.getItem("license_keys");
-  if (keys) {
-    return JSON.parse(keys);
-  }
-  return [];
+  return keys ? JSON.parse(keys) : [];
 };
-
-const LICENSE_KEYS = checkLicenseKeys();
 
 interface LicenseModalProps {
   showCloseButton?: boolean;
@@ -33,15 +28,16 @@ interface LicenseModalProps {
 
 const LicenseModal = ({ showCloseButton }: LicenseModalProps) => {
   const { close } = useModalStore();
+  const [licenseKeys, setLicenseKeys] = useState<string[]>([]);
 
   useEffect(() => {
     const keys = checkLicenseKeys();
-    if (keys.length > 0) {
-      console.log("License keys found:", keys);
-    } else {
-      console.log("No license keys found.");
-    }
+    setLicenseKeys(keys);
   }, []);
+
+  const handleCopy = (key: string) => {
+    navigator.clipboard.writeText(key);
+  };
 
   return (
     <AnimatePresence>
@@ -83,15 +79,13 @@ const LicenseModal = ({ showCloseButton }: LicenseModalProps) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.5 }}
         >
-          {LICENSE_KEYS.length > 0 ? (
-            LICENSE_KEYS.map((key, index) => (
+          {licenseKeys.length > 0 ? (
+            licenseKeys.map((key, index) => (
               <div key={index} className={styles.license_key}>
                 <div className={styles.key}>{key}</div>
                 <motion.button
                   className={styles.copy}
-                  onClick={() => {
-                    navigator.clipboard.writeText(key);
-                  }}
+                  onClick={() => handleCopy(key)}
                   whileTap={{ scale: 0.95 }}
                 >
                   Copy

@@ -1,4 +1,4 @@
-import nodemailer from "nodemailer";
+import { SES } from "aws-sdk";
 import { Stripe } from "stripe";
 import { NextResponse } from "next/server";
 import { headers } from "next/headers";
@@ -7,23 +7,33 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: "2025-04-30.basil",
 });
 
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: Number(process.env.SMTP_PORT),
-  secure: process.env.SMTP_SECURE === "true",
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
+const ses = new SES({
+  region: "eu-north-1",
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
 });
 
 async function sendLicenseEmail(to: string, licenseUuid: string) {
-  await transporter.sendMail({
-    from: `"Wallper app" <${process.env.SMTP_USER}>`,
-    to,
-    subject: "Ваш лицензионный ключ",
-    html: `<p>Спасибо за покупку! Ваш лицензионный ключ:</p><b>${licenseUuid}</b>`,
-  });
+  const params = {
+    Source: "support@wallper.app",
+    Destination: {
+      ToAddresses: [to],
+    },
+    Message: {
+      Subject: {
+        Data: "Ваш лицензионный ключ",
+        Charset: "UTF-8",
+      },
+      Body: {
+        Html: {
+          Data: `<p>Спасибо за покупку! Ваш лицензионный ключ:</p><b>${licenseUuid}</b>`,
+          Charset: "UTF-8",
+        },
+      },
+    },
+  };
+
+  await ses.sendEmail(params).promise();
 }
 
 export async function POST(req: Request) {
@@ -57,7 +67,7 @@ export async function POST(req: Request) {
 
   console.log("✅ Success:", event.id);
 
-  const permittedEvents: string[] = [
+  const permittedEvents = [
     "checkout.session.completed",
     "payment_intent.succeeded",
     "payment_intent.payment_failed",
@@ -100,19 +110,16 @@ export async function POST(req: Request) {
           console.log(`💰 CheckoutSession status: ${data.payment_status}`);
           break;
         }
-
         case "payment_intent.payment_failed": {
           const data = event.data.object as Stripe.PaymentIntent;
           console.log(`❌ Payment failed: ${data.last_payment_error?.message}`);
           break;
         }
-
         case "payment_intent.succeeded": {
           const data = event.data.object as Stripe.PaymentIntent;
           console.log(`💰 PaymentIntent status: ${data.status}`);
           break;
         }
-
         default:
           throw new Error(`Unhandled event: ${event.type}`);
       }

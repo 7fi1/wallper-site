@@ -1,20 +1,20 @@
 import { S3Client, DeleteObjectCommand } from "@aws-sdk/client-s3";
 
-// Инициализация клиента S3
 const s3 = new S3Client({
-  region: "eu-north-1", // Ваш регион
+  region: "eu-north-1",
+  endpoint: process.env.MINIO_PUBLIC_URL,
+  forcePathStyle: true,
   credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+    accessKeyId: process.env.MINIO_ACCESS_KEY!,
+    secretAccessKey: process.env.MINIO_SECRET_KEY!,
   },
 });
 
-const BUCKET_NAME = "wallper-moderate"; // Ваш бакет S3
+const MODERATE_BUCKET_NAME = process.env.MODERATE_BUCKET_NAME!;
 
-// Обработчик для удаления видео
 export async function DELETE(req: Request) {
   try {
-    const { name } = await req.json(); // Получаем ключ (name) из тела запроса
+    const { name } = await req.json();
 
     if (!name) {
       return new Response(
@@ -23,13 +23,12 @@ export async function DELETE(req: Request) {
       );
     }
 
-    // Удаление видео по ключу (name) из S3
     const deleteCommand = new DeleteObjectCommand({
-      Bucket: BUCKET_NAME,
-      Key: name, // Используем ключ, переданный в запросе
+      Bucket: MODERATE_BUCKET_NAME,
+      Key: name,
     });
 
-    await s3.send(deleteCommand); // Отправка запроса на удаление
+    await s3.send(deleteCommand);
     return new Response(JSON.stringify({ message: "Видео успешно удалено" }), {
       status: 200,
     });
