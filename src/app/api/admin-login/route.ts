@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
-const MAX_ATTEMPTS = 100;
+const MAX_ATTEMPTS = 3;
 const ATTEMPT_WINDOW_MS = 1000 * 60 * 60 * 24;
 
 type AttemptInfo = {
@@ -10,16 +12,14 @@ type AttemptInfo = {
 
 const attempts = new Map<string, AttemptInfo>();
 
+const JWT_SECRET = process.env.JWT_SECRET!;
+
 export async function POST(req: NextRequest) {
   const { password } = await req.json();
   const ip = req.headers.get("x-forwarded-for") || "unknown";
 
   const now = Date.now();
   const attempt = attempts.get(ip);
-
-  console.log("ADMIN_PASSWORD env:", process.env.ADMIN_PASSWORD);
-  console.log("Received password:", password);
-  console.log("Request IP:", ip);
 
   if (attempt) {
     const sinceLast = now - attempt.lastAttempt;
@@ -41,23 +41,32 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    if (password == process.env.ADMIN_PASSWORD) {
+    const PASSWORD_HASH = process.env.ADMIN_PASSWORD_CACHE!;
+
+    if (!PASSWORD_HASH) {
+      return NextResponse.json(
+        { success: false, error: "Пароль не настроен" },
+        { status: 500 }
+      );
+    }
+
+    const isValid = await bcrypt.compare(password, PASSWORD_HASH);
+
+    if (isValid) {
+      const token = jwt.sign({ role: "admin" }, JWT_SECRET, {
+        expiresIn: "1d",
+      });
+
       const res = NextResponse.json({ success: true });
 
-      if (!res) {
-        console.error("Response is null");
-        return NextResponse.json(
-          { success: false, error: "Ошибка сервера" },
-          { status: 500 }
-        );
-      }
-
-      res.cookies.set("admin_session", "valid", {
+      res.cookies.set("admin_session", token, {
         httpOnly: true,
         secure: false,
         sameSite: "strict",
         maxAge: 60 * 60 * 24,
+        path: "/",
       });
+
       return res;
     }
   } catch (error) {

@@ -1,21 +1,37 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { jwtVerify } from "jose";
 
-export function middleware(request: NextRequest) {
-  console.log("✅ Middleware is running for:", request.nextUrl.pathname);
+const SECRET = new TextEncoder().encode(process.env.JWT_SECRET!);
+
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const isLoginPage = pathname === "/admin/login";
   const isAdminPage = pathname.startsWith("/admin");
 
-  const session = request.cookies.get("admin_session");
+  const token = request.cookies.get("admin_session")?.value;
 
-  console.log("Session cookie value:", session?.value);
+  if (isAdminPage && !isLoginPage) {
+    if (!token) {
+      const loginUrl = new URL("/admin/login", request.url);
+      loginUrl.searchParams.set("redirect", pathname);
+      return NextResponse.redirect(loginUrl);
+    }
 
-  if (isAdminPage && !isLoginPage && session?.value !== "valid") {
-    console.log("Redirecting to login page...");
-    const loginUrl = new URL("/admin/login", request.url);
-    loginUrl.searchParams.set("redirect", pathname);
-    return NextResponse.redirect(loginUrl);
+    try {
+      const { payload } = await jwtVerify(token, SECRET);
+
+      if (payload.role !== "admin") {
+        throw new Error("Unauthorized");
+      }
+
+      return NextResponse.next();
+    } catch (error) {
+      const loginUrl = new URL("/admin/login", request.url);
+      loginUrl.searchParams.set("redirect", pathname);
+      console.log("Invalid token:", error);
+      return NextResponse.redirect(loginUrl);
+    }
   }
 
   return NextResponse.next();
