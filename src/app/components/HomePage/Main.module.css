@@ -213,24 +213,29 @@
   margin-bottom: 0.2rem;
 }
 
+.selected {
+  rotate: 180deg;
+}
+
 .laptop {
   margin-top: 5rem;
-  width: 1700px;
+  width: 100%;
+  max-width: 1200px;
   height: 100vh;
   border-radius: 20px;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   text-align: center;
   position: relative;
+  gap: 3rem;
 }
 
 .image {
   height: 550px;
   aspect-ratio: 16/9;
   border-radius: 40px;
-  /* background-image: url("/laptop.png"); */
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
@@ -245,8 +250,8 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 100%;
   position: relative;
+  gap: 1rem;
 }
 
 .holders:last-of-type {
@@ -263,26 +268,11 @@
   height: max-content;
   padding: 0 1rem;
   border-radius: 16px;
-  position: absolute;
   z-index: 6000;
   border: 1px solid rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(30px) saturate(180%);
   background-color: rgba(0, 0, 0, 0.6);
-}
-
-.block:first-of-type {
-  left: 0%;
-  bottom: 20%;
-}
-
-.block:nth-of-type(2) {
-  right: 0%;
-  top: 20%;
-}
-
-.block:nth-of-type(3) {
-  left: 2.5%;
-  top: 30%;
+  box-shadow: rgba(255, 255, 255, 0.15) 0px 1px 1px inset;
 }
 
 .text {
@@ -958,10 +948,6 @@
 
 .download_free:hover {
   background-color: #ccc;
-}
-
-.holders:first-of-type {
-  position: absolute;
 }
 
 .flex_col {

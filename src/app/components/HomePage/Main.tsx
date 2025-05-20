@@ -327,18 +327,22 @@ export const Main = () => {
                 <div className={styles.text} onClick={() => toggleBlock(index)}>
                   <h2>{text.title}</h2>
                   <FaChevronDown
-                    className={`${styles.chevron}`}
+                    className={`${styles.chevron} ${
+                      openIndex === index ? styles.selected : ""
+                    }`}
                     strokeWidth={1}
                   />
                 </div>
-                <motion.div
-                  className={styles.description_holder}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <p className={styles.description}>{text.description}</p>
-                </motion.div>
+                {openIndex === index && (
+                  <motion.div
+                    className={styles.description_holder}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <p className={styles.description}>{text.description}</p>
+                  </motion.div>
+                )}
               </motion.div>
             ))}
           </div>
