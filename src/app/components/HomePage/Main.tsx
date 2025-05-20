@@ -40,10 +40,11 @@ import { FaDroplet } from "react-icons/fa6";
 import { useModalStore } from "../../../store/ModalStore";
 import LicenseModal from "../Modals/LicenseModal";
 import VideosModal from "../Modals/VideosModal";
+import { IoIosCheckmarkCircle } from "react-icons/io";
 
 const VIDEOS = [
   "/video/green-bmw.mp4",
-  "/video/white lines.mp4",
+  "/video/second.mp4",
   "/video/check2.mp4",
   "/video/abstract.mp4",
 ];
@@ -326,22 +327,18 @@ export const Main = () => {
                 <div className={styles.text} onClick={() => toggleBlock(index)}>
                   <h2>{text.title}</h2>
                   <FaChevronDown
-                    className={`${styles.chevron} ${
-                      openIndex === index ? styles.selected : ""
-                    }`}
+                    className={`${styles.chevron}`}
                     strokeWidth={1}
                   />
                 </div>
-                {openIndex === index && (
-                  <motion.div
-                    className={styles.description_holder}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <p className={styles.description}>{text.description}</p>
-                  </motion.div>
-                )}
+                <motion.div
+                  className={styles.description_holder}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <p className={styles.description}>{text.description}</p>
+                </motion.div>
               </motion.div>
             ))}
           </div>
@@ -353,7 +350,102 @@ export const Main = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
-            <div className={styles.image} />
+            <div className={styles.prices_block}>
+              <div className={styles.free}>
+                <div className={styles.header}>
+                  <span>User Free</span>
+                  <div className={styles.price_check}>
+                    <h3>$0</h3>
+                    <span>/ per license</span>
+                  </div>
+                </div>
+                <div className={styles.main_price_block}>
+                  <h4>What’s included</h4>
+                  <ul>
+                    <p>
+                      <IoIosCheckmarkCircle size={20} />
+                      Up to 5 Shared Commands
+                    </p>
+                    <p>
+                      <IoIosCheckmarkCircle size={20} />
+                      Up to 30 Shared Quicklinks
+                    </p>
+                    <p>
+                      <IoIosCheckmarkCircle size={20} />
+                      Up to 30 Shared Snippets
+                    </p>
+                    <p>
+                      <IoIosCheckmarkCircle size={20} />
+                      Private Store
+                    </p>
+                  </ul>
+                  <motion.button
+                    className={styles.download_free}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Apple className={styles.apple_s} />
+                    <div>Download for Mac</div>
+                  </motion.button>
+                </div>
+              </div>
+              <div className={styles.pro}>
+                <div className={styles.header}>
+                  <span className={styles.type}>PRO version</span>
+                  <div className={styles.price_check}>
+                    <h3>$10</h3>
+                    <div className={styles.flex_col}>
+                      <span>/ per license</span>
+                      <p>-17%</p>
+                    </div>
+                  </div>
+                </div>
+                <div className={styles.main_price_block}>
+                  <h4>What’s included</h4>
+                  <ul>
+                    <p>
+                      <IoIosCheckmarkCircle size={20} color="#007aff" />
+                      Up to 5 Shared Commands
+                    </p>
+                    <p>
+                      <IoIosCheckmarkCircle size={20} color="#007aff" />
+                      Up to 30 Shared Quicklinks
+                    </p>
+                    <p>
+                      <IoIosCheckmarkCircle size={20} color="#007aff" />
+                      Up to 30 Shared Snippets
+                    </p>
+                    <p>
+                      <IoIosCheckmarkCircle size={20} color="#007aff" />
+                      Unlimited Shared Quicklinks
+                    </p>
+                    <p>
+                      <IoIosCheckmarkCircle size={20} color="#007aff" />
+                      Everything in Pro
+                    </p>
+                  </ul>
+                  <motion.button
+                    className={styles.download_free}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={async () => {
+                      const res = await fetch("/api/checkout_session", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                      });
+
+                      const data = await res.json();
+
+                      const stripe = await stripePromise;
+                      await stripe?.redirectToCheckout({
+                        sessionId: data.sessionId,
+                      });
+                    }}
+                  >
+                    <FaStore className={styles.check} />
+                    <div>Purchase </div>
+                  </motion.button>
+                </div>
+              </div>
+            </div>
           </motion.div>
         </motion.section>
         {/* FEATURES */}

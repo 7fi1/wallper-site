@@ -43,13 +43,21 @@ export async function POST(req: NextRequest) {
   try {
     const PASSWORD_HASH = process.env.ADMIN_PASSWORD_CACHE!;
 
+    const HASH_FUNC = (hash: string) => {
+      bcrypt.hash(hash, 10).then((hash) => {
+        console.log(hash);
+      });
+    };
+
     if (!PASSWORD_HASH) {
       return NextResponse.json(
         { success: false, error: "Пароль не настроен" },
         { status: 500 }
       );
     }
-
+    HASH_FUNC(
+      "v}bF7q2hjbp2T488xtGK8Uh2TDthrHUl8qqyYmdlvp1WRFuFL5I~$0qGnXKb7Z6xBHdqaEppvpGWd?060D7*tdQMun#@5muFdEt"
+    );
     const isValid = await bcrypt.compare(password, PASSWORD_HASH);
 
     if (isValid) {

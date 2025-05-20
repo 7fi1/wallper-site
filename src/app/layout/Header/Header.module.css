@@ -38,15 +38,15 @@
   font-size: 14px !important;
   width: max-content;
   transition: 0.3s ease;
-  background-color: rgba(0, 0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.6);
 }
 .status_container:first-of-type:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   cursor: pointer;
 }
 
 .status_container:nth-of-type(2):hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   cursor: pointer;
 }
 
@@ -83,9 +83,9 @@
   border: 1px solid hsl(0deg 0% 100% / 6%);
   background: linear-gradient(
     90deg,
-    rgba(255, 255, 255, 0) 0%,
+    rgba(0, 0, 0, 0.6) 0%,
     rgba(36, 36, 36, 0.75) 50%,
-    rgba(255, 255, 255, 0) 100%
+    rgba(0, 0, 0, 0.6) 100%
   );
   position: relative;
   overflow: hidden;
