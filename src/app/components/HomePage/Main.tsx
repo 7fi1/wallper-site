@@ -46,7 +46,7 @@ const VIDEOS = [
   "/video/green-bmw.mp4",
   "/video/second.mp4",
   "/video/check2.mp4",
-  "/video/abstract.mp4",
+  "/video/footer.mp4",
 ];
 
 export const Main = () => {
@@ -84,6 +84,22 @@ export const Main = () => {
 
   useEffect(() => {
     playerRef.current?.playFromBeginning();
+  }, []);
+
+  const [iconSize, setIconSize] = useState(64);
+
+  useEffect(() => {
+    const updateSize = () => {
+      const width = window.innerWidth;
+
+      if (width < 500) setIconSize(32);
+      else if (width < 900) setIconSize(48);
+      else setIconSize(64);
+    };
+
+    updateSize(); // init
+    window.addEventListener("resize", updateSize);
+    return () => window.removeEventListener("resize", updateSize);
   }, []);
 
   const { scrollYProgress } = useScroll({ container: containerRef });
@@ -362,24 +378,26 @@ export const Main = () => {
                   </div>
                 </div>
                 <div className={styles.main_price_block}>
-                  <h4>What’s included</h4>
-                  <ul>
-                    <p>
-                      <IoIosCheckmarkCircle size={20} />9 free 4K wallpapers
-                    </p>
-                    <p>
-                      <IoIosCheckmarkCircle size={20} />
-                      Full macOS app experience
-                    </p>
-                    <p>
-                      <FaCircleXmark size={17} />
-                      No custom uploads
-                    </p>
-                    <p>
-                      <FaCircleXmark size={17} />
-                      No access to user gallery
-                    </p>
-                  </ul>
+                  <div className={styles.mobile}>
+                    <h4>What’s included</h4>
+                    <ul>
+                      <p>
+                        <IoIosCheckmarkCircle size={20} />9 free 4K wallpapers
+                      </p>
+                      <p>
+                        <IoIosCheckmarkCircle size={20} />
+                        Full macOS app experience
+                      </p>
+                      <p>
+                        <FaCircleXmark size={17} />
+                        No custom uploads
+                      </p>
+                      <p>
+                        <FaCircleXmark size={17} />
+                        No access to user gallery
+                      </p>
+                    </ul>
+                  </div>
                   <motion.button
                     className={styles.download_free}
                     whileTap={{ scale: 0.95 }}
@@ -401,29 +419,31 @@ export const Main = () => {
                   </div>
                 </div>
                 <div className={styles.main_price_block}>
-                  <h4>What’s included</h4>
-                  <ul>
-                    <p>
-                      <IoIosCheckmarkCircle size={20} color="#007aff" />
-                      500+ exclusive 4K live wallpapers
-                    </p>
-                    <p>
-                      <IoIosCheckmarkCircle size={20} color="#007aff" />
-                      Upload your own videos
-                    </p>
-                    <p>
-                      <IoIosCheckmarkCircle size={20} color="#007aff" />
-                      Access community gallery
-                    </p>
-                    <p>
-                      <IoIosCheckmarkCircle size={20} color="#007aff" />
-                      Use on up to 3 MACs
-                    </p>
-                    <p>
-                      <IoIosCheckmarkCircle size={20} color="#007aff" />
-                      Lifetime updates — no subscription
-                    </p>
-                  </ul>
+                  <div className={styles.mobile}>
+                    <h4>What’s included</h4>
+                    <ul>
+                      <p>
+                        <IoIosCheckmarkCircle size={20} color="#007aff" />
+                        500+ exclusive 4K live wallpapers
+                      </p>
+                      <p>
+                        <IoIosCheckmarkCircle size={20} color="#007aff" />
+                        Upload your own videos
+                      </p>
+                      <p>
+                        <IoIosCheckmarkCircle size={20} color="#007aff" />
+                        Access community gallery
+                      </p>
+                      <p>
+                        <IoIosCheckmarkCircle size={20} color="#007aff" />
+                        Use on up to 3 MACs
+                      </p>
+                      <p>
+                        <IoIosCheckmarkCircle size={20} color="#007aff" />
+                        Lifetime updates — no subscription
+                      </p>
+                    </ul>
+                  </div>
                   <motion.button
                     className={styles.download_free}
                     whileTap={{ scale: 0.95 }}
@@ -445,6 +465,10 @@ export const Main = () => {
                     <div>Purchase </div>
                   </motion.button>
                 </div>
+              </div>
+              <div className={styles.text_mobile}>
+                Experience Wallper now – unlock a new level of beauty, motion,
+                and personalization for your Mac.
               </div>
             </div>
           </motion.div>
@@ -485,7 +509,7 @@ export const Main = () => {
                             iconRefs.current[index] = el;
                           },
                         } as any)}
-                        size={64}
+                        size={iconSize}
                         icon={Icon}
                         colorize="#007aff"
                       />
