@@ -1001,6 +1001,10 @@
     display: none;
   }
 
+  .license_modal {
+    max-width: 500px;
+  }
+
 }
 
 @media (max-width: 1200px) {
@@ -1115,6 +1119,14 @@
 
   .wallper {
     display: none;
+  }
+
+    .license_modal {
+    max-width: 350px;
+  }
+
+  .license_modal p {
+    max-width: 80%;
   }
 }
 
