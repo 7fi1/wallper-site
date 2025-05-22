@@ -210,3 +210,19 @@
 .download:hover {
   background-color: #ccc;
 }
+
+.menu {
+  display: none;
+  padding-right: 0.5rem;
+}
+
+
+@media (max-width: 650px) {
+  .blocks {
+    display: none;
+  }
+
+  .menu {
+    display: flex;
+  }
+}

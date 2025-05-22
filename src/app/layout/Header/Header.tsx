@@ -10,6 +10,8 @@ import Link from "next/link";
 import { FaKey } from "react-icons/fa";
 import { useModalStore } from "../../../store/ModalStore";
 import { loadStripe } from "@stripe/stripe-js";
+import { IoMdMenu } from "react-icons/io";
+import MobileHeader from "./MobileHeader/MobileHeader";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
@@ -42,6 +44,8 @@ const Header = () => {
   const { open } = useModalStore();
   const [totalVideos, setTotalVideos] = useState(0);
 
+  const [isMobileHeader, setMobileHeader] = useState<boolean>(false);
+
   const fetchVideos = async () => {
     try {
       const res = await fetch("api/bucketsStatus");
@@ -65,8 +69,16 @@ const Header = () => {
     >
       <div className={styles.overflow} />
 
+      <MobileHeader
+        isOpen={isMobileHeader}
+        onClose={() => setMobileHeader(false)}
+      />
+
       <div className={styles.container}>
-        <div className={styles.logo_container} onClick={() => router.push("/")}>
+        <button
+          className={styles.logo_container}
+          onClick={() => router.push("/")}
+        >
           <div className={styles.logo}>
             <Image
               alt="Wallper Logo"
@@ -77,7 +89,7 @@ const Header = () => {
             />
             <h1 className={styles.title}>Wallper 4K Live</h1>
           </div>
-        </div>
+        </button>
 
         <div className={styles.blocks}>
           <ul className={styles.ul}>
@@ -111,6 +123,18 @@ const Header = () => {
             <span>Download for Mac</span>
           </motion.button>
         </div>
+
+        <button
+          type="button"
+          className={styles.menu}
+          onClick={() => {
+            setMobileHeader(true);
+            console.log("clicked");
+          }}
+          aria-label="Open mobile menu"
+        >
+          <IoMdMenu size={20} />
+        </button>
       </div>
 
       <div className={styles.status}>
@@ -128,22 +152,6 @@ const Header = () => {
             label: <span>{totalVideos} videos</span>,
             onClick: () => open("videos"),
           },
-          // {
-          //   label: (
-          //     <>
-          //       <span>Data Bases status</span>
-          //       <div className={styles.round} />
-          //     </>
-          //   ),
-          // },
-          // {
-          //   label: (
-          //     <>
-          //       <span>Server status</span>
-          //       <div className={styles.round} />
-          //     </>
-          //   ),
-          // },
         ].map((block, idx) => (
           <motion.div
             key={idx}

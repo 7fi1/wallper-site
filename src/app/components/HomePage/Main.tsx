@@ -36,7 +36,7 @@ import BATTERY_ICON from "../../../../public/icons/battery.json";
 import GLOBE_ICON from "../../../../public/icons/globe.json";
 import PYRAMIDS_ICON from "../../../../public/icons/pyramids.json";
 import CONFETTI_ICON from "../../../../public/icons/confetti.json";
-import { FaDroplet } from "react-icons/fa6";
+import { FaCircleXmark, FaDroplet } from "react-icons/fa6";
 import { useModalStore } from "../../../store/ModalStore";
 import LicenseModal from "../Modals/LicenseModal";
 import VideosModal from "../Modals/VideosModal";
@@ -243,15 +243,13 @@ export const Main = () => {
           <motion.h1 layout>
             <span>Live Wallpapers</span>
             <div className={styles.flex_row}>
-              <span>now for your</span>
+              <span>now for your  Mac</span>
               <motion.div
                 className={styles.title_box}
                 initial={{ scale: 0.9 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.4, type: "spring" }}
-              >
-                <Apple className={styles.apple} /> <span>Mac</span>
-              </motion.div>
+              ></motion.div>
             </div>
           </motion.h1>
 
@@ -367,20 +365,19 @@ export const Main = () => {
                   <h4>What’s included</h4>
                   <ul>
                     <p>
-                      <IoIosCheckmarkCircle size={20} />
-                      Up to 5 Shared Commands
+                      <IoIosCheckmarkCircle size={20} />9 free 4K wallpapers
                     </p>
                     <p>
                       <IoIosCheckmarkCircle size={20} />
-                      Up to 30 Shared Quicklinks
+                      Full macOS app experience
                     </p>
                     <p>
-                      <IoIosCheckmarkCircle size={20} />
-                      Up to 30 Shared Snippets
+                      <FaCircleXmark size={17} />
+                      No custom uploads
                     </p>
                     <p>
-                      <IoIosCheckmarkCircle size={20} />
-                      Private Store
+                      <FaCircleXmark size={17} />
+                      No access to user gallery
                     </p>
                   </ul>
                   <motion.button
@@ -408,23 +405,23 @@ export const Main = () => {
                   <ul>
                     <p>
                       <IoIosCheckmarkCircle size={20} color="#007aff" />
-                      Up to 5 Shared Commands
+                      500+ exclusive 4K live wallpapers
                     </p>
                     <p>
                       <IoIosCheckmarkCircle size={20} color="#007aff" />
-                      Up to 30 Shared Quicklinks
+                      Upload your own videos
                     </p>
                     <p>
                       <IoIosCheckmarkCircle size={20} color="#007aff" />
-                      Up to 30 Shared Snippets
+                      Access community gallery
                     </p>
                     <p>
                       <IoIosCheckmarkCircle size={20} color="#007aff" />
-                      Unlimited Shared Quicklinks
+                      Use on up to 3 MACs
                     </p>
                     <p>
                       <IoIosCheckmarkCircle size={20} color="#007aff" />
-                      Everything in Pro
+                      Lifetime updates — no subscription
                     </p>
                   </ul>
                   <motion.button

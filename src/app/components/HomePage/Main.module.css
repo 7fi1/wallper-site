@@ -36,7 +36,9 @@
   text-align: center;
   gap: 2rem;
   position: relative;
+  padding: 0 2rem;
   width: 100%;
+  max-width: 1200px;
 }
 
 .price {
@@ -55,11 +57,11 @@
   font-weight: 400;
   max-width: 600px;
   color: #a1a1a1;
-  font-size: 20px;
+  font-size: clamp(12px, 6vw, 20px);
 }
 
 .top h1 {
-  font-size: 64px;
+  font-size: clamp(2rem, 6vw, 64px);
   font-weight: 700;
   text-wrap: balance;
   display: flex;
@@ -967,4 +969,32 @@
   border-radius: 24px;
   max-width: max-content;
   height: max-content;
+}
+
+
+@media (max-width: 768px) {
+  .greed p {
+    max-width: 450px;
+    font-size: 16px;
+  }
+
+  .greed {
+    gap: 1rem;
+  }
+
+  .videoWrapper {
+    width: 100vw !important;
+    height: 100vh !important;
+    border-radius: 0 !important;
+    border: none;
+  }
+
+  .container_greed {
+    bottom: 15%;
+  }
+
+  .windowDots {
+    display: none;
+  }
+
 }
