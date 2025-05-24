@@ -259,7 +259,7 @@ export const Main = () => {
           <motion.h1 layout>
             <span>Live Wallpapers</span>
             <div className={styles.flex_row}>
-              <span>now for your  Mac</span>
+              <span>now for your Mac</span>
               <motion.div
                 className={styles.title_box}
                 initial={{ scale: 0.9 }}
