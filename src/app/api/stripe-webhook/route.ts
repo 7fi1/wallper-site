@@ -24,29 +24,20 @@ async function sendLicenseEmail(to: string, licenseUuid: string) {
         Your personal license key is below. Please keep it safe and secure.
       </p>
 
-      <div style="display: inline-flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-bottom: 24px;">
-        ${[...licenseUuid]
-          .map(
-            (char) => `
-          <div style="
-            width: 40px;
-            height: 48px;
-            background-color: #1c1c1c;
-            border: 1px solid #333;
-            border-radius: 8px;
-            font-size: 22px;
-            font-weight: bold;
-            color: #007aff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: inset 0 0 4px rgba(0,122,255,0.3);
-          ">
-            ${char}
-          </div>
-        `
-          )
-          .join("")}
+      <div style="
+        display: inline-block;
+        background-color: #1c1c1c;
+        border: 1px solid #333;
+        border-radius: 10px;
+        padding: 16px 24px;
+        font-size: 20px;
+        font-weight: bold;
+        color: #00aaff;
+        box-shadow: inset 0 0 6px rgba(0,122,255,0.25);
+        letter-spacing: 2px;
+        word-break: break-word;
+      ">
+        ${licenseUuid}
       </div>
 
       <hr style="border: none; border-top: 1px solid #333; margin: 30px 0;" />
