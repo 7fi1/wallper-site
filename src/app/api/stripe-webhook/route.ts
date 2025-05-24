@@ -1,4 +1,4 @@
-import { SES } from "aws-sdk";
+import { Resend } from "resend";
 import { Stripe } from "stripe";
 import { NextResponse } from "next/server";
 import { headers } from "next/headers";
@@ -7,33 +7,27 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: "2025-04-30.basil",
 });
 
-const ses = new SES({
-  region: "eu-north-1",
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 async function sendLicenseEmail(to: string, licenseUuid: string) {
-  const params = {
-    Source: "support@wallper.app",
-    Destination: {
-      ToAddresses: [to],
-    },
-    Message: {
-      Subject: {
-        Data: "Ваш лицензионный ключ",
-        Charset: "UTF-8",
-      },
-      Body: {
-        Html: {
-          Data: `<p>Спасибо за покупку! Ваш лицензионный ключ:</p><b>${licenseUuid}</b>`,
-          Charset: "UTF-8",
-        },
-      },
-    },
-  };
-
-  await ses.sendEmail(params).promise();
+  await resend.emails.send({
+    from: "Wallper <support@wallper.app>",
+    to,
+    subject: "Ваш лицензионный ключ",
+    html: `
+  <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f9f9f9; padding: 40px;">
+    <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; padding: 32px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);">
+      <h2 style="color: #333333;">Thank you for your purchase!</h2>
+      <p style="color: #555555; font-size: 16px;">Here is your license key:</p>
+      <div style="background-color: #f0f0f0; padding: 12px 16px; border-radius: 6px; font-size: 20px; font-weight: bold; color: #222222; letter-spacing: 1px;">
+        ${licenseUuid}
+      </div>
+      <p style="color: #777777; font-size: 14px; margin-top: 24px;">If you have any questions, feel free to reply to this email. We're happy to help!</p>
+      <p style="color: #aaa; font-size: 12px; margin-top: 40px;">— The Wallper Team</p>
+    </div>
+  </div>
+`,
+  });
 }
 
 export async function POST(req: Request) {
@@ -120,8 +114,6 @@ export async function POST(req: Request) {
           console.log(`💰 PaymentIntent status: ${data.status}`);
           break;
         }
-        default:
-          throw new Error(`Unhandled event: ${event.type}`);
       }
     } catch (error) {
       console.log(error);
