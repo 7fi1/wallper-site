@@ -3,6 +3,7 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
+  padding: 0 2rem;
 }
 
 .top_class {
@@ -99,6 +100,7 @@
   align-items: center;
   text-align: center;
   align-items: center;
+  gap: 1rem;
 }
 
 .chevron {
@@ -142,4 +144,29 @@
   align-items: center;
   text-align: center;
   flex-direction: column;
+}
+
+@media (max-width: 600px) {
+  .title h2 {
+    font-size: 48px;
+  }
+  .title p {
+    font-size: 14px;
+  }
+  .title {
+    gap: 0.5rem;
+  }
+
+  .question {
+    padding: 0 1rem;
+  }
+
+  .question h3 {
+    padding: 1rem 0;
+    font-size: 14px;
+  }
+
+  .question p {
+    font-size: 12px;
+  }
 }

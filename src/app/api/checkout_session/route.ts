@@ -1,6 +1,5 @@
 import Stripe from "stripe";
 import { NextResponse } from "next/server";
-import { randomUUID } from "crypto";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-04-30.basil",
@@ -8,7 +7,18 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 export async function POST() {
   try {
-    const uuid = randomUUID();
+    function generateCustomUUID() {
+      const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+      const generateBlock = () =>
+        Array.from(
+          { length: 4 },
+          () => chars[Math.floor(Math.random() * chars.length)]
+        ).join("");
+
+      return `${generateBlock()}-${generateBlock()}-${generateBlock()}-${generateBlock()}`;
+    }
+
+    const uuid = generateCustomUUID();
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
