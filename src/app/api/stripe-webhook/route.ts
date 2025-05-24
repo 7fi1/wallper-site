@@ -11,19 +11,33 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 async function sendLicenseEmail(to: string, licenseUuid: string) {
   await resend.emails.send({
-    from: "Wallper <support@wallper.app>",
+    from: "Wallper Team <support@wallper.app>",
     to,
-    subject: "Ваш лицензионный ключ",
+    subject: "Your license key",
     html: `
-  <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f9f9f9; padding: 40px;">
-    <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; padding: 32px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);">
-      <h2 style="color: #333333;">Thank you for your purchase!</h2>
-      <p style="color: #555555; font-size: 16px;">Here is your license key:</p>
-      <div style="background-color: #f0f0f0; padding: 12px 16px; border-radius: 6px; font-size: 20px; font-weight: bold; color: #222222; letter-spacing: 1px;">
+  <div style="background-color: #000000; padding: 40px; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+    <div style="max-width: 600px; margin: 0 auto; background-color: #111111; border-radius: 12px; padding: 32px; box-shadow: 0 4px 20px rgba(0,0,0,0.6); color: #ffffff;">
+      
+      <div style="text-align: center; margin-bottom: 24px;">
+        <img src="https://wallper.app/logo/logo.ico" alt="Wallper Logo" width="64" height="64" style="border-radius: 50%; border: 2px solid #007aff;" />
+      </div>
+
+      <h1 style="color: #ffffff; font-size: 24px; text-align: center; margin-bottom: 16px;">Thank you for your purchase!</h1>
+      <p style="color: #cccccc; font-size: 16px; text-align: center; margin-bottom: 32px;">
+        We’re excited to have you on board. Here’s your personal license key:
+      </p>
+
+      <div style="background-color: #1c1c1c; border-left: 4px solid #007aff; padding: 16px 20px; border-radius: 8px; font-size: 20px; font-weight: bold; color: #ffffff; text-align: center; letter-spacing: 1px;">
         ${licenseUuid}
       </div>
-      <p style="color: #777777; font-size: 14px; margin-top: 24px;">If you have any questions, feel free to reply to this email. We're happy to help!</p>
-      <p style="color: #aaa; font-size: 12px; margin-top: 40px;">— The Wallper Team</p>
+
+      <p style="color: #999999; font-size: 14px; margin-top: 32px; text-align: center;">
+        If you have any questions or need help, just reply to this email. Our support team is here for you.
+      </p>
+
+      <p style="color: #555555; font-size: 12px; margin-top: 40px; text-align: center;">
+        — The <span style="color: #007aff;">Wallper</span> Team
+      </p>
     </div>
   </div>
 `,
