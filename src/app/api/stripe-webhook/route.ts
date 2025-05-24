@@ -16,28 +16,67 @@ async function sendLicenseEmail(to: string, licenseUuid: string) {
     subject: "Your license key",
     html: `
   <div style="background-color: #000000; padding: 40px; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
-    <div style="max-width: 600px; margin: 0 auto; background-color: #111111; border-radius: 12px; padding: 32px; box-shadow: 0 4px 20px rgba(0,0,0,0.6); color: #ffffff;">
-      
-      <div style="text-align: center; margin-bottom: 24px;">
-        <img src="https://wallper.app/logo/logo.ico" alt="Wallper Logo" width="64" height="64" style="border-radius: 50%; border: 2px solid #007aff;" />
+    <div style="max-width: 600px; margin: 0 auto; background-color: #111111; border-radius: 14px; padding: 36px; box-shadow: 0 6px 24px rgba(0,0,0,0.7); color: #ffffff; text-align: center;">
+
+      <h1 style="color: #ffffff; font-size: 28px; margin-bottom: 18px;">Thank you for your purchase!</h1>
+
+      <p style="color: #bbbbbb; font-size: 16px; margin-bottom: 28px;">
+        Your personal license key is below. Please keep it safe and secure.
+      </p>
+
+      <div style="display: inline-flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-bottom: 24px;">
+        ${[...licenseUuid]
+          .map(
+            (char) => `
+          <div style="
+            width: 40px;
+            height: 48px;
+            background-color: #1c1c1c;
+            border: 1px solid #333;
+            border-radius: 8px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #007aff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 0 4px rgba(0,122,255,0.3);
+          ">
+            ${char}
+          </div>
+        `
+          )
+          .join("")}
       </div>
 
-      <h1 style="color: #ffffff; font-size: 24px; text-align: center; margin-bottom: 16px;">Thank you for your purchase!</h1>
-      <p style="color: #cccccc; font-size: 16px; text-align: center; margin-bottom: 32px;">
-        We’re excited to have you on board. Here’s your personal license key:
+      <hr style="border: none; border-top: 1px solid #333; margin: 30px 0;" />
+
+      <p style="color: #888888; font-size: 14px; margin-bottom: 24px;">
+        You can return to the store at any time to manage your purchases.
       </p>
 
-      <div style="background-color: #1c1c1c; border-left: 4px solid #007aff; padding: 16px 20px; border-radius: 8px; font-size: 20px; font-weight: bold; color: #ffffff; text-align: center; letter-spacing: 1px;">
-        ${licenseUuid}
-      </div>
+      <a href="https://www.wallper.app/" style="
+        display: inline-block;
+        background: linear-gradient(90deg, #007aff, #339cff);
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 14px;
+        padding: 12px 28px;
+        border-radius: 10px;
+        font-weight: 600;
+        transition: background 0.3s ease;
+      ">
+        Back to Wallper
+      </a>
 
-      <p style="color: #999999; font-size: 14px; margin-top: 32px; text-align: center;">
-        If you have any questions or need help, just reply to this email. Our support team is here for you.
+      <p style="color: #666666; font-size: 13px; margin-top: 40px; line-height: 1.5;">
+        If you have any questions or need assistance, just reply to this email — we're always happy to help.
       </p>
 
-      <p style="color: #555555; font-size: 12px; margin-top: 40px; text-align: center;">
-        — The <span style="color: #007aff;">Wallper</span> Team
+      <p style="color: #007aff; font-size: 13px; margin-top: 20px;">
+        — The Wallper Team
       </p>
+
     </div>
   </div>
 `,
