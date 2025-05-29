@@ -3,19 +3,11 @@
   align-items: center;
   text-align: center;
   flex-direction: column;
-  scroll-snap-type: y mandatory;
   overflow-y: scroll;
   scroll-behavior: smooth;
   height: 100vh;
 }
 
-.greed,
-.laptop,
-.features,
-.footer {
-  scroll-snap-align: start;
-  height: 100vh !important;
-}
 
 .top {
   width: 100%;
