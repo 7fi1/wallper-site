@@ -26,6 +26,7 @@ import VideosModal from "../Modals/VideosModal";
 import Hero from "./Hero/Hero";
 import Features from "./Features/Features";
 import Bottom from "./Bottom/Bottom";
+import Experience from "./Experience/Experience";
 
 export const Main = () => {
   // const [openIndex, setOpenIndex] = useState<number | null>(0);
@@ -59,7 +60,9 @@ export const Main = () => {
       )}
       <Hero />
       <Features />
+      <Experience />
       <Bottom />
+
       {/* LAPTOP
       <motion.section
         className={styles.laptop}
