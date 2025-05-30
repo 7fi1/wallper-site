@@ -100,7 +100,7 @@ const Hero = () => {
           >
             <div className={styles.buttons}>
               <PrimaryButton
-                text="Get started"
+                text="Download Wallper"
                 icon="FaChevronRight"
                 iconPosition="right"
                 iconSize={10}
@@ -145,6 +145,7 @@ const Hero = () => {
           <Canvas
             camera={{ position: [5, 2, 5], fov: 50 }}
             shadows
+            frameloop="always"
             gl={{
               toneMapping: THREE.ACESFilmicToneMapping,
               outputColorSpace: THREE.SRGBColorSpace,

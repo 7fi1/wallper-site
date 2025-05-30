@@ -23,6 +23,16 @@ const Header = () => {
   const { open } = useModalStore();
   const [totalVideos, setTotalVideos] = useState(0);
   const [isMobileHeader, setMobileHeader] = useState<boolean>(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setHasScrolled(window.scrollY > 0);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []); // 🆕
 
   const fetchVideos = async () => {
     try {
@@ -70,7 +80,7 @@ const Header = () => {
 
   return (
     <motion.header
-      className={`${styles.header}`}
+      className={`${styles.header} ${hasScrolled ? styles.scrolled : ""}`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
@@ -88,14 +98,14 @@ const Header = () => {
           onClick={() => router.push("/")}
         >
           <div className={styles.logo}>
-            <Image
+            {/* <Image
               alt="Wallper Logo"
               src="/logo/logo.png"
               width={1024}
               height={1024}
               className={styles.logo_image}
-            />
-            <h1 className={styles.title}>Wallper 4K Live</h1>
+            /> */}
+            <h1 className={styles.title}>Wallper</h1>
           </div>
         </button>
 
