@@ -1,4 +1,4 @@
-import { Main } from "./components/HomePage/Main";
+import { Main } from "./components/home-page/Main";
 import Header from "./layout/Header/Header";
 import { Wrapper } from "./layout/Wrapper/Wrapper";
 

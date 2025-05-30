@@ -1,49 +1,27 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import React, { useEffect, useState } from "react";
 import styles from "./Header.module.css";
 import Image from "next/image";
-import { Apple } from "react-ios-icons";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { FaKey } from "react-icons/fa";
 import { useModalStore } from "../../../store/ModalStore";
 import { loadStripe } from "@stripe/stripe-js";
 import { IoMdMenu } from "react-icons/io";
 import MobileHeader from "./MobileHeader/MobileHeader";
+import PrimaryButton from "../../ui/primaryButton";
+import { FaChevronDown, FaChevronRight } from "react-icons/fa";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
 );
 
-const navItems = [
-  {
-    name: "PRO",
-    link: "",
-    onClick: async () => {
-      const res = await fetch("/api/checkout_session", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-      });
-
-      const data = await res.json();
-
-      const stripe = await stripePromise;
-      await stripe?.redirectToCheckout({
-        sessionId: data.sessionId,
-      });
-    },
-  },
-  { name: "FAQ", link: "/faq", onClick: null },
-  { name: "Help", link: "/help", onClick: null },
-];
-
 const Header = () => {
   const router = useRouter();
   const { open } = useModalStore();
   const [totalVideos, setTotalVideos] = useState(0);
-
   const [isMobileHeader, setMobileHeader] = useState<boolean>(false);
 
   const fetchVideos = async () => {
@@ -56,13 +34,43 @@ const Header = () => {
     }
   };
 
-  useEffect(() => {
-    fetchVideos();
-  }, []);
+  const navItems = [
+    {
+      name: "Features",
+      link: "",
+      onClick: () => open("videos"),
+      chevron: true,
+    },
+    { name: "Company", link: "/", onClick: null, chevron: true },
+    {
+      name: "Videos",
+      link: "",
+      onClick: () => open("videos"),
+      chevron: false,
+    },
+    {
+      name: "PRO",
+      link: "/",
+      onClick: async () => {
+        const res = await fetch("/api/checkout_session", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+        });
+
+        const data = await res.json();
+        const stripe = await stripePromise;
+        await stripe?.redirectToCheckout({
+          sessionId: data.sessionId,
+        });
+      },
+      chevron: false,
+    },
+    { name: "Help", link: "/help", onClick: null },
+  ];
 
   return (
     <motion.header
-      className={styles.header}
+      className={`${styles.header}`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
@@ -108,62 +116,38 @@ const Header = () => {
                 >
                   {item.name}
                 </Link>
+                {item.chevron && <FaChevronDown color="#70757e" size={10} />}
               </motion.li>
             ))}
           </ul>
+        </div>
 
-          <motion.button
-            className={styles.download}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ delay: 0.8, duration: 0.4 }}
+        <div className={styles.left_header}>
+          <button
+            onClick={() => open("license")}
+            className={`${styles.link} ${styles.license}`}
           >
-            <Apple className={styles.apple} />
-            <span>Download for Mac</span>
-          </motion.button>
+            My License Keys
+          </button>
+          <PrimaryButton
+            text="Get Started"
+            icon="FaChevronRight"
+            iconPosition="right"
+            popupMessage="Download"
+            popupButton="D"
+            iconSize={8}
+            iconColor="#70757e"
+          />
         </div>
 
         <button
           type="button"
           className={styles.menu}
-          onClick={() => {
-            setMobileHeader(true);
-            console.log("clicked");
-          }}
+          onClick={() => setMobileHeader(true)}
           aria-label="Open mobile menu"
         >
           <IoMdMenu size={20} />
         </button>
-      </div>
-
-      <div className={styles.status}>
-        {[
-          {
-            label: (
-              <>
-                <FaKey size={10} />
-                <span>My License keys</span>
-              </>
-            ),
-            onClick: () => open("license"),
-          },
-          {
-            label: <span>{totalVideos} videos</span>,
-            onClick: () => open("videos"),
-          },
-        ].map((block, idx) => (
-          <motion.div
-            key={idx}
-            className={styles.status_container}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1 + idx * 0.1, duration: 0.4 }}
-            onClick={block.onClick}
-          >
-            {block.label}
-          </motion.div>
-        ))}
       </div>
     </motion.header>
   );

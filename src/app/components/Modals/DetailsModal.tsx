@@ -1,11 +1,11 @@
 "use client";
 
-import styles from "../HomePage/Main.module.css";
+import styles from "../home-page/Main.module.css";
 import { FaXmark } from "react-icons/fa6";
 import { motion, AnimatePresence } from "framer-motion";
 import { useModalStore } from "../../../store/ModalStore";
 import { useEffect, useState } from "react";
-import Spinner from "../Spinner/Spinner";
+import Spinner from "../../ui/Spinner";
 import VideoMeta from "../VideoMeta/VideoMeta";
 
 const fadeIn = {

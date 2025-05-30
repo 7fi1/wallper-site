@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useEffect } from "react";
-import styles from "../HomePage/Main.module.css";
+import styles from "../home-page/Main.module.css";
 import { useModalStore } from "../../../store/ModalStore";
 import { useVideoStore } from "../../../store/VideoStore";
 import { FaXmark } from "react-icons/fa6";
 import { motion, AnimatePresence } from "framer-motion";
 import { Apple } from "react-ios-icons";
-import Spinner from "../Spinner/Spinner";
+import Spinner from "../../ui/Spinner";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },

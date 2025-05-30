@@ -1,0 +1,165 @@
+.top {
+  width: 100%;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-image: url("/bghero.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.vote {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.75rem;
+  background-color: #0b0e14;
+  color: #fff;
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 9999px;
+  font-weight: 400;
+  cursor: pointer;
+  position: relative;
+  transition: box-shadow 0.3s ease;
+  font-size: 14px;
+  margin-bottom: 2.5rem;
+  box-shadow:
+    -20px -10px 35px hsla(180, 100%, 70%, 0.05),
+    20px 10px 35px hsla(201, 85%, 55%, 0.05);
+  transition: 0.3s ease;
+}
+
+.vote:hover {
+  gap: 1rem;
+}
+
+.greed {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  justify-content: space-between;
+  text-align: сenter;
+  align-items: center;
+  position: relative;
+  padding: 0 2rem;
+  width: 100%;
+  max-width: 1300px;
+  padding-left: 6rem;
+}
+
+.greed p {
+  font-weight: 400;
+  max-width: 600px;
+  color: #f1f7feb5;
+  font-size: 18px;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.text {
+  width: max-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  text-align: start;
+}
+
+.top h1 {
+  font-size: 72px;
+  font-weight: 400;
+  text-wrap: balance;
+  display: flex;
+  flex-direction: column;
+  line-height: 5rem;
+  position: relative;
+  letter-spacing: -0.025em;
+  -webkit-text-stroke: 0.4px #ffffff80;
+  -webkit-text-fill-color: transparent;
+  text-shadow:
+    -1px -1px 0 rgba(255, 255, 255, 0.2),
+    1px 1px 0 rgba(0, 0, 0, 0.1);
+  background: linear-gradient(
+    to right bottom,
+    rgb(255, 255, 255) 30%,
+    rgba(255, 255, 255, 0.5)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.container_greed {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  text-align: start;
+  width: 100%;
+  gap: 2rem;
+  bottom: 10%;
+}
+
+.price {
+  font-size: 10px;
+  background-color: var(--blue-color);
+  padding: 0.1rem 0.25rem;
+  border-radius: 5px;
+  margin-left: 0.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.flex_row {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.title_box {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  width: max-content;
+  padding-right: 0.5rem;
+  z-index: 2;
+  position: relative;
+  color: #fff;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  gap: 1rem;
+}
+
+.spans span {
+  opacity: 0.4;
+  font-weight: 400 !important;
+  font-size: 14px;
+}
+
+.spans {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.model_wrapper {
+  position: absolute;
+  height: 600px;
+  width: 600px;
+  right: 0rem;
+  z-index: 0;
+}

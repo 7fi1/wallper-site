@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import styles from "./Preloader.module.css";
-import Spinner from "../Spinner/Spinner";
+import Spinner from "../../ui/Spinner";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Preloader = ({ children }: { children: React.ReactNode }) => {

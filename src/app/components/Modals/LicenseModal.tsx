@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import styles from "../HomePage/Main.module.css";
+import styles from "../home-page/Main.module.css";
 import { FaXmark } from "react-icons/fa6";
 import { motion, AnimatePresence } from "framer-motion";
 import { Apple } from "react-ios-icons";
