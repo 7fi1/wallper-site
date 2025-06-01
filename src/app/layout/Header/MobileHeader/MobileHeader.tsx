@@ -142,7 +142,7 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({ isOpen, onClose }) => {
                 icon="FaChevronRight"
                 iconPosition="right"
                 iconSize={8}
-                iconColor="#70757e"
+                iconColor="#ccc"
               />
             </motion.div>
           </motion.div>

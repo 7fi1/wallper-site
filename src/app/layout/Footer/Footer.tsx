@@ -14,12 +14,7 @@ const Footer = () => {
   ];
 
   return (
-    <motion.section
-      className={styles.footer}
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      transition={{ duration: 1 }}
-    >
+    <motion.section className={styles.footer}>
       <div className={styles.line} />
       <div className={styles.light} />
 

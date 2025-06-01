@@ -218,6 +218,11 @@
 
   .text {
     padding-left: 0;
+    margin-top: -6rem;
+  }
+
+  .holder {
+    gap: 6rem;
   }
 
   .right {

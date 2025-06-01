@@ -25,14 +25,14 @@ const Header = () => {
   const [isMobileHeader, setMobileHeader] = useState<boolean>(false);
   const [hasScrolled, setHasScrolled] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setHasScrolled(window.scrollY > 0);
-    };
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     setHasScrolled(window.scrollY > 0);
+  //   };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, []);
 
   const navItems = [
     {
