@@ -32,17 +32,7 @@ const Header = () => {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []); // 🆕
-
-  const fetchVideos = async () => {
-    try {
-      const res = await fetch("api/bucketsStatus");
-      const data = await res.json();
-      setTotalVideos(data.totalVideos);
-    } catch (err) {
-      console.error("Failed to fetch video count", err);
-    }
-  };
+  }, []);
 
   const navItems = [
     {
@@ -85,8 +75,6 @@ const Header = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
     >
-      <div className={styles.overflow} />
-
       <MobileHeader
         isOpen={isMobileHeader}
         onClose={() => setMobileHeader(false)}
@@ -98,13 +86,6 @@ const Header = () => {
           onClick={() => router.push("/")}
         >
           <div className={styles.logo}>
-            {/* <Image
-              alt="Wallper Logo"
-              src="/logo/logo.png"
-              width={1024}
-              height={1024}
-              className={styles.logo_image}
-            /> */}
             <h1 className={styles.title}>Wallper</h1>
           </div>
         </button>

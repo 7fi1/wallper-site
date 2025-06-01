@@ -28,7 +28,7 @@ const Bottom = () => {
               buttonSize={48}
               fontSize={16}
               fontWeight={500}
-              iconColor="#70757e"
+              iconColor="#ccc"
             />
           </div>
         </div>

@@ -87,18 +87,14 @@
   font-weight: 500;
   height: 40px;
   padding: 0px 16px;
-  color: #f1f7feb5;
+  color: #fff;
   border-radius: 32px;
   cursor: pointer;
   position: relative;
-  /* background: linear-gradient(
-    90deg,
-    hsl(180, 100%, 70%) -20%,
-    hsl(201, 85%, 55%)
-  ); */
-  /* box-shadow:
-    -20px -10px 35px hsla(180, 100%, 70%, 0.3),
-    20px 10px 35px hsla(201, 85%, 55%, 0.3); */
+  background: linear-gradient(135deg, hsl(34, 100%, 60%), hsl(338, 100%, 50%));
+  box-shadow:
+    -20px -10px 35px hsla(34, 100%, 60%, 0.3),
+    20px 10px 35px hsla(338, 100%, 50%, 0.3);
   transition: 0.3s ease;
 }
 .secondaryButton:hover {

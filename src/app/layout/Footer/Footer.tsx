@@ -61,50 +61,33 @@ const Footer = () => {
               Wallper API & Database status
             </div>
           </div>
-
-          <div className={styles.block}>
-            <h4>Resources</h4>
-            <a>Getting Started</a>
-            <a>API Reference</a>
-            <a>Integrations</a>
-            <a>Examples</a>
-            <a>SDKs</a>
-          </div>
-          <div className={styles.block}>
-            <h4>Company</h4>
-            <a>About</a>
-            <a>Blog</a>
-            <a>Careers</a>
-            <a>Contact</a>
-            <a>Customers</a>
-            <a>Philosophy</a>
-          </div>
-          <div className={styles.block}>
-            <h4>Company</h4>
-            <a>About</a>
-            <a>Blog</a>
-            <a>Careers</a>
-            <a>Contact</a>
-            <a>Customers</a>
-            <a>Philosophy</a>
-          </div>
-          <div className={styles.block}>
-            <h4>Company</h4>
-            <a>About</a>
-            <a>Blog</a>
-            <a>Careers</a>
-            <a>Contact</a>
-            <a>Customers</a>
-            <a>Philosophy</a>
-          </div>
-          <div className={styles.block}>
-            <h4>Legal</h4>
-            <a>Acceptable Use</a>
-            <a>Cookie Policy</a>
-            <a>Privacy Policy</a>
-            <a>Terms of Service</a>
-            <a>Subprocessors</a>
-            <a>DPA</a>
+          <div className={styles.container_footer}>
+            <div className={styles.block}>
+              <h4>Resources</h4>
+              <a>Getting Started</a>
+              <a>API Reference</a>
+              <a>Integrations</a>
+              <a>Examples</a>
+              <a>SDKs</a>
+            </div>
+            <div className={styles.block}>
+              <h4>Company</h4>
+              <a>About</a>
+              <a>Blog</a>
+              <a>Careers</a>
+              <a>Contact</a>
+              <a>Customers</a>
+              <a>Philosophy</a>
+            </div>
+            <div className={styles.block}>
+              <h4>Company</h4>
+              <a>About</a>
+              <a>Blog</a>
+              <a>Careers</a>
+              <a>Contact</a>
+              <a>Customers</a>
+              <a>Philosophy</a>
+            </div>
           </div>
         </div>
       </div>

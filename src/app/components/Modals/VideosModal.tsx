@@ -6,8 +6,8 @@ import { useModalStore } from "../../../store/ModalStore";
 import { useVideoStore } from "../../../store/VideoStore";
 import { FaXmark } from "react-icons/fa6";
 import { motion, AnimatePresence } from "framer-motion";
-import { Apple } from "react-ios-icons";
 import Spinner from "../../ui/Spinner";
+import PrimaryButton from "../../ui/primaryButton";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -98,14 +98,16 @@ const VideosModal = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.5 }}
           >
-            <motion.button
-              className={styles.download}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              <Apple className={styles.apple_s} />
-              <div>Download for Mac</div>
-            </motion.button>
+            <PrimaryButton
+              text="Get Started"
+              icon="FaChevronRight"
+              iconPosition="right"
+              popupButton="D"
+              iconSize={8}
+              buttonSize={36}
+              fontSize={12}
+              iconColor="#70757e"
+            />
           </motion.div>
         </motion.div>
       </motion.div>

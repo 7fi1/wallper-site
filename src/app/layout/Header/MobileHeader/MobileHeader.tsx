@@ -1,12 +1,12 @@
 import React from "react";
 import styles from "./MainHeader.module.css";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Apple, XMark } from "react-ios-icons";
-import { motion } from "framer-motion";
+import { XMark } from "react-ios-icons";
+import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { loadStripe } from "@stripe/stripe-js";
-import { FaLink } from "react-icons/fa6";
+import PrimaryButton from "@/src/app/ui/primaryButton";
+import SecondaryButton from "@/src/app/ui/secondaryButton";
 
 interface MobileHeaderProps {
   isOpen: boolean;
@@ -17,15 +17,31 @@ const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
 );
 
-const closeVariants = {
-  hidden: { rotate: -90, opacity: 0, scale: 0.5 },
-  visible: { rotate: 0, opacity: 1, scale: 1, transition: { duration: 0.4 } },
-  exit: { rotate: 90, opacity: 0, scale: 0.5, transition: { duration: 0.3 } },
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.4,
+      when: "beforeChildren",
+      staggerChildren: 0.1,
+    },
+  },
+  exit: {
+    opacity: 0,
+    transition: { duration: 0.3 },
+  },
+};
+
+const linkVariants = {
+  hidden: { opacity: 0, x: -10 },
+  visible: { opacity: 1, x: 0 },
 };
 
 const navItems = [
   {
-    name: "Buy PRO version",
+    name: "Buy Pro version",
     link: "",
     onClick: async () => {
       const res = await fetch("/api/checkout_session", {
@@ -41,61 +57,62 @@ const navItems = [
       });
     },
   },
-  { name: "Frequently Asked Questions", link: "/faq", onClick: null },
+  { name: "Videos", link: "/videos", onClick: null },
+  { name: "FAQ", link: "/faq", onClick: null },
   { name: "Get Help", link: "/help", onClick: null },
+  { name: "Cookie Policy", link: "/cookie", onClick: null },
+  { name: "Privacy Policy", link: "/privacy", onClick: null },
+  { name: "Terms of Service", link: "/terms", onClick: null },
 ];
 
 const MobileHeader: React.FC<MobileHeaderProps> = ({ isOpen, onClose }) => {
   const router = useRouter();
 
   return (
-    <>
+    <AnimatePresence>
       {isOpen && (
-        <div className={styles.main}>
+        <motion.div
+          className={styles.main}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          variants={containerVariants}
+        >
           <div className={styles.container}>
             <div className={styles.logo_container}>
-              <button
+              <motion.button
                 className={styles.logo}
                 onClick={() => router.push("/")}
                 aria-label="На главную"
                 type="button"
+                whileHover={{ y: -2 }}
               >
-                <Image
-                  alt="Wallper Logo"
-                  src="/logo/logo.png"
-                  width={1024}
-                  height={1024}
-                  className={styles.logo_image}
-                />
-                <h1 className={styles.title}>Wallper 4K Live</h1>
-              </button>
+                <h1 className={styles.title}>Wallper</h1>
+              </motion.button>
+
               <motion.button
                 className={styles.close}
                 onClick={onClose}
                 aria-label="Close menu"
                 type="button"
-                variants={closeVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                whileTap={{ scale: 0.85, rotate: 45 }}
+                initial={{ rotate: 0, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ opacity: 0 }}
+                whileHover={{ rotate: 90 }}
               >
                 <XMark />
               </motion.button>
             </div>
           </div>
-          <div className={styles.links}>
-            <ul className={styles.ul}>
+
+          <motion.div className={styles.links}>
+            <motion.ul className={styles.ul}>
               {navItems.map((item, idx) => (
                 <motion.li
                   key={idx}
                   className={styles.li}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 + idx * 0.1, duration: 0.4 }}
+                  variants={linkVariants}
                 >
-                  <FaLink color="#007aff" />
-
                   <Link
                     className={styles.link}
                     href={item.link}
@@ -105,23 +122,33 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({ isOpen, onClose }) => {
                   </Link>
                 </motion.li>
               ))}
-            </ul>
+            </motion.ul>
 
-            <motion.button
-              className={styles.download}
+            <motion.div
+              className={styles.buttons}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ delay: 0.8, duration: 0.4 }}
+              transition={{ delay: 0.5, duration: 0.4 }}
             >
-              <Apple className={styles.apple} />
-              <span>Download for Mac</span>
-            </motion.button>
-          </div>
-        </div>
+              <PrimaryButton
+                text="Get started"
+                icon="FaChevronRight"
+                iconPosition="right"
+                iconSize={8}
+                iconColor="#70757e"
+              />
+              <SecondaryButton
+                text="Contact Us"
+                icon="FaChevronRight"
+                iconPosition="right"
+                iconSize={8}
+                iconColor="#70757e"
+              />
+            </motion.div>
+          </motion.div>
+        </motion.div>
       )}
-    </>
+    </AnimatePresence>
   );
 };
-
 export default MobileHeader;

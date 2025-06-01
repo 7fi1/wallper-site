@@ -81,3 +81,40 @@
   align-items: center;
   flex-direction: column;
 }
+
+@media (max-width: 1000px) {
+  .title h2 {
+    font-size: 52px;
+    max-width: 100%;
+    line-height: 60px;
+    width: auto;
+  }
+
+  .text {
+    width: 100%;
+    bottom: -3rem;
+    height: auto;
+    aspect-ratio: 15/3.5;
+  }
+}
+
+@media (max-width: 500px) {
+  .title h2 {
+    font-size: 36px;
+    line-height: 44px;
+    text-align: center;
+    align-items: center;
+  }
+
+  .text {
+    bottom: -1.8rem;
+  }
+
+  .buttons {
+    margin-bottom: 8rem;
+  }
+
+  .bottom {
+    height: auto;
+  }
+}

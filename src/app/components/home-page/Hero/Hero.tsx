@@ -74,22 +74,12 @@ const Hero = () => {
             Help Wallper on Product Hunt{" "}
             <FaChevronRight color="#70757e" size={10} />
           </button>
-          <motion.h1 layout>
-            <span>Live Wallpapers</span>
-            <div className={styles.flex_row}>
-              <span>now for your Mac</span>
-              <motion.div
-                className={styles.title_box}
-                initial={{ scale: 0.9 }}
-                animate={{ scale: 1 }}
-                transition={{ delay: 0.4, type: "spring" }}
-              ></motion.div>
-            </div>
-          </motion.h1>
+          <motion.h1 layout>Live Wallpapers now for your Mac</motion.h1>
 
           <motion.p layout>
-            A collection of powerful productivity tools all within an extendable
-            launcher. Fast, ergonomic and reliable.
+            Bring your desktop to life with stunning dynamic wallpapers.
+            Seamless performance, elegant control, and effortless customization
+            — all in one place.
           </motion.p>
 
           <motion.div
@@ -100,7 +90,7 @@ const Hero = () => {
           >
             <div className={styles.buttons}>
               <PrimaryButton
-                text="Download Wallper"
+                text="Download for Free"
                 icon="FaChevronRight"
                 iconPosition="right"
                 iconSize={10}
@@ -110,14 +100,14 @@ const Hero = () => {
                 iconColor="#70757e"
               />
               <SecondaryButton
-                text="PRO for 9.99$"
+                text="Pro for 9.99$"
                 icon="FaChevronRight"
                 iconPosition="right"
                 iconSize={10}
                 buttonSize={48}
                 fontSize={16}
                 fontWeight={500}
-                iconColor="#70757e"
+                iconColor="#ccc"
                 onClick={async () => {
                   const res = await fetch("/api/checkout_session", {
                     method: "POST",

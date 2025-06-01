@@ -60,7 +60,6 @@
 }
 
 .text {
-  width: max-content;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -76,7 +75,6 @@
   flex-direction: column;
   line-height: 5rem;
   position: relative;
-  letter-spacing: -0.025em;
   -webkit-text-stroke: 0.4px #ffffff80;
   -webkit-text-fill-color: transparent;
   text-shadow:
@@ -90,6 +88,7 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  max-width: 70%;
 }
 
 .container_greed {
@@ -162,4 +161,60 @@
   width: 600px;
   right: 0rem;
   z-index: 0;
+}
+
+@media (max-width: 1000px) {
+  .greed {
+    flex-direction: column-reverse;
+    justify-content: start;
+    padding-left: 2rem;
+    height: 100vh;
+  }
+
+  .model_wrapper {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin-top: 5rem;
+    margin-bottom: 1rem;
+  }
+
+  .text h1 {
+    font-size: 52px;
+    max-width: 100%;
+    line-height: 60px;
+  }
+
+  .text p {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 500px) {
+  .text {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .text h1 {
+    font-size: 36px;
+    line-height: 44px;
+    text-align: center;
+    align-items: center;
+  }
+  .buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+  .buttons button {
+    width: 100%;
+  }
+
+  .spans {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  }
 }

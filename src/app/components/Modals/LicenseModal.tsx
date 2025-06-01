@@ -4,8 +4,9 @@ import React, { useEffect, useState } from "react";
 import styles from "../home-page/Main.module.css";
 import { FaXmark } from "react-icons/fa6";
 import { motion, AnimatePresence } from "framer-motion";
-import { Apple } from "react-ios-icons";
 import { useModalStore } from "../../../store/ModalStore";
+import PrimaryButton from "../../ui/primaryButton";
+import toast from "react-hot-toast";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 30 },
@@ -29,6 +30,7 @@ interface LicenseModalProps {
 const LicenseModal = ({ showCloseButton }: LicenseModalProps) => {
   const { close } = useModalStore();
   const [licenseKeys, setLicenseKeys] = useState<string[]>([]);
+  const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
   useEffect(() => {
     const keys = checkLicenseKeys();
@@ -37,6 +39,27 @@ const LicenseModal = ({ showCloseButton }: LicenseModalProps) => {
 
   const handleCopy = (key: string) => {
     navigator.clipboard.writeText(key);
+    setCopiedKey(key);
+
+    setTimeout(() => {
+      setCopiedKey(null);
+    }, 1000);
+
+    toast.success("License key copied!", {
+      position: "bottom-right",
+      icon: null,
+      style: {
+        fontSize: "14px",
+        backgroundColor: "#2ca76f4b",
+        color: "#fff",
+        border: "1px solid #44ffaa4b",
+        height: "36px",
+        padding: "8px",
+        borderRadius: "6px",
+        fontWeight: "500",
+        backdropFilter: "blur(30px) saturate(180%)",
+      },
+    });
   };
 
   return (
@@ -88,7 +111,7 @@ const LicenseModal = ({ showCloseButton }: LicenseModalProps) => {
                   onClick={() => handleCopy(key)}
                   whileTap={{ scale: 0.95 }}
                 >
-                  Copy
+                  {copiedKey === key ? "Copied!" : "Copy"}
                 </motion.button>
               </div>
             ))
@@ -105,10 +128,16 @@ const LicenseModal = ({ showCloseButton }: LicenseModalProps) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.5 }}
         >
-          <motion.button className={styles.download} whileTap={{ scale: 0.95 }}>
-            <Apple className={styles.apple_s} />
-            <div>Download for Mac</div>
-          </motion.button>
+          <PrimaryButton
+            text="Get Started"
+            icon="FaChevronRight"
+            iconPosition="right"
+            popupButton="D"
+            iconSize={8}
+            buttonSize={36}
+            fontSize={12}
+            iconColor="#70757e"
+          />
         </motion.div>
       </motion.div>
     </AnimatePresence>

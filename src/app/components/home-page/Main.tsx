@@ -24,9 +24,11 @@ import VideosModal from "../Modals/VideosModal";
 // import { IoIosCheckmarkCircle } from "react-icons/io";
 // import { blocks, features } from "../../constants";
 import Hero from "./Hero/Hero";
-import Features from "./Features/Features";
 import Bottom from "./Bottom/Bottom";
 import Experience from "./Experience/Experience";
+import Video from "./Video/Video";
+import Screen from "./Screen/Screen";
+import Features from "./Features/Features";
 
 export const Main = () => {
   // const [openIndex, setOpenIndex] = useState<number | null>(0);
@@ -59,8 +61,10 @@ export const Main = () => {
         </div>
       )}
       <Hero />
-      <Features />
+      <Screen />
       <Experience />
+      <Video />
+      <Features />
       <Bottom />
 
       {/* LAPTOP

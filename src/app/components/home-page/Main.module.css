@@ -275,7 +275,7 @@
 }
 
 .license_modal_overlay {
-  position: absolute;
+  position: fixed;
   width: 100vw;
   height: 100vh;
   backdrop-filter: blur(30px) saturate(180%);
@@ -462,24 +462,24 @@
   height: 36px;
   border-radius: 8px;
   padding-left: 0.75rem;
-  padding-right: 0.5rem;
   color: #a1a1a1;
+  overflow: hidden;
 }
 
 .copy {
-  color: #a1a1a1;
-  cursor: pointer;
-  background: rgba(255, 255, 255, 0.1);
-  border: none;
-  border-radius: 8px;
+  font-size: 12px;
+  display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 8px;
-  padding: 4px 8px;
-  font-size: 12px;
+  text-align: center;
   font-weight: 500;
-  display: flex;
+  height: 100%;
+  padding: 0px 10px;
+  color: #ccc;
+  cursor: pointer;
+  position: relative;
+  transition: 0.3s ease;
 }
 .video_meta {
   border-radius: 16px;

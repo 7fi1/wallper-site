@@ -1,43 +1,45 @@
 import React from "react";
 import styles from "./Experience.module.css";
-import { FaStore } from "react-icons/fa6";
+import { MdMonitor } from "react-icons/md";
+import { TbDeviceDesktopX } from "react-icons/tb";
 
 const Experience = () => {
   return (
     <section className={styles.experience}>
       <div className={styles.container}>
         <div className={styles.title}>
-          <h4>First class of development experience</h4>
+          <h4>Effortless Control, Personalized Experience</h4>
           <p>
-            We are a team of engineers who love building tools for other
-            engineers. Our goal is to create the email platform we`ve always
-            wished we had — one that just works.
+            Manage your wallpapers and devices with flexibility — apply designs
+            across all screens instantly or tailor each monitor individually.
+            Stay in control of your licenses and connected devices, with support
+            for up to 3 per account.
           </p>
         </div>
         <div className={styles.holder}>
           <div className={styles.block}>
             <div className={styles.left}></div>
             <div className={styles.text}>
-              <FaStore size={24} color="fcfdffef" />
-              <h3>Test Mode</h3>
+              <MdMonitor size={24} color="fcfdffef" />
+              <h3>Instant Apply Mode</h3>
               <p>
-                Simulate events and experiment with our API without the risk of
-                accidentally set all wallper with real people.
+                Set wallpapers on all screens with a single click — or assign
+                different wallpapers to each monitor. The app remembers your
+                setup for the next launch.
               </p>
-              <a href="">Learn more</a>
             </div>
             <div className={styles.light} />
           </div>
           <div className={styles.block}>
             <div className={styles.right}></div>
             <div className={styles.text}>
-              <FaStore size={24} color="fcfdffef" />
-              <h3>Test Mode</h3>
+              <TbDeviceDesktopX size={24} color="fcfdffef" />
+              <h3>Device Management</h3>
               <p>
-                Simulate events and experiment with our API without the risk of
-                accidentally set all wallper with real people.
+                View and manage all your linked devices. Remove old ones, check
+                device details, and use your license on up to 3 devices at the
+                same time.
               </p>
-              <a href="">Learn more</a>
             </div>
             <div className={styles.light} />
           </div>
