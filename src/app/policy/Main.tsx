@@ -292,10 +292,6 @@ export const Main = () => {
                   California Privacy Rights Act (CPRA):
                 </p>
                 <p>
-                  <strong className={styles.strong}>• Right of Access</strong> —
-                  to know what data we hold about you.
-                </p>
-                <p>
                   Disclosure of categories and specific pieces of personal data
                   collected.
                 </p>
