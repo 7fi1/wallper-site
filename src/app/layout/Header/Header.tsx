@@ -25,15 +25,6 @@ const Header = () => {
   const [isMobileHeader, setMobileHeader] = useState<boolean>(false);
   const [hasScrolled, setHasScrolled] = useState(false);
 
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     setHasScrolled(window.scrollY > 0);
-  //   };
-
-  //   window.addEventListener("scroll", handleScroll);
-  //   return () => window.removeEventListener("scroll", handleScroll);
-  // }, []);
-
   const navItems = [
     {
       name: "Features",
@@ -70,7 +61,7 @@ const Header = () => {
 
   return (
     <motion.header
-      className={`${styles.header} ${hasScrolled ? styles.scrolled : ""}`}
+      className={`${styles.header}`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}

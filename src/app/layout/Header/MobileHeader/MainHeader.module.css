@@ -3,8 +3,6 @@
   top: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 999999;
-  backdrop-filter: blur(30px) saturate(180%);
   color: rgb(255, 255, 255);
   flex-direction: column;
   gap: 8px;
@@ -14,7 +12,8 @@
   display: flex;
   font-size: 14px !important;
   transition: 0.3s ease;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.95);
+  z-index: 99999;
 }
 
 .container {
@@ -29,6 +28,7 @@
   overflow: hidden;
   align-items: center;
   position: relative;
+  backdrop-filter: blur(30px) saturate(180%);
 }
 
 .title {

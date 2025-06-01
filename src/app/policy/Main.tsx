@@ -309,6 +309,78 @@ export const Main = () => {
               </span>
             </div>
           </div>
+
+          <div className={styles.block}>
+            <h1>7. Data Security</h1>
+            <p>
+              We are committed to protecting your information using commercially
+              reasonable safeguards, including:
+            </p>
+            <div className={styles.separate}>
+              <p>
+                <strong className={styles.strong}>
+                  • TLS encryption for all data in transit
+                </strong>
+              </p>
+              <p>
+                <strong className={styles.strong}>
+                  • Access controls and monitoring of cloud infrastructure
+                </strong>
+              </p>
+              <p>
+                <strong className={styles.strong}>
+                  • Role-based permissions for support and administrative access
+                </strong>
+              </p>
+              <p>
+                However, no system can be guaranteed to be 100% secure. We
+                cannot warrant or guarantee the absolute security of any
+                information you transmit to us or that we store on your behalf.
+              </p>
+            </div>
+          </div>
+
+          <div className={styles.block}>
+            <h1>8. Children’s Privacy</h1>
+            <p>
+              Our Services are not directed to individuals under the age of 13,
+              and we do not knowingly collect or solicit data from children. If
+              we become aware that we have inadvertently received personal
+              information from a minor, we will take reasonable steps to delete
+              such information.
+            </p>
+          </div>
+
+          <div className={styles.block}>
+            <h1>9. Changes to This Policy</h1>
+            <p>
+              We may amend this Privacy Policy at our sole discretion. The most
+              current version will always be accessible at:
+            </p>
+            <a href="https://wallper.app/privacy" className={styles.link}>
+              https://wallper.app/privacy
+            </a>
+            <p>
+              We will notify users of material changes through the app or via
+              our website. Continued use of the Services following any updates
+              constitutes your acceptance of the revised terms.
+            </p>
+          </div>
+
+          <div className={styles.block}>
+            <h1>10. Contact Information</h1>
+            <p>
+              For any questions, requests, or complaints related to this Privacy
+              Policy or your data rights, please contact: <br /> Email:{" "}
+              <a href="mailto:support@wallper.app" className={styles.link}>
+                support@wallper.app.
+              </a>{" "}
+              Website:{" "}
+              <a href="https://wallper.app" className={styles.link}>
+                https://wallper.app
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </main>
