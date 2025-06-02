@@ -8,6 +8,7 @@ import { FaXmark } from "react-icons/fa6";
 import { motion, AnimatePresence } from "framer-motion";
 import Spinner from "../../ui/Spinner";
 import PrimaryButton from "../../ui/primaryButton";
+import { useRouter } from "next/navigation";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -27,6 +28,8 @@ const VideosModal = () => {
   useEffect(() => {
     fetchTotalSize();
   }, [fetchTotalSize]);
+
+  const router = useRouter();
 
   return (
     <AnimatePresence>
@@ -107,6 +110,9 @@ const VideosModal = () => {
               buttonSize={36}
               fontSize={12}
               iconColor="#70757e"
+              onClick={() => {
+                router.push("/download");
+              }}
             />
           </motion.div>
         </motion.div>

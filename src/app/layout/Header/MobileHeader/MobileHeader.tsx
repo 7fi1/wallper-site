@@ -136,6 +136,9 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({ isOpen, onClose }) => {
                 iconPosition="right"
                 iconSize={8}
                 iconColor="#70757e"
+                onClick={() => {
+                  router.push("/download");
+                }}
               />
               <SecondaryButton
                 text="Contact Us"

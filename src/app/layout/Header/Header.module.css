@@ -73,6 +73,7 @@
   justify-content: center;
   align-items: center;
   text-align: center;
+  position: relative;
 }
 
 .ul {
@@ -118,12 +119,39 @@
   color: #fff;
 }
 
+.button_link {
+  font-size: 14px;
+  color: #dedede;
+  transition: 0.3s ease;
+  font-weight: 500;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.button_link:hover {
+  color: #fff;
+}
+
+.button_link > svg {
+  transition: 0.3s ease;
+}
+
+.button_link:hover > svg {
+  rotate: 180deg;
+}
+
 .menu {
   display: none;
   padding-right: 0.5rem;
 }
 
-@media (max-width: 650px) {
+@media (max-width: 1200px) {
   .blocks {
     display: none;
   }

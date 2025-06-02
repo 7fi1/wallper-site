@@ -130,7 +130,7 @@
   margin-bottom: 3rem;
   image-rendering: optimizeQuality;
   position: relative;
-  z-index: 100;
+  z-index: 1;
 }
 
 .video_player {

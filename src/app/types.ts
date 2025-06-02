@@ -10,6 +10,7 @@ export type PrimaryButtonProps = {
   fontSize?: number;
   fontWeight?: 400 | 500 | 600 | 700;
   onClick?: () => void;
+  widthButton?: string;
 };
 
 export type SecondaryButtonProps = {
@@ -29,4 +30,12 @@ export type SecondaryButtonProps = {
 export type PopupProps = {
   text?: string;
   button?: string;
+};
+
+export type HoverBloсkProps = {
+  isVisible?: boolean;
+  links?: { link: string; name: string }[];
+  videoIdx: number;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 };

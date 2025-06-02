@@ -9,6 +9,7 @@ import SecondaryButton from "@/src/app/ui/secondaryButton";
 import { Canvas, useThree } from "@react-three/fiber";
 import { OrbitControls, Environment, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
+import { useRouter } from "next/navigation";
 
 const Hero = () => {
   const stripePromise = loadStripe(
@@ -61,6 +62,8 @@ const Hero = () => {
     return null;
   }
 
+  const router = useRouter();
+
   return (
     <section className={styles.top}>
       <motion.div
@@ -98,6 +101,9 @@ const Hero = () => {
                 fontSize={16}
                 fontWeight={500}
                 iconColor="#70757e"
+                onClick={() => {
+                  router.push("/download");
+                }}
               />
               <SecondaryButton
                 text="Pro for 9.99$"

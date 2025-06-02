@@ -20,6 +20,8 @@ const PrimaryButton = ({
   buttonSize,
   fontSize,
   fontWeight,
+  onClick,
+  widthButton,
 }: PrimaryButtonProps) => {
   const iconsMap: { [key: string]: JSX.Element } = {
     FaChevronRight: <FaChevronRight size={iconSize} color={iconColor} />,
@@ -37,7 +39,13 @@ const PrimaryButton = ({
       className={styles.primaryButton}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
-      style={{ height: buttonSize, fontSize: fontSize, fontWeight: fontWeight }}
+      onClick={onClick}
+      style={{
+        height: buttonSize,
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+        width: widthButton,
+      }}
     >
       {iconPosition === "left" && IconComponent}
       <span>{text}</span>

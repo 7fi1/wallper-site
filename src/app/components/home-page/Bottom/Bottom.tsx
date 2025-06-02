@@ -2,8 +2,10 @@ import React from "react";
 import styles from "./Bottom.module.css";
 import SecondaryButton from "@/src/app/ui/secondaryButton";
 import PrimaryButton from "@/src/app/ui/primaryButton";
+import { useRouter } from "next/navigation";
 
 const Bottom = () => {
+  const router = useRouter();
   return (
     <section className={styles.bottom}>
       <div className={styles.container}>
@@ -19,6 +21,9 @@ const Bottom = () => {
               fontSize={16}
               fontWeight={500}
               iconColor="#70757e"
+              onClick={() => {
+                router.push("/download");
+              }}
             />
             <SecondaryButton
               text="Contact Us"

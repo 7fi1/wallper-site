@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useModalStore } from "../../../store/ModalStore";
 import PrimaryButton from "../../ui/primaryButton";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 30 },
@@ -61,6 +62,8 @@ const LicenseModal = ({ showCloseButton }: LicenseModalProps) => {
       },
     });
   };
+
+  const router = useRouter();
 
   return (
     <AnimatePresence>
@@ -137,6 +140,9 @@ const LicenseModal = ({ showCloseButton }: LicenseModalProps) => {
             buttonSize={36}
             fontSize={12}
             iconColor="#70757e"
+            onClick={() => {
+              router.push("/download");
+            }}
           />
         </motion.div>
       </motion.div>

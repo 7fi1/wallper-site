@@ -3,8 +3,8 @@
 
 import React, { useEffect, useState } from "react";
 import styles from "./Header.module.css";
-import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useModalStore } from "../../../store/ModalStore";
@@ -12,7 +12,9 @@ import { loadStripe } from "@stripe/stripe-js";
 import { IoMdMenu } from "react-icons/io";
 import MobileHeader from "./MobileHeader/MobileHeader";
 import PrimaryButton from "../../ui/primaryButton";
-import { FaChevronDown, FaChevronRight } from "react-icons/fa";
+import { FaChevronDown } from "react-icons/fa";
+import HoverBlock from "../../ui/hoverBlock";
+import { useVideoStore } from "@/src/store/VideoStore";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
@@ -21,27 +23,56 @@ const stripePromise = loadStripe(
 const Header = () => {
   const router = useRouter();
   const { open } = useModalStore();
-  const [totalVideos, setTotalVideos] = useState(0);
+
   const [isMobileHeader, setMobileHeader] = useState<boolean>(false);
-  const [hasScrolled, setHasScrolled] = useState(false);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   const navItems = [
     {
-      name: "Features",
-      link: "",
-      onClick: () => open("videos"),
+      name: "Resources",
+      onClick: null,
       chevron: true,
+      links: [
+        { name: "Assets", link: "/assets" },
+        { name: "Download Wallper", link: "/download" },
+        { name: "Getting Started", link: "/" },
+        { name: "Pro", link: "/pro" },
+      ],
+      videoIdx: 0,
     },
-    { name: "Company", link: "/", onClick: null, chevron: true },
+    {
+      name: "Company",
+      onClick: null,
+      chevron: true,
+      links: [
+        { name: "About", link: "/about" },
+        { name: "Changelog", link: "/Changelog" },
+        { name: "Contact", link: "/contact" },
+        { name: "FAQ", link: "/faq" },
+      ],
+      videoIdx: 1,
+    },
+    {
+      name: "Legal",
+      onClick: null,
+      chevron: true,
+      links: [
+        { name: "Cookie Policy", link: "/cookie" },
+        { name: "Privacy Policy", link: "/policy" },
+        { name: "Terms", link: "/terms" },
+        { name: "Refund Policy", link: "/refund" },
+        { name: "Subprocessors", link: "/subprocessors" },
+      ],
+      videoIdx: 2,
+    },
     {
       name: "Videos",
-      link: "",
       onClick: () => open("videos"),
       chevron: false,
     },
     {
       name: "Pro",
-      link: "/",
+      link: "/pro",
       onClick: async () => {
         const res = await fetch("/api/checkout_session", {
           method: "POST",
@@ -56,7 +87,6 @@ const Header = () => {
       },
       chevron: false,
     },
-    { name: "Help", link: "/help", onClick: null },
   ];
 
   return (
@@ -87,21 +117,42 @@ const Header = () => {
               <motion.li
                 key={idx}
                 className={styles.li}
+                onMouseEnter={() => setHoveredIndex(idx)}
+                onMouseLeave={() => setHoveredIndex(null)}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 + idx * 0.1, duration: 0.4 }}
               >
-                <Link
-                  className={styles.link}
-                  href={item.link}
-                  onClick={item.onClick}
-                >
-                  {item.name}
-                </Link>
-                {item.chevron && <FaChevronDown color="#70757e" size={10} />}
+                {item.link ? (
+                  <Link className={styles.link} href={item.link}>
+                    {item.name}
+                  </Link>
+                ) : item.chevron ? (
+                  <button className={styles.button_link} onClick={item.onClick}>
+                    {item.name}
+                    <FaChevronDown color="#70757e" size={10} />
+                  </button>
+                ) : (
+                  <button className={styles.button_link} onClick={item.onClick}>
+                    {item.name}
+                  </button>
+                )}
               </motion.li>
             ))}
           </ul>
+
+          <AnimatePresence>
+            {hoveredIndex !== null && navItems[hoveredIndex]?.chevron && (
+              <HoverBlock
+                key={hoveredIndex}
+                isVisible
+                links={navItems[hoveredIndex].links}
+                videoIdx={navItems[hoveredIndex].videoIdx}
+                onMouseEnter={() => setHoveredIndex(hoveredIndex)}
+                onMouseLeave={() => setHoveredIndex(null)}
+              />
+            )}
+          </AnimatePresence>
         </div>
 
         <div className={styles.left_header}>
@@ -119,6 +170,9 @@ const Header = () => {
             popupButton="D"
             iconSize={8}
             iconColor="#70757e"
+            onClick={() => {
+              router.push("/download");
+            }}
           />
         </div>
 
