@@ -40,7 +40,7 @@ const Header = () => {
       chevron: false,
     },
     {
-      name: "PRO",
+      name: "Pro",
       link: "/",
       onClick: async () => {
         const res = await fetch("/api/checkout_session", {

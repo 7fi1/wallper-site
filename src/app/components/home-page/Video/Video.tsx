@@ -25,16 +25,19 @@ const Video = () => {
             fontWeight={500}
             iconColor="#70757e"
           />
-          <SecondaryButton
-            text="Contact Us"
-            icon="FaChevronRight"
-            iconPosition="right"
-            iconSize={10}
-            buttonSize={48}
-            fontSize={16}
-            fontWeight={500}
-            iconColor="#ccc"
-          />
+            <SecondaryButton
+              text="Contact Us"
+              icon="FaChevronRight"
+              iconPosition="right"
+              iconSize={10}
+              buttonSize={48}
+              fontSize={16}
+              fontWeight={500}
+              iconColor="#ccc"
+              onClick={() => {
+                window.location.href = "mailto:support@wallper.app";
+              }}
+            />
         </div>
       </div>
       <div className={styles.container}>

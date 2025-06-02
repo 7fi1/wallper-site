@@ -143,6 +143,9 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({ isOpen, onClose }) => {
                 iconPosition="right"
                 iconSize={8}
                 iconColor="#ccc"
+                onClick={() => {
+                  window.location.href = "mailto:support@wallper.app";
+                }}
               />
             </motion.div>
           </motion.div>

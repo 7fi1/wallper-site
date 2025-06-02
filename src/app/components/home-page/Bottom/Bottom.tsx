@@ -29,6 +29,9 @@ const Bottom = () => {
               fontSize={16}
               fontWeight={500}
               iconColor="#ccc"
+              onClick={() => {
+                window.location.href = "mailto:support@wallper.app";
+              }}
             />
           </div>
         </div>

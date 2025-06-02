@@ -60,28 +60,23 @@ const Footer = () => {
             <div className={styles.block}>
               <h4>Resources</h4>
               <a>Getting Started</a>
-              <a>API Reference</a>
-              <a>Integrations</a>
-              <a>Examples</a>
-              <a>SDKs</a>
+              <a>Pricing</a>
+              <a>Download Wallper</a>
+              <a>Videos</a>
             </div>
             <div className={styles.block}>
               <h4>Company</h4>
               <a>About</a>
-              <a>Blog</a>
-              <a>Careers</a>
+              <a>Changelog</a>
               <a>Contact</a>
-              <a>Customers</a>
-              <a>Philosophy</a>
+              <a>FAQ</a>
             </div>
             <div className={styles.block}>
-              <h4>Company</h4>
-              <a>About</a>
-              <a>Blog</a>
-              <a>Careers</a>
-              <a>Contact</a>
-              <a>Customers</a>
-              <a>Philosophy</a>
+              <h4>Legal</h4>
+              <a href="/cookie">Cookie Policy</a>
+              <a href="/policy">Privacy Policy</a>
+              <a href="/terms">Terms of Service</a>
+              <a href="/subproccessors">Subprocessors</a>
             </div>
           </div>
         </div>
