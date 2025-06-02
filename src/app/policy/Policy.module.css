@@ -9,11 +9,22 @@
   align-items: center;
   text-align: center;
   margin-top: 58px;
+  background-image: url("/bghero.webp");
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 .container {
   max-width: 900px;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+}
+
+.title {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -129,6 +140,24 @@
   color: #fff;
   font-size: 14px;
   font-weight: 600;
+}
+
+.code {
+  padding: 2px 4px;
+  background-color: rgba(0, 255, 234, 0.185);
+  border-radius: 6px;
+}
+
+.image {
+  width: 170px;
+  height: 170px;
+  background-image: url("/w.png");
+  background-position: center;
+  background-size: cover;
+  margin-bottom: 3rem;
+  image-rendering: optimizeQuality;
+  position: relative;
+  z-index: 100;
 }
 
 @media (max-width: 500px) {

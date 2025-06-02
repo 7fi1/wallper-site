@@ -6,6 +6,7 @@ export const Main = () => {
     <main className={styles.main}>
       <div className={styles.container}>
         <div className={styles.title}>
+          <div className={styles.image} />
           <h3>Cookie Policy</h3>
           <p>Last update: June 01st, 2025</p>
         </div>
@@ -334,8 +335,8 @@ export const Main = () => {
           <div className={styles.block}>
             <h1>9. Contact Information</h1>
             <p>
-              For any questions, requests, or complaints related to this Privacy
-              Policy or your data rights, please contact: <br /> Email:{" "}
+              For all inquiries, support requests, or legal concerns, you may
+              contact us at: <br /> Email:{" "}
               <a href="mailto:support@wallper.app" className={styles.link}>
                 support@wallper.app.
               </a>{" "}

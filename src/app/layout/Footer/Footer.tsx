@@ -76,7 +76,8 @@ const Footer = () => {
               <a href="/cookie">Cookie Policy</a>
               <a href="/policy">Privacy Policy</a>
               <a href="/terms">Terms of Service</a>
-              <a href="/subproccessors">Subprocessors</a>
+              <a href="/refund">Refund Policy</a>
+              <a href="/subprocessors">Subprocessors</a>
             </div>
           </div>
         </div>

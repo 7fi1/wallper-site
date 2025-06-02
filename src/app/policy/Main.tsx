@@ -6,6 +6,7 @@ export const Main = () => {
     <main className={styles.main}>
       <div className={styles.container}>
         <div className={styles.title}>
+          <div className={styles.image} />
           <h3>Privacy Policy</h3>
           <p>Last update: June 01st, 2025</p>
         </div>
