@@ -195,7 +195,7 @@
   overflow: hidden;
   border-radius: 20px;
   backdrop-filter: blur(30px) saturate(180%);
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: 1px solid hsl(0deg 0% 100% / 6%);
   transition: 0.3s ease;
   cursor: pointer;
 }
@@ -242,7 +242,7 @@
 .image {
   width: 256px;
   height: 256px;
-  background-image: url("/disk-icon.webp");
+  background-image: url("/disk.webp");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
