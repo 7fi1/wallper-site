@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import Footer from "../layout/Footer/Footer";
 import Header from "../layout/Header/Header";
 import { Wrapper } from "../layout/Wrapper/Wrapper";
@@ -9,7 +10,9 @@ const page = () => {
   return (
     <Wrapper>
       <Header />
-      <Main />
+      <Suspense>
+        <Main />
+      </Suspense>
       <Footer />
     </Wrapper>
   );
