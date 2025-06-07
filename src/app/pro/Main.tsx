@@ -35,11 +35,30 @@ export const Pro = () => {
   ];
 
   const CustomerSupport = [
-    { title: "Daily Limit", free: "123", pro: "123123" },
-    { title: "RESTful API", free: false, pro: true },
-    { title: "SMTP Relay", free: false, pro: true },
-    { title: "Official SDKs", free: false, pro: true },
-    { title: "Schedule Emails", free: false, pro: true },
+    { title: "Payment", free: "Once", pro: "Subscription" },
+    { title: "Video Quality", free: "True 4K", pro: "Mixed" },
+    { title: "Library Size", free: "500+", pro: "50–100" },
+    { title: "Multi-Monitor", free: "Seamless", pro: "Unsupported" },
+    { title: "Devices Included", free: "3 Macs", pro: "1 device" },
+    { title: "Custom Uploads", free: "Full", pro: "Restricted" },
+    {
+      title: "Battery Usage",
+      free: "Low",
+      pro: "Inconsistent",
+    },
+    { title: "Performance", free: "MAX", pro: "Slow" },
+    { title: "Offline Access", free: "Available", pro: "Cloud" },
+    { title: "Cache Control", free: "Clearable", pro: "No user control" },
+    {
+      title: "Moderation",
+      free: "Videos reviewed",
+      pro: "No checks",
+    },
+    {
+      title: "Support",
+      free: "Priority support",
+      pro: "Limited or none",
+    },
   ];
 
   const router = useRouter();
@@ -179,8 +198,8 @@ export const Pro = () => {
           <h1>Customer Support</h1>
           <div className={styles.table_content}>
             <div className={styles.table_header}>
-              <div className={styles.header}>Free</div>
-              <div className={styles.header}>Pro</div>
+              <div className={styles.header}>Wallper</div>
+              <div className={styles.header}>Other</div>
             </div>
             <div className={styles.table_rows}>
               {CustomerSupport.map((item, idx) => (
@@ -222,7 +241,7 @@ export const Pro = () => {
                           />
                         )
                       ) : (
-                        item.free
+                        item.pro
                       )}
                     </div>
                   </div>
