@@ -21,6 +21,7 @@ const SecondaryButton = ({
   fontSize,
   fontWeight,
   onClick,
+  widthButton,
 }: SecondaryButtonProps) => {
   const iconsMap: { [key: string]: JSX.Element } = {
     FaChevronRight: <FaChevronRight size={iconSize} color={iconColor} />,
@@ -39,7 +40,12 @@ const SecondaryButton = ({
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
       onClick={onClick}
-      style={{ height: buttonSize, fontSize: fontSize, fontWeight: fontWeight }}
+      style={{
+        height: buttonSize,
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+        width: widthButton,
+      }}
     >
       {iconPosition === "left" && IconComponent}
       <span>{text}</span>

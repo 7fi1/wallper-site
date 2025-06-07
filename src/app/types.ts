@@ -25,6 +25,7 @@ export type SecondaryButtonProps = {
   fontSize?: number;
   fontWeight?: 400 | 500 | 600 | 700;
   onClick?: () => void;
+  widthButton?: string;
 };
 
 export type PopupProps = {

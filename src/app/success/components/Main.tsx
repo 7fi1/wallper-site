@@ -1,17 +1,67 @@
-"use client";
-import { motion } from "framer-motion";
-import React from "react";
-import styles from "./Main.module.css";
-import PrimaryButton from "../ui/primaryButton";
-import { useRouter } from "next/navigation";
-import { FaChevronRight } from "react-icons/fa6";
-import Bottom from "../components/home-page/Bottom/Bottom";
-import { useModalStore } from "@/src/store/ModalStore";
-import LicenseModal from "../components/Modals/LicenseModal";
-import VideosModal from "../components/Modals/VideosModal";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/exhaustive-deps */
 
-const Main = () => {
+"use client";
+
+import styles from "./Main.module.css";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import PrimaryButton from "../../ui/primaryButton";
+import { FaChevronRight } from "react-icons/fa6";
+import toast from "react-hot-toast";
+import { useModalStore } from "@/src/store/ModalStore";
+import LicenseModal from "../../components/Modals/LicenseModal";
+import VideosModal from "../../components/Modals/VideosModal";
+
+export const Main = () => {
+  const searchParams = useSearchParams();
+  const uuid = searchParams.get("k");
+  const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const router = useRouter();
+
+  const handleCopy = (key: string) => {
+    navigator.clipboard.writeText(key);
+    setCopiedKey(key);
+
+    setTimeout(() => {
+      setCopiedKey(null);
+    }, 1000);
+
+    toast.success("License key copied!", {
+      position: "bottom-right",
+      icon: null,
+      style: {
+        fontSize: "14px",
+        backgroundColor: "#2ca76f4b",
+        color: "#fff",
+        border: "1px solid #44ffaa4b",
+        height: "36px",
+        padding: "8px",
+        borderRadius: "6px",
+        fontWeight: "500",
+        backdropFilter: "blur(30px) saturate(180%)",
+      },
+    });
+  };
+
+  useEffect(() => {
+    if (!uuid) return;
+
+    try {
+      const existing = localStorage.getItem("license_keys");
+      const keys = existing ? JSON.parse(existing) : [];
+
+      if (!keys.includes(uuid)) {
+        keys.push(uuid);
+        localStorage.setItem("license_keys", JSON.stringify(keys));
+      }
+    } catch (e) {
+      console.error("❌ Failed to save license:", e);
+    }
+  }, [uuid]);
+
   const { isOpen, modalType } = useModalStore();
 
   return (
@@ -32,14 +82,18 @@ const Main = () => {
         transition={{ duration: 1 }}
       >
         <div className={styles.text}>
-          <motion.h1 layout>Download Wallper for Free</motion.h1>
+          <motion.h1 layout>You&apos;re All Set!</motion.h1>
 
-          <motion.p layout>
-            Bring your desktop to life with stunning dynamic wallpapers.
-            Seamless performance, elegant control, and effortless customization
-            — all in one place.
+          <motion.p layout className={styles.paragraph}>
+            Thanks for your support! Your wallpaper is ready — bring your
+            desktop to life with vibrant visuals and smooth performance.
           </motion.p>
-
+          <div className={styles.key}>
+            <h3>{uuid}</h3>
+            <span onClick={() => handleCopy(uuid)}>
+              {copiedKey === uuid ? "Copied!" : "Copy"}
+            </span>
+          </div>
           <motion.div
             className={styles.container_greed}
             initial={{ scale: 0.95 }}
@@ -82,9 +136,6 @@ const Main = () => {
           </div>
         </div>
       </motion.div>
-      <Bottom />
     </section>
   );
 };
-
-export default Main;

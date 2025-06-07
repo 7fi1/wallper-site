@@ -12,9 +12,18 @@ type AttemptInfo = {
 
 const attempts = new Map<string, AttemptInfo>();
 
-const JWT_SECRET = process.env.JWT_SECRET!;
+const JWT_SECRET = process.env.JWT_SECRET;
+const PASSWORD_HASH = process.env.ADMIN_PASSWORD_CACHE;
 
 export async function POST(req: NextRequest) {
+  if (!JWT_SECRET || !PASSWORD_HASH) {
+    console.error("Missing environment variables");
+    return NextResponse.json(
+      { success: false, error: "Сервер не настроен должным образом" },
+      { status: 500 }
+    );
+  }
+
   const { password } = await req.json();
   const ip = req.headers.get("x-forwarded-for") || "unknown";
 
@@ -29,7 +38,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         {
           success: false,
-          error: "Превышено количество попыток. Попробуйте завтра.",
+          error: "Превышено количество попыток.",
         },
         { status: 429 }
       );
@@ -41,49 +50,32 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const PASSWORD_HASH = process.env.ADMIN_PASSWORD_CACHE!;
-
-    const HASH_FUNC = (hash: string) => {
-      bcrypt.hash(hash, 10).then((hash) => {
-        console.log(hash);
-      });
-    };
-
-    if (!PASSWORD_HASH) {
-      return NextResponse.json(
-        { success: false, error: "Пароль не настроен" },
-        { status: 500 }
-      );
-    }
-    HASH_FUNC(
-      "v}bF7q2hjbp2T488xtGK8Uh2TDthrHUl8qqyYmdlvp1WRFuFL5I~$0qGnXKb7Z6xBHdqaEppvpGWd?060D7*tdQMun#@5muFdEt"
-    );
     const isValid = await bcrypt.compare(password, PASSWORD_HASH);
 
-    if (isValid) {
-      const token = jwt.sign({ role: "admin" }, JWT_SECRET, {
-        expiresIn: "1d",
-      });
-
-      const res = NextResponse.json({ success: true });
-
-      res.cookies.set("admin_session", token, {
-        httpOnly: true,
-        secure: false,
-        sameSite: "strict",
-        maxAge: 60 * 60 * 24,
-        path: "/",
-      });
-
-      return res;
+    if (!isValid) {
+      return NextResponse.json({ success: false }, { status: 401 });
     }
+
+    const token = jwt.sign({ role: "admin" }, JWT_SECRET, {
+      expiresIn: "1d",
+    });
+
+    const res = NextResponse.json({ success: true });
+
+    res.cookies.set("admin_session", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // true только в проде
+      sameSite: "strict",
+      maxAge: 60 * 60 * 24,
+      path: "/",
+    });
+
+    return res;
   } catch (error) {
-    console.error("Error during password check:", error);
+    console.error("Ошибка при проверке пароля:", error);
     return NextResponse.json(
       { success: false, error: "Ошибка сервера" },
       { status: 500 }
     );
   }
-
-  return NextResponse.json({ success: false }, { status: 401 });
 }

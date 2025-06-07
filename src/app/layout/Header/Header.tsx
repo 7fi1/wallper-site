@@ -33,25 +33,15 @@ const Header = () => {
       onClick: null,
       chevron: true,
       links: [
-        { name: "Assets", link: "/assets" },
+        { name: "Contact", link: "mailto:support@wallper.app" },
         { name: "Download Wallper", link: "/download" },
+        { name: "FAQ", link: "/faq" },
         { name: "Getting Started", link: "/" },
         { name: "Pro", link: "/pro" },
       ],
       videoIdx: 0,
     },
-    {
-      name: "Company",
-      onClick: null,
-      chevron: true,
-      links: [
-        { name: "About", link: "/about" },
-        { name: "Changelog", link: "/Changelog" },
-        { name: "Contact", link: "/contact" },
-        { name: "FAQ", link: "/faq" },
-      ],
-      videoIdx: 1,
-    },
+
     {
       name: "Legal",
       onClick: null,

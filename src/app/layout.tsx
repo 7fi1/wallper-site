@@ -2,13 +2,59 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Toaster } from "react-hot-toast";
 import { Analytics } from "@vercel/analytics/react";
-import PreloadWrapper from "./components/Preloader/PreloaderWrapper";
 import { inter } from "./fonts/fonts";
 
 export const metadata: Metadata = {
-  title: "Wallper — Live Wallpapers for your Mac",
+  title: "Wallper — Live Wallpapers for Your Mac",
   description:
-    "Wappler App brings you the best live wallpapers in one place...",
+    "Wallper App brings you the best dynamic live wallpapers in one place. Elevate your desktop experience with performance and elegance.",
+  keywords: [
+    "live wallpapers",
+    "dynamic wallpapers",
+    "mac wallpapers",
+    "wallpaper app",
+    "desktop backgrounds",
+    "Wallper",
+    "custom wallpapers",
+  ],
+  authors: [{ name: "Wallper Team", url: "https://wallper.app" }],
+  creator: "Wallper Team",
+  themeColor: "#000000",
+  colorScheme: "dark",
+  applicationName: "Wallper",
+  referrer: "origin-when-cross-origin",
+
+  openGraph: {
+    title: "Wallper — Stunning Live Wallpapers for Your Mac",
+    description:
+      "Transform your desktop with Wallper. Beautiful, performance-optimized live wallpapers designed for macOS.",
+    url: "https://wallper.app",
+    siteName: "Wallper",
+    images: [
+      {
+        url: "https://wallper.app/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Wallper App Preview",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Wallper — Live Wallpapers for Your Mac",
+    description:
+      "Discover a new era of desktop aesthetics. Wallper delivers high-quality live wallpapers with seamless integration.",
+    creator: "@wallperapp",
+    images: ["https://wallper.app/og-image.png"],
+  },
+
+  metadataBase: new URL("https://wallper.app"),
+  alternates: {
+    canonical: "/",
+  },
 };
 
 export default function RootLayout({
@@ -19,7 +65,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <PreloadWrapper>{children}</PreloadWrapper>
+        {children}
         <Toaster />
         <Analytics />
       </body>

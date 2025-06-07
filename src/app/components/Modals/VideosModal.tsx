@@ -69,7 +69,7 @@ const VideosModal = () => {
                 <Spinner />
               </motion.div>
             ) : (
-              <motion.h1
+              <motion.h6
                 key="totalSize"
                 className={styles.totalSize}
                 initial={{ opacity: 0, scale: 0.95 }}
@@ -78,7 +78,7 @@ const VideosModal = () => {
                 transition={{ duration: 0.4 }}
               >
                 {totalSize}
-              </motion.h1>
+              </motion.h6>
             )}
           </AnimatePresence>
 

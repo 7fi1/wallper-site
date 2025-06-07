@@ -1,9 +1,22 @@
 import React from "react";
 import styles from "./Refund.module.css";
+import { useModalStore } from "@/src/store/ModalStore";
+import LicenseModal from "../components/Modals/LicenseModal";
+import VideosModal from "../components/Modals/VideosModal";
+import { motion } from "framer-motion";
 
 export const Main = () => {
+  const { isOpen, modalType } = useModalStore();
   return (
     <main className={styles.main}>
+      {isOpen && (
+        <div className={styles.license_modal_overlay}>
+          <motion.div className={styles.modal}>
+            {modalType === "license" && <LicenseModal showCloseButton={true} />}
+            {modalType === "videos" && <VideosModal />}
+          </motion.div>
+        </div>
+      )}
       <div className={styles.container}>
         <div className={styles.title}>
           <div className={styles.image} />

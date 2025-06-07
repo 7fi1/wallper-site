@@ -6,7 +6,7 @@ import { FaChevronRight } from "react-icons/fa";
 import { loadStripe } from "@stripe/stripe-js";
 import PrimaryButton from "@/src/app/ui/primaryButton";
 import SecondaryButton from "@/src/app/ui/secondaryButton";
-import { Canvas, useThree } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import { useRouter } from "next/navigation";
@@ -52,14 +52,6 @@ const Hero = () => {
     return (
       <primitive object={gltf.scene} scale={2.5} position={[1.5, -1, 0]} />
     );
-  }
-
-  function SetExposure() {
-    const { gl } = useThree();
-    useEffect(() => {
-      gl.toneMappingExposure = 1;
-    }, [gl]);
-    return null;
   }
 
   const router = useRouter();
@@ -141,43 +133,42 @@ const Hero = () => {
           <Canvas
             camera={{ position: [5, 2, 5], fov: 50 }}
             shadows
-            frameloop="always"
+            frameloop="demand"
             gl={{
               toneMapping: THREE.ACESFilmicToneMapping,
               outputColorSpace: THREE.SRGBColorSpace,
             }}
           >
-            <SetExposure />
-            <ambientLight intensity={10} />
+            <ambientLight intensity={0.5} />
             <directionalLight
-              castShadow
               position={[5, 10, 5]}
-              intensity={2000}
-              color={"#fff"}
+              intensity={2}
+              color="#ffffff"
             />
-
             <pointLight
               position={[-10, 10, -10]}
-              intensity={0.4}
-              color="#red"
+              intensity={0.2}
+              color="#ff0000"
             />
             <spotLight
               position={[0, 20, 0]}
               angle={0.3}
               penumbra={1}
-              intensity={10}
+              intensity={1}
               castShadow
             />
+
             <Suspense fallback={null}>
               <Model />
               <Environment preset="lobby" />
             </Suspense>
+
             <OrbitControls
               enableZoom={false}
               enablePan={false}
               target={[1.5, -1, 0]}
               autoRotate
-              autoRotateSpeed={2}
+              autoRotateSpeed={1}
             />
           </Canvas>
         </div>
