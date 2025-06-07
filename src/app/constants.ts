@@ -15,14 +15,3 @@ export const blocks = [
       "Got a drone shot? A dreamy video loop? Make it your wallpaper in seconds. Your screen, your story.",
   },
 ];
-
-export const features = [
-  { icon: PYRAMIDS_ICON, title: "Stunning 4K Live Wallpapers" },
-  { icon: WAND_ICON, title: "Ultra-Smooth Performance" },
-  { icon: BATTERY_ICON, title: "Smart System Optimization" },
-  { icon: CONFETTI_ICON, title: "Available on the App Store" },
-  { icon: FINGERPRINT_ICON, title: "Private Collections" },
-  { icon: COMPUTER_ICON, title: "Up to 3 Devices per License" },
-  { icon: GLOBE_ICON, title: "User-Generated Library" },
-  { icon: COIN_ICON, title: "Free Version Available" },
-];
