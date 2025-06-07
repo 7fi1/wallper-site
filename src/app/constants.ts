@@ -1,12 +1,3 @@
-import COIN_ICON from "../../public/icons/coin.json";
-import FINGERPRINT_ICON from "../../public/icons/fingerprint.json";
-import COMPUTER_ICON from "../../public/icons/computer.json";
-import WAND_ICON from "../../public/icons/wand.json";
-import BATTERY_ICON from "../../public/icons/battery.json";
-import GLOBE_ICON from "../../public/icons/globe.json";
-import PYRAMIDS_ICON from "../../public/icons/pyramids.json";
-import CONFETTI_ICON from "../../public/icons/confetti.json";
-
 export const blocks = [
   {
     title: "4K Live Wallpapers",
