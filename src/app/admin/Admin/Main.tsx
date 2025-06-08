@@ -114,39 +114,13 @@ export const Main = () => {
     }
   }, [currentKey]);
 
-  const removeVideoFromServer = async (url: string, endpoint: string) => {
-    const key =
-      extractKeyFromUrl(url) ??
-      url.replace("http://57.129.86.35:9001/browser/wallper-moderate", "");
-
-    setCurrentKey(key);
-    console.log("Удаляем видео с ключом:", key);
-
-    try {
-      const res = await fetch(endpoint, {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: key }),
-      });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Ошибка на сервере");
-      return true;
-    } catch (err) {
-      console.error("Ошибка при удалении видео:", err);
-      return false;
-    }
-  };
-
   const handleApprove = async (url: string) => {
     setFuncLoading(true);
     const toastId = toast.loading("Обработка события.", {
       position: "bottom-right",
     });
 
-    const success = await removeVideoFromServer(url, "/api/upload-video");
-
-    if (success) {
+    try {
       const statusResponse = await fetch("/api/success-status", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -166,13 +140,13 @@ export const Main = () => {
       setCurrentIndex((prev) => Math.max(prev - 1, 0));
       setFuncLoading(false);
 
-      toast.success("Видео одобрено", {
+      toast.success("Video approved", {
         id: toastId,
         position: "bottom-right",
       });
-    } else {
+    } catch {
       setFuncLoading(false);
-      toast.error("Ошибка при перемещении видео", {
+      toast.error("Error while transfering", {
         id: toastId,
         position: "bottom-right",
       });
@@ -181,12 +155,11 @@ export const Main = () => {
 
   const handleDecline = async (url: string) => {
     setFuncLoading(true);
-    const toastId = toast.loading("Перемещаем видео.", {
+    const toastId = toast.loading("Transfering video.", {
       position: "bottom-right",
     });
 
-    const success = await removeVideoFromServer(url, "/api/delete-video");
-    if (success) {
+    try {
       const statusResponse = await fetch("/api/decline-status", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -205,13 +178,13 @@ export const Main = () => {
       await fetchVideos();
       setCurrentIndex((prev) => Math.max(prev - 1, 0));
       setFuncLoading(false);
-      toast.success("Видео удалено", {
+      toast.success("Video declined", {
         id: toastId,
         position: "bottom-right",
       });
-    } else {
+    } catch {
       setFuncLoading(false);
-      toast.error("Ошибка при удалении видео", {
+      toast.error("Fatal error", {
         id: toastId,
         position: "bottom-right",
       });

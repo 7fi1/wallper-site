@@ -106,7 +106,6 @@ export async function POST(req: Request) {
         case "checkout.session.completed": {
           const data = event.data.object as Stripe.Checkout.Session;
           const licenseUuid = data.metadata?.license_uuid;
-          const licenseType = data.metadata?.license_type || "Standard";
           const customerEmail =
             data.customer_details?.email || data.customer_email;
 
@@ -149,32 +148,27 @@ export async function POST(req: Request) {
                         color: 0x00aaff,
                         fields: [
                           {
-                            name: "👤 Email",
+                            name: "Email",
                             value: customerEmail || "Not Provided",
                             inline: true,
                           },
                           {
-                            name: "🔑 License Key",
+                            name: "License Key",
                             value: licenseUuid,
                             inline: true,
                           },
                           {
-                            name: "🎛️ License Type",
-                            value: licenseType,
-                            inline: true,
-                          },
-                          {
-                            name: "💳 Status",
+                            name: "Status",
                             value: data.payment_status || "Unknown",
                             inline: true,
                           },
                           {
-                            name: "💰 Amount",
+                            name: "Amount",
                             value: `${amountTotal} ${currency}`,
                             inline: true,
                           },
                           {
-                            name: "🌍 Country",
+                            name: "Country",
                             value: country,
                             inline: true,
                           },

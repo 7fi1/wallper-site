@@ -1,10 +1,6 @@
 // app/api/upload-video/route.ts
 
-import {
-  S3Client,
-  CopyObjectCommand,
-  DeleteObjectCommand,
-} from "@aws-sdk/client-s3";
+import { S3Client, CopyObjectCommand } from "@aws-sdk/client-s3";
 import { NextRequest, NextResponse } from "next/server";
 
 const s3 = new S3Client({
@@ -33,19 +29,10 @@ export async function DELETE(req: NextRequest) {
 
     const key = name.startsWith("/") ? name.slice(1) : name;
 
-    // 1. Копируем объект в bucket с одобренными видео
     await s3.send(
       new CopyObjectCommand({
         Bucket: APPROVED_BUCKET,
         CopySource: `${MODERATE_BUCKET}/${key}`,
-        Key: key,
-      })
-    );
-
-    // 2. Удаляем из bucket с модерацией
-    await s3.send(
-      new DeleteObjectCommand({
-        Bucket: MODERATE_BUCKET,
         Key: key,
       })
     );
