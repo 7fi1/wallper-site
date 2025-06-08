@@ -189,11 +189,6 @@ export async function POST(req: Request) {
                   color: 0xffd700,
                   fields: [
                     {
-                      name: "🧾 **Order ID**",
-                      value: `\`${orderId}\``,
-                      inline: true,
-                    },
-                    {
                       name: "👤 **Email**",
                       value: customerEmail || "_Not provided_",
                       inline: true,
