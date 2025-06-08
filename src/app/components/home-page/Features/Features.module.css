@@ -234,4 +234,8 @@
     max-width: 90% !important;
     width: 90% !important;
   }
+
+  .container {
+    padding-top: 3rem;
+  }
 }

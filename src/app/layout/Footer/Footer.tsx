@@ -23,21 +23,9 @@ const Footer = () => {
         <div className={styles.grid}>
           <div className={styles.company_info}>
             <div>
-              <p className={styles.smal_p}>Karlovo náměstí 317/5</p>
-              <p className={styles.smal_p}>Prague, CZ 120 00 </p>
+              <p className={styles.smal_p}>© Wallper App 2025</p>
+              <p className={styles.smal_p}>All rights reserved</p>
             </div>
-
-            <span>
-              Made by{" "}
-              <a
-                className={styles.telegram_link}
-                href="https://t.me/alxndlk"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                @axlndlk
-              </a>
-            </span>
 
             <div className={styles.icons}>
               {icons.map((item, index) => (
@@ -56,6 +44,18 @@ const Footer = () => {
             <div className={styles.reachability}>
               Wallper API & Database status
             </div>
+
+            <span>
+              Made by{" "}
+              <a
+                className={styles.telegram_link}
+                href="https://t.me/alxndlk"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                @axlndlk
+              </a>
+            </span>
           </div>
           <div className={styles.container_footer}>
             <div className={styles.block}>

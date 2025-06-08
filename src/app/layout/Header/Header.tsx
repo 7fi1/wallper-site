@@ -14,7 +14,6 @@ import MobileHeader from "./MobileHeader/MobileHeader";
 import PrimaryButton from "../../ui/primaryButton";
 import { FaChevronDown } from "react-icons/fa";
 import HoverBlock from "../../ui/hoverBlock";
-import { useVideoStore } from "@/src/store/VideoStore";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
@@ -147,6 +146,7 @@ const Header = () => {
             {hoveredIndex !== null && navItems[hoveredIndex]?.chevron && (
               <HoverBlock
                 key={hoveredIndex}
+                
                 isVisible
                 links={navItems[hoveredIndex].links}
                 videoIdx={navItems[hoveredIndex].videoIdx}
@@ -168,8 +168,6 @@ const Header = () => {
             text="Get Started"
             icon="FaChevronRight"
             iconPosition="right"
-            popupMessage="Download"
-            popupButton="D"
             iconSize={8}
             iconColor="#70757e"
             onClick={() => {

@@ -14,11 +14,7 @@ const HoverBlock = ({
 }: HoverBloсkProps) => {
   const ref = useRef<HTMLDivElement>(null);
 
-  const videos = [
-    "/video/green-bmw.mp4",
-    "/video/footer.mp4",
-    "/video/check2.mp4",
-  ];
+  const videos = ["/video/green-bmw.mp4", "", "/video/legal.mp4"];
 
   if (!isVisible || typeof window === "undefined") return null;
 

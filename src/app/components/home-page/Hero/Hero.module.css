@@ -197,6 +197,10 @@
     text-align: center;
   }
 
+  .greed {
+    height: max-content;
+  }
+
   .text h1 {
     font-size: 36px;
     line-height: 44px;

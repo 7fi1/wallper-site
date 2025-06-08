@@ -117,4 +117,8 @@
   .bottom {
     height: auto;
   }
+
+  .container {
+    padding-top: 3rem;
+  }
 }

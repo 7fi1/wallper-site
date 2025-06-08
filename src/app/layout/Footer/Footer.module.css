@@ -91,11 +91,11 @@
 }
 
 .telegram_link {
-  color: #fff !important;
+  color: #ccc !important;
   padding: 2px 4px;
   border-radius: 8px;
   font-size: 12px;
-  background-color: #70707060;
+  background-image: linear-gradient(to bottom, #272525, #0a0a0a);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -115,8 +115,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #ccc;
   text-align: center;
-  background: radial-gradient(rgba(200, 200, 200, 0.1) 0%, transparent 80%);
+  background: linear-gradient(to bottom, #272525, #0a0a0a);
   transition: 0.3s ease;
 }
 .icon:hover {

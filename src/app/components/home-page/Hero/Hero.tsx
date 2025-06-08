@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import React, { Suspense, useEffect } from "react";
 import styles from "./Hero.module.css";
-import { FaChevronRight } from "react-icons/fa";
+// import { FaChevronRight } from "react-icons/fa";
 import { loadStripe } from "@stripe/stripe-js";
 import PrimaryButton from "@/src/app/ui/primaryButton";
 import SecondaryButton from "@/src/app/ui/secondaryButton";
@@ -65,10 +65,10 @@ const Hero = () => {
         transition={{ duration: 1 }}
       >
         <div className={styles.text}>
-          <button className={styles.vote}>
+          {/* <button className={styles.vote}>
             Help Wallper on Product Hunt{" "}
             <FaChevronRight color="#70757e" size={10} />
-          </button>
+          </button> */}
           <motion.h1 layout>Live Wallpapers now for your Mac</motion.h1>
 
           <motion.p layout>
