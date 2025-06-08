@@ -9,7 +9,7 @@ import { FaDiscord, FaGithub, FaTiktok } from "react-icons/fa";
 const Footer = () => {
   const icons = [
     { icons: <FaInstagram />, link: "https://www.instagram.com/wallper.app" },
-    { icons: <FaDiscord />, link: "/" },
+    { icons: <FaDiscord />, link: "https://discord.gg/ksxrdnETuc" },
     { icons: <FaTiktok />, link: "https://www.tiktok.com/@wallper.live" },
     { icons: <FaGithub />, link: "https://github.com/alxndlk" },
   ];
