@@ -185,7 +185,7 @@ export async function POST(req: Request) {
                 const embed = {
                   title: `${countryFlag} New Wallper Purchase`,
                   description:
-                    "A new customer just unlocked **Wallper PRO – Lifetime License** 🖥️✨",
+                    "A new customer just unlocked **Wallper PRO – Lifetime License ** 🖥️✨",
                   color: 0x5865f2,
                   fields: [
                     {
@@ -211,11 +211,6 @@ export async function POST(req: Request) {
                     {
                       name: "📦 Status",
                       value: data.payment_status || "_Unknown_",
-                      inline: true,
-                    },
-                    {
-                      name: "🧾 OrderID:",
-                      value: orderId || "_Unknown_",
                       inline: true,
                     },
                     { name: "🕒 Local Time", value: localTime, inline: true },
