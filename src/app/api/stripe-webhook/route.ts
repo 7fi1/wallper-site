@@ -182,71 +182,26 @@ export async function POST(req: Request) {
                 const countryCode = country;
                 const countryFlag = countryCodeToEmoji(countryCode);
 
-                const embed = {
-                  title: `${countryFlag} New Wallper Purchase`,
-                  description:
-                    "A new customer just unlocked **Wallper PRO – Lifetime License** 🖥️✨",
-                  color: 0xffd700,
-                  fields: [
-                    {
-                      name: "👤 **Email**",
-                      value: customerEmail || "_Not provided_",
-                      inline: true,
-                    },
-                    {
-                      name: "🔑 **License Key**",
-                      value: `\`${licenseUuid}\``,
-                      inline: true,
-                    },
-                    {
-                      name: "💵 **Amount**",
-                      value: `**$${amountTotal} ${currency}**`,
-                      inline: true,
-                    },
-                    {
-                      name: "🌍 **Country**",
-                      value: `${countryFlag} ${countryCode}`,
-                      inline: true,
-                    },
-                    {
-                      name: "📦 **Status**",
-                      value: data.payment_status || "_Unknown_",
-                      inline: true,
-                    },
-                    {
-                      name: "🕒 **Local Time**",
-                      value: localTime,
-                      inline: true,
-                    },
-                    {
-                      name: "🌐 **IP Address**",
-                      value: customerIp,
-                      inline: true,
-                    },
-                    {
-                      name: "🗣️ **Locale**",
-                      value: locale,
-                      inline: true,
-                    },
-                    {
-                      name: "📱 **Device**",
-                      value: deviceType,
-                      inline: true,
-                    },
-                    {
-                      name: "🔗 **Referrer**",
-                      value:
-                        referrer.length > 45
-                          ? referrer.slice(0, 45) + "…"
-                          : referrer,
-                      inline: false,
-                    },
-                  ],
-                  footer: {
-                    text: "Wallper Store • Premium Experience",
-                  },
-                  timestamp: new Date().toISOString(),
-                };
+                const message = `
+🧾 **Order ID**: \`${orderId}\`
+
+${countryFlag} **New Wallper Purchase**
+
+A new customer just unlocked **Wallper PRO – Lifetime License** 🖥️✨
+
+👤 **Email**: ${customerEmail || "_Not provided_"}
+🔑 **License Key**: \`${licenseUuid}\`
+💵 **Amount**: **$${amountTotal} ${currency}**
+🌍 **Country**: ${countryFlag} ${countryCode}
+📦 **Status**: ${data.payment_status || "_Unknown_"}
+🕒 **Local Time**: ${localTime}
+🌐 **IP Address**: ${customerIp}
+🗣️ **Locale**: ${locale}
+📱 **Device**: ${deviceType}
+🔗 **Referrer**: ${referrer.length > 100 ? referrer.slice(0, 100) + "…" : referrer}
+
+_Wallper Store • Pro_
+`;
 
                 const webhookRes = await fetch(DISCORD_WEBHOOK_URL!, {
                   method: "POST",
@@ -254,8 +209,7 @@ export async function POST(req: Request) {
                   body: JSON.stringify({
                     username: "Wallper Purchase",
                     avatar_url: "https://www.wallper.app/w.png",
-                    content: `🧾 **Order ID**: \`${orderId}\``,
-                    embeds: [embed],
+                    content: message,
                   }),
                 });
 
