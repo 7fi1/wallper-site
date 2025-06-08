@@ -158,7 +158,6 @@ export async function POST(req: Request) {
                   req.headers.get("x-real-ip") ||
                   "Unknown";
 
-                const orderId = data?.id || "Unknown";
                 const timezone =
                   data.metadata?.user_timezone ||
                   fallbackTimezones[country] ||
