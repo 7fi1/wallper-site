@@ -157,16 +157,23 @@ export async function POST(req: Request) {
                   req.headers.get("x-forwarded-for")?.split(",")[0] ||
                   req.headers.get("x-real-ip") ||
                   "Unknown";
+
                 const orderId = data?.id || "Unknown";
                 const timezone =
                   data.metadata?.user_timezone ||
                   fallbackTimezones[country] ||
                   "UTC";
-                const localTime = new Date().toLocaleString("en-US", {
-                  timeZone: timezone,
-                  dateStyle: "medium",
-                  timeStyle: "short",
-                });
+
+                let localTime = "Unknown";
+                try {
+                  localTime = new Date().toLocaleString("en-US", {
+                    timeZone: timezone,
+                    dateStyle: "medium",
+                    timeStyle: "short",
+                  });
+                } catch {
+                  localTime = new Date().toUTCString();
+                }
 
                 const locale = data.metadata?.locale || "Unknown";
                 const deviceType = data.metadata?.device_type || "Unknown";
@@ -176,7 +183,7 @@ export async function POST(req: Request) {
                 const countryFlag = countryCodeToEmoji(countryCode);
 
                 const embed = {
-                  title: "💎 New Wallper Purchase",
+                  title: `${countryFlag} New Wallper Purchase`,
                   description:
                     "A new customer just unlocked **Wallper PRO – Lifetime License** 🖥️✨",
                   color: 0xffd700,
@@ -246,17 +253,27 @@ export async function POST(req: Request) {
                   timestamp: new Date().toISOString(),
                 };
 
-                await fetch(DISCORD_WEBHOOK_URL!, {
+                const webhookRes = await fetch(DISCORD_WEBHOOK_URL!, {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify({
-                    username: "Wallper Bot",
+                    username: "Wallper Purchase",
                     avatar_url: "https://www.wallper.app/w.png",
+                    content: `🧾 **Order ID**: \`${orderId}\``,
                     embeds: [embed],
                   }),
                 });
 
-                console.log("📢 Discord notification sent");
+                if (!webhookRes.ok) {
+                  const errText = await webhookRes.text();
+                  console.error(
+                    "❌ Discord webhook failed:",
+                    webhookRes.status,
+                    errText
+                  );
+                } else {
+                  console.log("📢 Discord notification sent");
+                }
               } catch (error) {
                 console.error("❌ Failed to send Discord webhook:", error);
               }
