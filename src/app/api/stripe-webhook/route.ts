@@ -142,6 +142,7 @@ export async function POST(req: Request) {
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify({
                     username: "Wallper Bot",
+                    avatarURL: "https://www.wallper.app/w.png",
                     embeds: [
                       {
                         title: "🛒 New Purchase",
