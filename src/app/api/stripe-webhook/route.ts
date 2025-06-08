@@ -10,6 +10,23 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
 const resend = new Resend(process.env.RESEND_API_KEY);
 const DISCORD_WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL;
 
+function countryCodeToEmoji(code: string) {
+  if (!code || typeof code !== "string") return "🏳️";
+  return code
+    .toUpperCase()
+    .replace(/./g, (char) => String.fromCodePoint(127397 + char.charCodeAt(0)));
+}
+
+const fallbackTimezones: Record<string, string> = {
+  US: "America/New_York",
+  DE: "Europe/Berlin",
+  CZ: "Europe/Prague",
+  GB: "Europe/London",
+  CA: "America/Toronto",
+  AU: "Australia/Sydney",
+  UA: "Europe/Kyiv",
+};
+
 async function sendLicenseEmail(to: string, licenseUuid: string) {
   await resend.emails.send({
     from: "Wallper Team <support@wallper.app>",
@@ -109,7 +126,7 @@ export async function POST(req: Request) {
           const customerEmail =
             data.customer_details?.email || data.customer_email;
 
-          const amountTotal = (data.amount_total || 0) / 100;
+          const amountTotal = ((data.amount_total || 0) / 100).toFixed(2);
           const currency = data.currency?.toUpperCase() || "USD";
           const country = data.customer_details?.address?.country || "Unknown";
 
@@ -136,59 +153,118 @@ export async function POST(req: Request) {
               }
 
               try {
-                await fetch(DISCORD_WEBHOOK_URL, {
+                const customerIp =
+                  req.headers.get("x-forwarded-for")?.split(",")[0] ||
+                  req.headers.get("x-real-ip") ||
+                  "Unknown";
+                const orderId = data?.id || "Unknown";
+                const timezone =
+                  data.metadata?.user_timezone ||
+                  fallbackTimezones[country] ||
+                  "UTC";
+                const localTime = new Date().toLocaleString("en-US", {
+                  timeZone: timezone,
+                  dateStyle: "medium",
+                  timeStyle: "short",
+                });
+
+                const locale = data.metadata?.locale || "Unknown";
+                const deviceType = data.metadata?.device_type || "Unknown";
+                const referrer = data.metadata?.referrer || "direct";
+
+                const countryCode = country;
+                const countryFlag = countryCodeToEmoji(countryCode);
+
+                const embed = {
+                  title: "💎 New Wallper Purchase",
+                  description:
+                    "A new customer just unlocked **Wallper PRO – Lifetime License** 🖥️✨",
+                  color: 0xffd700,
+                  fields: [
+                    {
+                      name: "🧾 **Order ID**",
+                      value: `\`${orderId}\``,
+                      inline: true,
+                    },
+                    {
+                      name: "👤 **Email**",
+                      value: customerEmail || "_Not provided_",
+                      inline: true,
+                    },
+                    {
+                      name: "🔑 **License Key**",
+                      value: `\`${licenseUuid}\``,
+                      inline: true,
+                    },
+                    {
+                      name: "💵 **Amount**",
+                      value: `**$${amountTotal} ${currency}**`,
+                      inline: true,
+                    },
+                    {
+                      name: "🌍 **Country**",
+                      value: `${countryFlag} ${countryCode}`,
+                      inline: true,
+                    },
+                    {
+                      name: "📦 **Status**",
+                      value: data.payment_status || "_Unknown_",
+                      inline: true,
+                    },
+                    {
+                      name: "🕒 **Local Time**",
+                      value: localTime,
+                      inline: true,
+                    },
+                    {
+                      name: "🌐 **IP Address**",
+                      value: customerIp,
+                      inline: true,
+                    },
+                    {
+                      name: "🗣️ **Locale**",
+                      value: locale,
+                      inline: true,
+                    },
+                    {
+                      name: "📱 **Device**",
+                      value: deviceType,
+                      inline: true,
+                    },
+                    {
+                      name: "🔗 **Referrer**",
+                      value:
+                        referrer.length > 45
+                          ? referrer.slice(0, 45) + "…"
+                          : referrer,
+                      inline: false,
+                    },
+                  ],
+                  footer: {
+                    text: "Wallper Store • Premium Experience",
+                  },
+                  timestamp: new Date().toISOString(),
+                };
+
+                await fetch(DISCORD_WEBHOOK_URL!, {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify({
                     username: "Wallper Bot",
-                    avatarURL: "https://www.wallper.app/w.png",
-                    embeds: [
-                      {
-                        title: "🛒 New Purchase",
-                        color: 0x00aaff,
-                        fields: [
-                          {
-                            name: "Email",
-                            value: customerEmail || "Not Provided",
-                            inline: true,
-                          },
-                          {
-                            name: "License Key",
-                            value: licenseUuid,
-                            inline: true,
-                          },
-                          {
-                            name: "Status",
-                            value: data.payment_status || "Unknown",
-                            inline: true,
-                          },
-                          {
-                            name: "Amount",
-                            value: `${amountTotal} ${currency}`,
-                            inline: true,
-                          },
-                          {
-                            name: "Country",
-                            value: country,
-                            inline: true,
-                          },
-                        ],
-                        footer: {
-                          text: "Wallper Store",
-                        },
-                        timestamp: new Date().toISOString(),
-                      },
-                    ],
+                    avatar_url: "https://www.wallper.app/w.png",
+                    embeds: [embed],
                   }),
                 });
+
                 console.log("📢 Discord notification sent");
-              } catch (discordErr) {
-                console.error("❌ Failed to send Discord webhook:", discordErr);
+              } catch (error) {
+                console.error("❌ Failed to send Discord webhook:", error);
               }
             } catch (fetchErr) {
               console.error("❌ Error while saving license:", fetchErr);
             }
           }
+
           console.log(`💰 CheckoutSession status: ${data.payment_status}`);
           break;
         }

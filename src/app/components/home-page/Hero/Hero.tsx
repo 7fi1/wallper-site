@@ -107,9 +107,21 @@ const Hero = () => {
                 fontWeight={500}
                 iconColor="#ccc"
                 onClick={async () => {
+                  const metadata = {
+                    license_uuid: crypto.randomUUID(),
+                    user_timezone:
+                      Intl.DateTimeFormat().resolvedOptions().timeZone,
+                    locale: navigator.language,
+                    device_type: /Mobi|Android/i.test(navigator.userAgent)
+                      ? "mobile"
+                      : "desktop",
+                    referrer: document.referrer || "direct",
+                  };
+
                   const res = await fetch("/api/checkout_session", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ metadata }),
                   });
 
                   const data = await res.json();
