@@ -26,7 +26,7 @@ export async function POST() {
         {
           price_data: {
             product: process.env.STRIPE_PRODUCT_ID!,
-            unit_amount: 999,
+            unit_amount: Number(process.env.STRIPE_PRICE_AMOUNT!),
             currency: "usd",
           },
           quantity: 1,
