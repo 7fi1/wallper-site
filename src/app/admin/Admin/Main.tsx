@@ -115,7 +115,7 @@ export const Main = () => {
   }, [currentKey]);
 
   const handleApprove = async (url: string) => {
-    setFuncLoading(true);
+    setFuncLoading(true); 
     const toastId = toast.loading("Обработка события.", {
       position: "bottom-right",
     });

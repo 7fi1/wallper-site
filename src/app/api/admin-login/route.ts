@@ -64,7 +64,7 @@ export async function POST(req: NextRequest) {
 
     res.cookies.set("admin_session", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // true только в проде
+      secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
       maxAge: 60 * 60 * 24,
       path: "/",

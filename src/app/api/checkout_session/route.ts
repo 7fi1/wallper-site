@@ -34,7 +34,7 @@ export async function POST() {
       ],
       mode: "payment",
       metadata: { license_uuid: uuid },
-
+      allow_promotion_codes: true,
       success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/success?k=${uuid}`,
       cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/cancel`,
     });
