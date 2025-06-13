@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Pro.module.css";
 import { FaCheckCircle } from "react-icons/fa";
 import { FaCircleXmark } from "react-icons/fa6";
@@ -35,34 +35,85 @@ export const Pro = () => {
   ];
 
   const CustomerSupport = [
-    { title: "Payment", free: "Once", pro: "Subscription" },
-    { title: "Video Quality", free: "True 4K", pro: "Mixed" },
-    { title: "Library Size", free: "500+", pro: "50–100" },
-    { title: "Multi-Monitor", free: "Seamless", pro: "Unsupported" },
-    { title: "Devices Included", free: "3 Macs", pro: "1 device" },
-    { title: "Custom Uploads", free: "Full", pro: "Restricted" },
+    {
+      title: "Payment",
+      free: "Once",
+      pro: "Subscription",
+      description: "How often do you pay? One-time or monthly?",
+    },
+    {
+      title: "Video Quality",
+      free: "True 4K",
+      pro: "Mixed",
+      description: "Actual 4K resolution vs. compressed or low-bitrate video.",
+    },
+    {
+      title: "Library Size",
+      free: "500+",
+      pro: "50–100",
+      description: "How many wallpapers are included out of the box.",
+    },
+    {
+      title: "Multi-Monitor",
+      free: "Seamless",
+      pro: "Unsupported",
+      description:
+        "Support for applying different or synced wallpapers on multiple displays.",
+    },
+    {
+      title: "Devices Included",
+      free: "3 Macs",
+      pro: "1 device",
+      description: "How many Macs you can use per license.",
+    },
+    {
+      title: "Custom Uploads",
+      free: "Full",
+      pro: "Restricted",
+      description: "Can you add your own videos as wallpapers?",
+    },
     {
       title: "Battery Usage",
       free: "Low",
       pro: "Inconsistent",
+      description:
+        "How much the wallpapers affect battery drain during daily use.",
     },
-    { title: "Performance", free: "MAX", pro: "Slow" },
-    { title: "Offline Access", free: "Available", pro: "Cloud" },
-    { title: "Cache Control", free: "Clearable", pro: "No user control" },
+    {
+      title: "Performance",
+      free: "MAX",
+      pro: "Slow",
+      description: "Impact on system speed and memory usage.",
+    },
+    {
+      title: "Offline Access",
+      free: "Available",
+      pro: "Cloud",
+      description: "Do wallpapers work without internet connection?",
+    },
+    {
+      title: "Cache Control",
+      free: "Clearable",
+      pro: "No user control",
+      description: "Can you manage or clear downloaded data manually?",
+    },
     {
       title: "Moderation",
       free: "Videos reviewed",
       pro: "No checks",
+      description: "Are community wallpapers reviewed before being published?",
     },
     {
       title: "Support",
       free: "Priority support",
       pro: "Limited or none",
+      description: "Access to help, response times, and available channels.",
     },
   ];
 
   const router = useRouter();
   const { isOpen, modalType } = useModalStore();
+  const [opacity, setOpacity] = useState<number>(0);
 
   return (
     <main className={styles.main}>
@@ -179,15 +230,24 @@ export const Pro = () => {
               iconSize={10}
               fontWeight={500}
               onClick={async () => {
+                const isBrowser = typeof window !== "undefined";
                 const metadata = {
-                  license_uuid: crypto.randomUUID(),
-                  user_timezone:
-                    Intl.DateTimeFormat().resolvedOptions().timeZone,
-                  locale: navigator.language,
-                  device_type: /Mobi|Android/i.test(navigator.userAgent)
-                    ? "mobile"
+                  license_uuid:
+                    typeof crypto !== "undefined" && crypto.randomUUID
+                      ? crypto.randomUUID()
+                      : Math.random().toString(36).substring(2, 15),
+                  user_timezone: isBrowser
+                    ? Intl.DateTimeFormat().resolvedOptions().timeZone
+                    : "",
+                  locale: isBrowser ? navigator.language : "",
+                  device_type: isBrowser
+                    ? /Mobi|Android/i.test(navigator.userAgent)
+                      ? "mobile"
+                      : "desktop"
                     : "desktop",
-                  referrer: document.referrer || "direct",
+                  referrer: isBrowser
+                    ? document.referrer || "direct"
+                    : "direct",
                 };
 
                 const res = await fetch("/api/checkout_session", {
@@ -207,7 +267,7 @@ export const Pro = () => {
           </div>
         </div>
         <div className={styles.table}>
-          <h1>Customer Support</h1>
+          <h1>Wallper Advantage</h1>
           <div className={styles.table_content}>
             <div className={styles.table_header}>
               <div className={styles.header}>Wallper</div>
@@ -216,7 +276,20 @@ export const Pro = () => {
             <div className={styles.table_rows}>
               {CustomerSupport.map((item, idx) => (
                 <div key={idx} className={styles.row}>
-                  <div className={styles.row_title}>{item.title}</div>
+                  <div
+                    className={styles.row_title}
+                    onMouseEnter={() => setOpacity(idx)}
+                    onMouseLeave={() => setOpacity(-1)}
+                  >
+                    {item.title}
+                    <div
+                      className={styles.title_description}
+                      style={{ opacity: opacity === idx ? 1 : 0 }}
+                    >
+                      {item.description}
+                    </div>
+                  </div>
+
                   <div className={styles.row_values}>
                     <div className={styles.row_free}>
                       {typeof item.free === "boolean" ? (

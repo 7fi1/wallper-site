@@ -414,6 +414,32 @@
   text-underline-offset: 2px;
   text-decoration-line: underline;
   cursor: help;
+  position: relative;
+}
+
+.title_description {
+  position: absolute;
+  bottom: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: left;
+  width: max-content;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  border-radius: 8px;
+  background-color: #000;
+  border: 1px solid #d6ebfd30;
+  border-radius: 6px;
+  font-size: 12px;
+  color: #fcfdffef;
+  z-index: 20;
+  backdrop-filter: blur(30px) saturate(180%);
+  transition: 0.3s ease;
+  pointer-events: none;
+  user-select: none;
+  max-width: 250px;
 }
 
 @media (max-width: 1000px) {
