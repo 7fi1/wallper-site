@@ -72,7 +72,8 @@ const Main = () => {
               fontWeight={500}
               iconColor="#70757e"
               onClick={() => {
-                router.push("/download");
+                window.location.href =
+                  "https://github.com/alxndlk/wallper-app/releases/download/Release/Wallper.dmg";
               }}
               widthButton="max-content"
             />
