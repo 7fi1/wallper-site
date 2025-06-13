@@ -491,4 +491,9 @@
   .row_free {
     width: 75px;
   }
+
+  .title_description {
+    transform: none;
+    left: 0.5rem;
+  }
 }
