@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import React from "react";
 import styles from "./Main.module.css";
 import PrimaryButton from "../ui/primaryButton";
-import { useRouter } from "next/navigation";
 import { FaChevronRight } from "react-icons/fa6";
 import Bottom from "../components/home-page/Bottom/Bottom";
 import { useModalStore } from "@/src/store/ModalStore";
@@ -11,7 +10,6 @@ import LicenseModal from "../components/Modals/LicenseModal";
 import VideosModal from "../components/Modals/VideosModal";
 
 const Main = () => {
-  const router = useRouter();
   const { isOpen, modalType } = useModalStore();
 
   return (

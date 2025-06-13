@@ -4,7 +4,6 @@ import styles from "./Main.module.css";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
 import PrimaryButton from "../../ui/primaryButton";
 import { FaChevronRight } from "react-icons/fa6";
 import toast from "react-hot-toast";
@@ -16,7 +15,6 @@ export const Main = () => {
   const searchParams = useSearchParams();
   const uuid = searchParams.get("k");
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
-  const router = useRouter();
 
   const handleCopy = (key: string) => {
     navigator.clipboard.writeText(key);
