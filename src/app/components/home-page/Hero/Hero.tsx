@@ -9,6 +9,7 @@ import SecondaryButton from "@/src/app/ui/secondaryButton";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
+import { useApplicationStore } from "@/src/store/ApplicationStore";
 import { useRouter } from "next/navigation";
 
 const Hero = () => {
@@ -55,6 +56,12 @@ const Hero = () => {
   }
 
   const router = useRouter();
+
+  const { version, fetchApplicationData } = useApplicationStore();
+
+  useEffect(() => {
+    fetchApplicationData();
+  }, [fetchApplicationData]);
 
   return (
     <section className={styles.top}>
@@ -134,7 +141,7 @@ const Hero = () => {
               />
             </div>
             <motion.div className={styles.spans} layout>
-              <span>v1.0.0 release</span>
+              <span>v{version} release</span>
               <span>macOS 14+</span>
               <span>App Store soon!</span>
             </motion.div>

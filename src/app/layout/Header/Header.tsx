@@ -14,6 +14,7 @@ import MobileHeader from "./MobileHeader/MobileHeader";
 import PrimaryButton from "../../ui/primaryButton";
 import { FaChevronDown } from "react-icons/fa";
 import HoverBlock from "../../ui/hoverBlock";
+import { useApplicationStore } from "../../../store/ApplicationStore";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
@@ -22,6 +23,12 @@ const stripePromise = loadStripe(
 const Header = () => {
   const router = useRouter();
   const { open } = useModalStore();
+
+  const { version, fetchApplicationData } = useApplicationStore();
+
+  useEffect(() => {
+    fetchApplicationData();
+  }, [fetchApplicationData]);
 
   const [isMobileHeader, setMobileHeader] = useState<boolean>(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -108,7 +115,9 @@ const Header = () => {
           onClick={() => router.push("/")}
         >
           <div className={styles.logo}>
-            <h1 className={styles.title}>Wallper</h1>
+            <h1 className={styles.title}>
+              Wallper<span className={styles.version}>v{version}</span>
+            </h1>
           </div>
         </button>
 
@@ -146,7 +155,6 @@ const Header = () => {
             {hoveredIndex !== null && navItems[hoveredIndex]?.chevron && (
               <HoverBlock
                 key={hoveredIndex}
-                
                 isVisible
                 links={navItems[hoveredIndex].links}
                 videoIdx={navItems[hoveredIndex].videoIdx}

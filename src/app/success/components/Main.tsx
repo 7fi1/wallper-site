@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 import { useModalStore } from "@/src/store/ModalStore";
 import LicenseModal from "../../components/Modals/LicenseModal";
 import VideosModal from "../../components/Modals/VideosModal";
+import { useApplicationStore } from "@/src/store/ApplicationStore";
 
 export const Main = () => {
   const searchParams = useSearchParams();
@@ -59,6 +60,12 @@ export const Main = () => {
 
   const { isOpen, modalType } = useModalStore();
 
+  const { version, fetchApplicationData, size } = useApplicationStore();
+
+  useEffect(() => {
+    fetchApplicationData();
+  }, [fetchApplicationData]);
+
   return (
     <section className={styles.top}>
       {isOpen && (
@@ -96,7 +103,7 @@ export const Main = () => {
             transition={{ delay: 0.6, duration: 0.4 }}
           >
             <motion.div className={styles.spans} layout>
-              <span>v1.0.0 release</span>
+              <span>v{version} release</span>
               <span>macOS 14+</span>
               <span>App Store soon!</span>
             </motion.div>
@@ -108,7 +115,9 @@ export const Main = () => {
             <div className={styles.image} />
             <h2>Wallper</h2>
             <p>Minimum macOS 14 Sonoma</p>
-            <span>DMG, 10MB • v1.0.0</span>
+            <span>
+              DMG, {size}MB • v{version}
+            </span>
           </div>
           <div className={styles.buttons}>
             <PrimaryButton

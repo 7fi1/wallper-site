@@ -60,6 +60,11 @@
 .title {
   font-size: 20px;
   font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
   color: #dedede;
   font-family:
     "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans",
@@ -149,6 +154,19 @@
 .menu {
   display: none;
   padding-right: 0.5rem;
+}
+
+.version {
+  font-size: 10px;
+  color: #dedede;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.3s ease;
+  border: 1px solid #d6ebfd30;
+  background: #d8f4f609;
+  padding: 0.125rem 0.35rem;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
 }
 
 @media (max-width: 1200px) {

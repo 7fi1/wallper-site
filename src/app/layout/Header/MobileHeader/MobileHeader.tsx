@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useEffect } from "react";
 import styles from "./MainHeader.module.css";
 import { useRouter } from "next/navigation";
 import { XMark } from "react-ios-icons";
@@ -7,6 +9,7 @@ import Link from "next/link";
 import { loadStripe } from "@stripe/stripe-js";
 import PrimaryButton from "@/src/app/ui/primaryButton";
 import SecondaryButton from "@/src/app/ui/secondaryButton";
+import { useApplicationStore } from "@/src/store/ApplicationStore";
 
 interface MobileHeaderProps {
   isOpen: boolean;
@@ -79,6 +82,12 @@ const navItems = [
 const MobileHeader: React.FC<MobileHeaderProps> = ({ isOpen, onClose }) => {
   const router = useRouter();
 
+  const { version, fetchApplicationData } = useApplicationStore();
+
+  useEffect(() => {
+    fetchApplicationData();
+  }, [fetchApplicationData]);
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -98,7 +107,9 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({ isOpen, onClose }) => {
                 type="button"
                 whileHover={{ y: -2 }}
               >
-                <h1 className={styles.title}>Wallper</h1>
+                <h1 className={styles.title}>
+                  Wallper<span className={styles.version}>v{version}</span>
+                </h1>
               </motion.button>
 
               <motion.button

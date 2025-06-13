@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./Main.module.css";
 import PrimaryButton from "../ui/primaryButton";
 import { FaChevronRight } from "react-icons/fa6";
@@ -8,9 +8,16 @@ import Bottom from "../components/home-page/Bottom/Bottom";
 import { useModalStore } from "@/src/store/ModalStore";
 import LicenseModal from "../components/Modals/LicenseModal";
 import VideosModal from "../components/Modals/VideosModal";
+import { useApplicationStore } from "@/src/store/ApplicationStore";
 
 const Main = () => {
   const { isOpen, modalType } = useModalStore();
+
+  const { version, size, fetchApplicationData } = useApplicationStore();
+
+  useEffect(() => {
+    fetchApplicationData();
+  }, [fetchApplicationData]);
 
   return (
     <section className={styles.top}>
@@ -45,7 +52,7 @@ const Main = () => {
             transition={{ delay: 0.6, duration: 0.4 }}
           >
             <motion.div className={styles.spans} layout>
-              <span>v1.0.0 release</span>
+              <span>v{version} release</span>
               <span>macOS 14+</span>
               <span>App Store soon!</span>
             </motion.div>
@@ -57,7 +64,9 @@ const Main = () => {
             <div className={styles.image} />
             <h2>Wallper</h2>
             <p>Minimum macOS 14 Sonoma</p>
-            <span>DMG, 10MB • v1.0.0</span>
+            <span>
+              DMG, {size}MB • v{version}
+            </span>
           </div>
           <div className={styles.buttons}>
             <PrimaryButton
