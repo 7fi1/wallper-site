@@ -269,7 +269,6 @@ const fallbackTimezones: Record<string, string> = {
   ZW: "UTC",
 };
 
-
 async function sendLicenseEmail(to: string, licenseUuid: string) {
   await resend.emails.send({
     from: "Wallper Team <support@wallper.app>",
@@ -405,6 +404,62 @@ export async function POST(req: Request) {
             body: JSON.stringify({ licenseUuid }),
           }
         );
+
+        async function sendPurchaseToGA({
+          transaction_id,
+          value,
+          currency,
+        }: {
+          transaction_id: string;
+          value: number;
+          currency: string;
+        }) {
+          const measurement_id = "G-R7N8SPW14W";
+          const api_secret = process.env.GA4_API_SECRET!;
+
+          const payload = {
+            client_id: Math.floor(Math.random() * 1000000000).toString(),
+            events: [
+              {
+                name: "purchase",
+                params: {
+                  transaction_id,
+                  value,
+                  currency,
+                  items: [
+                    {
+                      item_name: "Wallper PRO License",
+                      item_id: "license001",
+                      price: value,
+                      quantity: 1,
+                    },
+                  ],
+                },
+              },
+            ],
+          };
+
+          const res = await fetch(
+            `https://www.google-analytics.com/mp/collect?measurement_id=${measurement_id}&api_secret=${api_secret}`,
+            {
+              method: "POST",
+              body: JSON.stringify(payload),
+            }
+          );
+
+          if (!res.ok) {
+            const text = await res.text();
+            console.error("❌ Failed to send GA event:", res.status, text);
+          } else {
+            console.log("✅ Purchase event sent to GA4");
+          }
+        }
+
+        await sendPurchaseToGA({
+          transaction_id: licenseUuid,
+          value: parseFloat(amountTotal),
+          currency,
+        });
 
         if (!saveRes.ok) {
           console.error("❌ Failed to save license");
