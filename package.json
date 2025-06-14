@@ -21,6 +21,7 @@
     "aws-sdk": "^2.1692.0",
     "bcrypt": "^6.0.0",
     "device-uuid": "^1.0.4",
+    "fast-xml-parser": "^5.2.5",
     "framer-motion": "^12.6.5",
     "ios-icons": "^2.0.1",
     "jose": "^6.0.11",

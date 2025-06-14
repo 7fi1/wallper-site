@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Toaster } from "react-hot-toast";
 import { Analytics } from "@vercel/analytics/react";
 import { inter } from "./fonts/fonts";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "Wallper — Live Wallpapers for Your Mac",
@@ -64,6 +65,20 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <Script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-R7N8SPW14W"
+        />
+        <Script id="ga-init">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-R7N8SPW14W');
+          `}
+        </Script>
+      </head>
       <body className={inter.className}>
         {children}
         <Toaster />
