@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     canonical: "/",
   },
 };
-
+const REDDIT_PIXEL_ID = process.env.NEXT_PUBLIC_REDDIT_PIXEL_ID!;
 export default function RootLayout({
   children,
 }: {
@@ -90,7 +90,7 @@ export default function RootLayout({
         var f=d.getElementsByTagName(t)[0];f.parentNode.insertBefore(s,f);
       }(window,document,'script','https://www.redditstatic.com/ads/pixel.js','rdt');
       
-      window.rdt && window.rdt('init', ${process.env.REDIT_KEY!});
+      window.rdt && window.rdt('init', ${REDDIT_PIXEL_ID});
       window.rdt && window.rdt('track', 'PageVisit');
     `,
           }}
