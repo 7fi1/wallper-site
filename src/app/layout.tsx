@@ -78,6 +78,23 @@ export default function RootLayout({
             gtag('config', 'G-R7N8SPW14W');
           `}
         </Script>
+
+        <Script
+          id="reddit-pixel"
+          dangerouslySetInnerHTML={{
+            __html: `
+      !function(w,d,t,r,u){
+        w[u]=w[u]||[];
+        w[u].push({'event':'pageview'});
+        var s=d.createElement(t);s.async=1;s.src=r;
+        var f=d.getElementsByTagName(t)[0];f.parentNode.insertBefore(s,f);
+      }(window,document,'script','https://www.redditstatic.com/ads/pixel.js','rdt');
+      
+      window.rdt && window.rdt('init', ${process.env.REDIT_KEY!});
+      window.rdt && window.rdt('track', 'PageVisit');
+    `,
+          }}
+        />
       </head>
       <body className={inter.className}>
         {children}

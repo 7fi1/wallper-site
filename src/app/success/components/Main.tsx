@@ -1,4 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
+
+declare global {
+  interface Window {
+    rdt?: (event: string, type?: string, data?: Record<string, any>) => void;
+  }
+}
 
 import styles from "./Main.module.css";
 import { motion } from "framer-motion";
@@ -43,15 +50,23 @@ export const Main = () => {
   };
 
   useEffect(() => {
-    if (!uuid) return;
+    if (!uuid || uuid.length < 10) return;
 
     try {
       const existing = localStorage.getItem("license_keys");
-      const keys = existing ? JSON.parse(existing) : [];
+      const keys: string[] = existing ? JSON.parse(existing) : [];
 
       if (!keys.includes(uuid)) {
         keys.push(uuid);
         localStorage.setItem("license_keys", JSON.stringify(keys));
+
+        if (typeof window !== "undefined" && typeof window.rdt === "function") {
+          window.rdt("track", "Purchase", {
+            currency: "USD",
+            value: 9.99,
+          });
+          console.log("✅ Reddit Pixel 'Purchase' fired");
+        }
       }
     } catch (e) {
       console.error("❌ Failed to save license:", e);
