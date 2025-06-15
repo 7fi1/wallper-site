@@ -83,15 +83,23 @@ export default function RootLayout({
           id="reddit-pixel"
           dangerouslySetInnerHTML={{
             __html: `
-      !function(w,d,t,r,u){
-        w[u]=w[u]||[];
-        w[u].push({'event':'pageview'});
-        var s=d.createElement(t);s.async=1;s.src=r;
-        var f=d.getElementsByTagName(t)[0];f.parentNode.insertBefore(s,f);
-      }(window,document,'script','https://www.redditstatic.com/ads/pixel.js','rdt');
-      
-      window.rdt && window.rdt('init', '${REDDIT_PIXEL_ID}');
-      window.rdt && window.rdt('track', 'PageVisit');
+      !function(w,d){
+        if(!w.rdt){
+          var rdt = w.rdt = function(){
+            rdt.callMethod ?
+              rdt.callMethod.apply(rdt, arguments) : rdt.queue.push(arguments)
+          };
+          rdt.queue = [];
+          var t = d.createElement('script');
+          t.async = true;
+          t.src = 'https://www.redditstatic.com/ads/pixel.js';
+          var s = d.getElementsByTagName('script')[0];
+          s.parentNode.insertBefore(t, s);
+        }
+      }(window, document);
+
+      rdt('init', '${REDDIT_PIXEL_ID}');
+      rdt('track', 'PageVisit');
     `,
           }}
         />
