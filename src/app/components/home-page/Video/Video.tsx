@@ -47,7 +47,7 @@ const Video = () => {
       </div>
       <div className={styles.container}>
         <motion.video
-          src={"/video/screen.mov"}
+          src={"/video/screen.mp4"}
           autoPlay
           muted
           loop
