@@ -85,21 +85,27 @@ export default function RootLayout({
             __html: `
       !function(w,d){
         if(!w.rdt){
-          var rdt = w.rdt = function(){
-            rdt.callMethod ?
-              rdt.callMethod.apply(rdt, arguments) : rdt.queue.push(arguments)
+          var p=w.rdt=function(){
+            p.callQueue.push(arguments)
           };
-          rdt.queue = [];
-          var t = d.createElement('script');
-          t.async = true;
-          t.src = 'https://www.redditstatic.com/ads/pixel.js';
-          var s = d.getElementsByTagName('script')[0];
-          s.parentNode.insertBefore(t, s);
+          p.callQueue=[];
+          var t=d.createElement("script");
+          t.src="https://www.redditstatic.com/ads/pixel.js";
+          t.async=true;
+          var s=d.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(t,s);
         }
-      }(window, document);
 
-      rdt('init', '${REDDIT_PIXEL_ID}');
-      rdt('track', 'PageVisit');
+        // Push init + PageVisit to queue
+        w.rdt("init","${REDDIT_PIXEL_ID}", {
+          optOut: false,
+          useDecimalCurrencyValues: true,
+          email: "user@example.com",
+          externalId: "user-1234"
+        });
+
+        w.rdt("track", "PageVisit");
+      }(window,document);
     `,
           }}
         />
