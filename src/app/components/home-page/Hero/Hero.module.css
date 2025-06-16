@@ -163,6 +163,32 @@
   z-index: 0;
 }
 
+.icons {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.icon {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ccc;
+  text-align: center;
+  background: linear-gradient(to bottom, #272525, #0a0a0a);
+  transition: 0.3s ease;
+  margin-top: 2rem;
+}
+.icon:hover {
+  background: radial-gradient(rgba(200, 200, 200, 0.2) 0%, transparent 80%);
+}
+
 @media (max-width: 1000px) {
   .greed {
     flex-direction: column-reverse;

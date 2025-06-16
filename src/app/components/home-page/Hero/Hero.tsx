@@ -11,11 +11,19 @@ import { OrbitControls, Environment, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import { useApplicationStore } from "@/src/store/ApplicationStore";
 import { useRouter } from "next/navigation";
+import { FaDiscord, FaGithub, FaReddit, FaTiktok } from "react-icons/fa6";
 
 const Hero = () => {
   const stripePromise = loadStripe(
     process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
   );
+
+  const icons = [
+    { icons: <FaReddit />, link: "https://www.reddit.com/r/wallper/" },
+    { icons: <FaDiscord />, link: "https://discord.gg/ksxrdnETuc" },
+    { icons: <FaTiktok />, link: "https://www.tiktok.com/@wallper.live" },
+    { icons: <FaGithub />, link: "https://github.com/alxndlk" },
+  ];
 
   function Model() {
     const gltf = useGLTF("/models/hero.glb");
@@ -146,6 +154,20 @@ const Hero = () => {
               <span>App Store soon!</span>
             </motion.div>
           </motion.div>
+
+          <div className={styles.icons}>
+            {icons.map((item, index) => (
+              <a
+                key={index}
+                href={item.link}
+                className={styles.icon}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {item.icons}
+              </a>
+            ))}
+          </div>
         </div>
 
         <div className={styles.model_wrapper}>

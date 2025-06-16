@@ -3,12 +3,12 @@ import React from "react";
 import styles from "./Footer.module.css";
 
 import { motion } from "framer-motion";
-import { FaInstagram } from "react-icons/fa6";
+import { FaReddit } from "react-icons/fa6";
 import { FaDiscord, FaGithub, FaTiktok } from "react-icons/fa";
 
 const Footer = () => {
   const icons = [
-    { icons: <FaInstagram />, link: "https://www.instagram.com/wallper.app" },
+    { icons: <FaReddit />, link: "https://www.reddit.com/r/wallper/" },
     { icons: <FaDiscord />, link: "https://discord.gg/ksxrdnETuc" },
     { icons: <FaTiktok />, link: "https://www.tiktok.com/@wallper.live" },
     { icons: <FaGithub />, link: "https://github.com/alxndlk" },
