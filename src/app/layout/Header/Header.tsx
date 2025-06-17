@@ -140,7 +140,7 @@ const Header = () => {
                 ) : item.chevron ? (
                   <button className={styles.button_link} onClick={item.onClick}>
                     {item.name}
-                    <FaChevronDown color="#70757e" size={10} />
+                    <FaChevronDown color="#fff" size={10} />
                   </button>
                 ) : (
                   <button className={styles.button_link} onClick={item.onClick}>

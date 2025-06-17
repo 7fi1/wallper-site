@@ -1,14 +1,14 @@
 "use client";
 import { motion } from "framer-motion";
-import React, { Suspense, useEffect } from "react";
+import React, { useEffect } from "react";
 import styles from "./Hero.module.css";
 // import { FaChevronRight } from "react-icons/fa";
 import { loadStripe } from "@stripe/stripe-js";
 import PrimaryButton from "@/src/app/ui/primaryButton";
 import SecondaryButton from "@/src/app/ui/secondaryButton";
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Environment, useGLTF } from "@react-three/drei";
-import * as THREE from "three";
+// import { Canvas } from "@react-three/fiber";
+// import { OrbitControls, Environment, useGLTF } from "@react-three/drei";
+// import * as THREE from "three";
 import { useApplicationStore } from "@/src/store/ApplicationStore";
 import { useRouter } from "next/navigation";
 import { FaDiscord, FaGithub, FaReddit, FaTiktok } from "react-icons/fa6";
@@ -25,43 +25,43 @@ const Hero = () => {
     { icons: <FaGithub />, link: "https://github.com/alxndlk" },
   ];
 
-  function Model() {
-    const gltf = useGLTF("/models/hero.glb");
+  // function Model() {
+  //   const gltf = useGLTF("/models/hero.glb");
 
-    useEffect(() => {
-      gltf.scene.traverse((child) => {
-        if ((child as THREE.Mesh).isMesh && (child as THREE.Mesh).material) {
-          const mesh = child as THREE.Mesh;
-          if (Array.isArray(mesh.material)) {
-            mesh.material.forEach((mat) => {
-              if (
-                mat instanceof THREE.MeshStandardMaterial ||
-                mat instanceof THREE.MeshPhysicalMaterial
-              ) {
-                mat.roughness = 0;
-                mat.metalness = 1;
-                mat.needsUpdate = true;
-              }
-            });
-          } else {
-            const mat = mesh.material;
-            if (
-              mat instanceof THREE.MeshStandardMaterial ||
-              mat instanceof THREE.MeshPhysicalMaterial
-            ) {
-              mat.roughness = 0;
-              mat.metalness = 1;
-              mat.needsUpdate = true;
-            }
-          }
-        }
-      });
-    }, [gltf]);
+  //   useEffect(() => {
+  //     gltf.scene.traverse((child) => {
+  //       if ((child as THREE.Mesh).isMesh && (child as THREE.Mesh).material) {
+  //         const mesh = child as THREE.Mesh;
+  //         if (Array.isArray(mesh.material)) {
+  //           mesh.material.forEach((mat) => {
+  //             if (
+  //               mat instanceof THREE.MeshStandardMaterial ||
+  //               mat instanceof THREE.MeshPhysicalMaterial
+  //             ) {
+  //               mat.roughness = 0;
+  //               mat.metalness = 1;
+  //               mat.needsUpdate = true;
+  //             }
+  //           });
+  //         } else {
+  //           const mat = mesh.material;
+  //           if (
+  //             mat instanceof THREE.MeshStandardMaterial ||
+  //             mat instanceof THREE.MeshPhysicalMaterial
+  //           ) {
+  //             mat.roughness = 0;
+  //             mat.metalness = 1;
+  //             mat.needsUpdate = true;
+  //           }
+  //         }
+  //       }
+  //     });
+  //   }, [gltf]);
 
-    return (
-      <primitive object={gltf.scene} scale={2.5} position={[1.5, -1, 0]} />
-    );
-  }
+  //   return (
+  //     <primitive object={gltf.scene} scale={2.5} position={[1.5, -1, 0]} />
+  //   );
+  // }
 
   const router = useRouter();
 
@@ -170,7 +170,7 @@ const Hero = () => {
           </div>
         </div>
 
-        <div className={styles.model_wrapper}>
+        {/* <div className={styles.model_wrapper}>
           <Canvas
             camera={{ position: [5, 2, 5], fov: 50 }}
             shadows
@@ -212,8 +212,20 @@ const Hero = () => {
               autoRotateSpeed={1}
             />
           </Canvas>
-        </div>
+        </div> */}
       </motion.div>
+      <motion.video
+        src={"/video/hero.mp4"}
+        autoPlay
+        muted
+        loop
+        playsInline
+        className={styles.video_player}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+      />
+      <div className={styles.background} />
     </section>
   );
 };
