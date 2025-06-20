@@ -4,6 +4,7 @@ type VideoMetaProps = {
   data: {
     name?: string;
     author?: string;
+    author_name?: string;
     sizeMB?: number;
     resolution?: string;
     duration?: number;
@@ -70,7 +71,8 @@ export default function VideoMeta({ data }: VideoMetaProps) {
   return (
     <div className={styles.video_meta}>
       {renderRow("Название:", shortName, data.name)}
-      {renderRow("Автор:", data.author || "Не указан")}
+      {renderRow("Автор (ID):", data.author || "Не указан")}
+      {renderRow("Автор:", data.author_name || "Не указан")}
       {renderSizeRow(data.sizeMB)}
       {renderRow("Разрешение:", data.resolution)}
       {renderRow("Длительность:", data.duration ? `${data.duration} сек` : "—")}
@@ -83,7 +85,7 @@ export default function VideoMeta({ data }: VideoMetaProps) {
               : styles.status_pending
           }
         >
-          {data.status === "Success" ? "Success" : data.status ?? "—"}
+          {data.status === "Success" ? "Success" : (data.status ?? "—")}
         </span>
       )}
       {renderRow("Возрастное ограничение:", data.age || "—")}

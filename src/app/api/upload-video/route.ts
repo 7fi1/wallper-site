@@ -16,7 +16,7 @@ const s3 = new S3Client({
 const MODERATE_BUCKET = process.env.MODERATE_BUCKET_NAME!;
 const APPROVED_BUCKET = process.env.USER_GENERATED_BUCKET_NAME!;
 
-export async function DELETE(req: NextRequest) {
+export async function POST(req: NextRequest) {
   try {
     const { name } = await req.json();
 

@@ -129,10 +129,12 @@ export default function Main() {
     });
 
     try {
+      const key = extractKeyFromUrl(url);
+
       const statusResponse = await fetch("/api/success-status", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ currentKey: extractKeyFromUrl(url) }),
+        body: JSON.stringify({ currentKey: key }),
       });
 
       if (!statusResponse.ok) {
@@ -144,17 +146,33 @@ export default function Main() {
         return;
       }
 
+      const uploadResponse = await fetch("/api/upload-video", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: key }),
+      });
+
+      if (!uploadResponse.ok) {
+        toast.error("Ошибка при копировании видео", {
+          id: toastId,
+          position: "bottom-right",
+        });
+        setFuncLoading(false);
+        return;
+      }
+
       await fetchVideos();
       setCurrentIndex((prev) => Math.max(prev - 1, 0));
       setFuncLoading(false);
 
-      toast.success("Video approved", {
+      toast.success("Видео одобрено ✅", {
         id: toastId,
         position: "bottom-right",
       });
-    } catch {
+    } catch (err) {
+      console.error("❌ handleApprove error:", err);
       setFuncLoading(false);
-      toast.error("Error while transfering", {
+      toast.error("Ошибка при переносе видео", {
         id: toastId,
         position: "bottom-right",
       });

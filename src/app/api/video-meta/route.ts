@@ -30,18 +30,21 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Ключ не найден" }, { status: 404 });
     }
 
+    const item = data.Item;
+
     const videoMeta = {
-      id: data.Item.id.S,
-      age: data.Item.age.S,
-      author: data.Item.author.S,
-      createdAt: data.Item.createdAt.S,
-      duration: parseInt(data.Item.duration.N, 10),
-      isPublic: data.Item.createdAt.BOOL,
-      likes: parseInt(data.Item.likes.N, 10),
-      name: data.Item.name.S,
-      resolution: data.Item.resolution.S,
-      sizeMB: parseInt(data.Item.sizeMB.N, 10),
-      status: data.Item.status.S,
+      id: item.id.S,
+      age: item.age.S,
+      author: item.author.S,
+      author_name: item.author_name?.S ?? "",
+      createdAt: item.createdAt.S,
+      duration: parseInt(item.duration.N, 10),
+      isPublic: item.isPublic?.BOOL ?? false,
+      likes: parseInt(item.likes.N, 10),
+      name: item.name.S,
+      resolution: item.resolution.S,
+      sizeMB: parseFloat(item.sizeMB.N),
+      status: item.status.S,
     };
 
     return NextResponse.json(videoMeta);

@@ -26,6 +26,7 @@ interface VideoMeta {
   id: string;
   age: string;
   author: string;
+  author_name?: string;
   createdAt: string;
   duration: number;
   isPublic: boolean;
