@@ -278,7 +278,7 @@
   width: 100vw;
   height: 100vh;
   backdrop-filter: blur(30px) saturate(180%);
-  z-index: 30;
+  z-index: 1000;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
@@ -309,7 +309,7 @@
   transition: 0.3s ease;
   animation: moveUp 0.5s ease;
   width: max-content;
-  z-index: 100;
+  z-index: 1000;
 }
 
 @keyframes moveUp {
