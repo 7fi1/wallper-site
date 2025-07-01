@@ -31,6 +31,18 @@ const Hero = () => {
 
   return (
     <section className={styles.top}>
+      <a
+        href="https://www.producthunt.com/products/wallper-wallpaper-engine-for-macos?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-wallper"
+        target="_blank"
+        className={styles.hero_link}
+      >
+        <img
+          src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=983449&theme=light&t=1751410283935"
+          alt="Wallper - 4K&#0032;wallpapers&#0032;for&#0032;Mac&#0046;&#0032;Use&#0032;built&#0045;in&#0032;or&#0032;your&#0032;own&#0032;videos | Product Hunt"
+          width="250"
+          height="54"
+        />
+      </a>
       <motion.div
         className={styles.greed}
         initial={{ y: -50, opacity: 0 }}

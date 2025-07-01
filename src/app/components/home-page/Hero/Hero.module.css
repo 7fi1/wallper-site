@@ -235,6 +235,13 @@
   z-index: 0;
 }
 
+.hero_link {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  z-index: 100;
+}
+
 .icons {
   display: flex;
   flex-direction: row;
