@@ -54,7 +54,7 @@ const QUESTIONS_DATA = [
   {
     question: "9. Is there a free version?",
     answer:
-      "Yes. The free version includes 9 high-quality live wallpapers that you can use without a license. However, uploading your own videos and accessing the full library requires a license.",
+      "Yes. The free version includes 18 high-quality live wallpapers that you can use without a license. However, uploading your own videos and accessing the full library requires a license.",
   },
   {
     question: "10. How can I contact support?",
