@@ -12,6 +12,15 @@
   overflow: hidden;
 }
 
+.link_hero {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  z-index: 9999;
+  width: 250px;
+  height: 54px;
+}
+
 .vote {
   display: inline-flex;
   align-items: center;
