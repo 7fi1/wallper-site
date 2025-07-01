@@ -6,7 +6,7 @@ const Screen = () => {
   return (
     <section className={styles.screen}>
       <div className={styles.top}>
-        <div className={styles.image} />
+        {/* <div className={styles.image} /> */}
         <h3>Wallpapers Like Never Before</h3>
         <p>
           Seamlessly discover, customize, and enjoy live wallpapers — built with
@@ -14,19 +14,16 @@ const Screen = () => {
         </p>
       </div>
       <div className={styles.container}>
-        <motion.video
-          src={"/video/apply.mp4"}
-          autoPlay
-          muted
-          loop
-          playsInline
-          className={styles.video_player}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-        />
-        <div className={styles.bg} />
-        <div className={styles.light} />
+        <div className={styles.video}>
+          <motion.video
+            src={"/video/apply.mp4"}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className={styles.video_player}
+          />
+        </div>
       </div>
     </section>
   );

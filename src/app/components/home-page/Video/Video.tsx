@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 const Video = () => {
   const router = useRouter();
   return (
-    <section className={styles.video}>
+    <section className={styles.video_holder}>
       <div className={styles.top}>
         <h3>Smart Controls for Daily Comfort</h3>
         <p>
@@ -46,18 +46,19 @@ const Video = () => {
         </div>
       </div>
       <div className={styles.container}>
-        <motion.video
-          src={"/video/screen.mp4"}
-          autoPlay
-          muted
-          loop
-          playsInline
-          className={styles.video_player}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-        />
-        <div className={styles.light} />
+        <div className={styles.video}>
+          <motion.video
+            src={"/video/wallper.mp4"}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className={styles.video_player}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1 }}
+          />
+        </div>
       </div>
     </section>
   );

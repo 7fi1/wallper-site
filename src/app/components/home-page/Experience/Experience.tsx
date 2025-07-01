@@ -20,7 +20,7 @@ const Experience = () => {
           <div className={styles.block}>
             <div className={styles.left}></div>
             <div className={styles.text}>
-              <MdMonitor size={24} color="fcfdffef" />
+              <MdMonitor size={32} color="fcfdffef" className={styles.icon} />
               <h3>Instant Apply Mode</h3>
               <p>
                 Set wallpapers on all screens with a single click — or assign
@@ -33,7 +33,11 @@ const Experience = () => {
           <div className={styles.block}>
             <div className={styles.right}></div>
             <div className={styles.text}>
-              <TbDeviceDesktopX size={24} color="fcfdffef" />
+              <TbDeviceDesktopX
+                size={32}
+                color="fcfdffef"
+                className={styles.icon}
+              />
               <h3>Device Management</h3>
               <p>
                 View and manage all your linked devices. Remove old ones, check
