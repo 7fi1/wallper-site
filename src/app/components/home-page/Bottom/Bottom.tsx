@@ -40,7 +40,6 @@ const Bottom = () => {
             />
           </div>
         </div>
-        <div className={styles.text} />
       </div>
     </section>
   );

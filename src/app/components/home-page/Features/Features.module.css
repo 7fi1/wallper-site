@@ -176,4 +176,16 @@
   .right {
     background-size: 150%;
   }
+
+  .title {
+    padding: 24px;
+  }
+
+  .text {
+    padding: 24px;
+  }
+
+  .text p {
+    max-width: 100%;
+  }
 }

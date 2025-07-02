@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     canonical: "/",
   },
 };
-const REDDIT_PIXEL_ID = process.env.NEXT_PUBLIC_REDDIT_PIXEL_ID!;
+// const REDDIT_PIXEL_ID = process.env.NEXT_PUBLIC_REDDIT_PIXEL_ID!;
 export default function RootLayout({
   children,
 }: {
@@ -79,7 +79,7 @@ export default function RootLayout({
           `}
         </Script>
 
-        <Script
+        {/* <Script
           id="reddit-pixel"
           dangerouslySetInnerHTML={{
             __html: `
@@ -108,7 +108,7 @@ export default function RootLayout({
       }(window,document);
     `,
           }}
-        />
+        /> */}
       </head>
       <body className={inter.className}>
         {children}

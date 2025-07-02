@@ -6,7 +6,6 @@ const Screen = () => {
   return (
     <section className={styles.screen}>
       <div className={styles.top}>
-        {/* <div className={styles.image} /> */}
         <h3>Wallpapers Like Never Before</h3>
         <p>
           Seamlessly discover, customize, and enjoy live wallpapers — built with

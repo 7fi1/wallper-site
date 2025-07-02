@@ -19,7 +19,11 @@ const Features = () => {
           <div className={styles.block}>
             <div className={styles.left}></div>
             <div className={styles.text}>
-              <RiUploadCloud2Fill size={24} color="fcfdffef" />
+              <RiUploadCloud2Fill
+                size={24}
+                color="fcfdffef"
+                className={styles.icon}
+              />
               <h3>Create. Share. Inspire.</h3>
               <p>
                 Upload your own videos and share them with the community — your
@@ -31,7 +35,11 @@ const Features = () => {
           <div className={styles.block}>
             <div className={styles.right}></div>
             <div className={styles.text}>
-              <MdPhotoLibrary size={24} color="fcfdffef" />
+              <MdPhotoLibrary
+                size={24}
+                color="fcfdffef"
+                className={styles.icon}
+              />
               <h3>Two Wallpaper Libraries</h3>
               <p>
                 Wallper Library — selection of polished, high-performance

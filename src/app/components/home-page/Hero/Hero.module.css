@@ -6,19 +6,14 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  background-image: url("/bghero.webp");
-  background-size: cover;
-  background-repeat: no-repeat;
   overflow: hidden;
 }
 
 .link_hero {
   position: absolute;
   bottom: 1rem;
-  left: 1rem;
+  right: 1rem;
   z-index: 9999;
-  width: 250px;
-  height: 54px;
 }
 
 .vote {
@@ -49,16 +44,16 @@
 .greed {
   display: flex;
   flex-direction: row;
-  height: 100vh;
-  justify-content: center;
-  text-align: center;
+  justify-content: start;
+  text-align: start;
   align-items: center;
   position: relative;
-  padding: 0 2rem;
   width: 100%;
   max-width: 1300px;
   z-index: 100;
   pointer-events: none;
+  padding-top: calc(58px + 5rem);
+  border-left: 1px dashed rgba(255, 255, 255, 0.15);
 }
 
 .greed p {
@@ -74,13 +69,53 @@
 .text {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
-  text-align: center;
+  justify-content: start;
+  align-items: start;
+  z-index: 0;
+  text-align: start;
   position: relative;
   pointer-events: none;
-  max-width: 600px;
+  max-width: 700px;
+  padding: 4rem 4rem;
+  background-image: linear-gradient(90deg, #111111, transparent);
+}
+
+.text::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 160%;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.1) 10%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0.1) 90%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  pointer-events: none;
+}
+
+.text::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 160%;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.1) 10%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0.1) 90%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  pointer-events: none;
 }
 
 .logo {
@@ -95,8 +130,6 @@
   background-image: url("/w.png");
   background-position: center;
   background-size: contain;
-  scale: 100%;
-  transition: scale 0.1s ease;
   z-index: 8888;
   position: relative;
   box-shadow:
@@ -116,7 +149,6 @@
   background: #e46de6;
   z-index: 10;
   filter: blur(100px);
-  opacity: 0.5;
 }
 
 .light_l {
@@ -130,7 +162,6 @@
   border-radius: 50%;
   z-index: 10;
   filter: blur(100px);
-  opacity: 0.5;
 }
 
 .top h1 {
@@ -154,7 +185,7 @@
   align-items: center;
   text-align: center;
   width: 100%;
-  gap: 2rem;
+  gap: 1rem;
   bottom: 10%;
 }
 
@@ -193,9 +224,9 @@
 .buttons {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  text-align: center;
-  justify-content: center;
+  align-items: start;
+  text-align: start;
+  justify-content: start;
   width: 100%;
   gap: 1rem;
   pointer-events: all !important;
@@ -204,13 +235,16 @@
 .spans span {
   font-weight: 400 !important;
   font-size: 14px;
-  text-shadow: 0 0 10px rgba(0, 0, 0, 1);
 }
 
 .spans {
   display: flex;
   flex-direction: row;
   gap: 1rem;
+  justify-content: start;
+  align-items: start;
+  text-align: start;
+  width: 100%;
 }
 
 .model_wrapper {
@@ -232,7 +266,10 @@
   outline: 2px solid transparent;
   outline-offset: 2px;
   border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: rgba(255, 255, 255, 0.15) 0px 1px 1px inset;
+  background: linear-gradient(180deg, #ffffff 0, #111111 65.62%);
+  position: relative;
+  background: linear-gradient(180deg, #242424, #121212 65.62%);
   width: 36px;
   height: 36px;
   display: flex;
@@ -240,12 +277,50 @@
   align-items: center;
   color: #ccc;
   text-align: center;
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(30px) saturate(180%);
   transition: 0.3s ease;
-  margin-top: 1rem;
+  margin-top: 2rem;
   pointer-events: all;
 }
+
+.icon::before {
+  content: "";
+  position: absolute;
+  background-clip: padding-box;
+  inset: 0;
+
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+  border: 2px solid transparent;
+  background: linear-gradient(
+      100deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.12) 48%,
+      rgba(255, 255, 255, 0.4) 50%,
+      rgba(255, 255, 255, 0.12) 52%,
+      rgba(255, 255, 255, 0) 100%
+    )
+    border-box;
+
+  background-size: 300% 100%;
+  background-position: 0% 0%;
+  animation: shimmerBorder 10s linear infinite;
+  mask:
+    linear-gradient(#fff 0 0) padding-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+}
+
+@keyframes shimmerBorder {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 300% 0%;
+  }
+}
+
 .icon:hover {
   background: rgba(255, 255, 255, 0.2);
 }
@@ -262,11 +337,14 @@
   object-fit: cover;
 }
 
+.ph {
+  width: 250px;
+  height: 54px;
+}
+
 @media (max-width: 1000px) {
   .greed {
     justify-content: start;
-    padding-left: 2rem;
-    height: 100vh;
   }
 
   .top {
@@ -296,35 +374,27 @@
   }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 800px) {
   .text {
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+    padding: 24px;
   }
 
+  .link_hero {
+    position: fixed;
+  }
+}
+
+@media (max-width: 500px) {
   .greed {
-    height: 100vh;
+    padding-top: 58px;
   }
 
   .text h1 {
     font-size: 36px;
     line-height: 44px;
-    text-align: center;
-    align-items: center;
   }
   .buttons {
     flex-direction: column;
-    width: 100%;
-  }
-  .buttons button {
-    width: 100%;
-  }
-
-  .spans {
-    justify-content: center;
-    align-items: center;
-    text-align: center;
     width: 100%;
   }
 }

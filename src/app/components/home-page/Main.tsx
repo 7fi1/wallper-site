@@ -16,6 +16,7 @@ import Video from "./Video/Video";
 import Screen from "./Screen/Screen";
 import Features from "./Features/Features";
 import Statistic from "./Statistic/Main";
+import Price from "./Price/Price";
 
 export const Main = () => {
   const playerRef = useRef(null);
@@ -40,6 +41,7 @@ export const Main = () => {
       <Hero />
       <Statistic />
       <Screen />
+      <Price />
       <Experience />
       <Video />
       <Features />

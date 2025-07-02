@@ -39,9 +39,10 @@ const Hero = () => {
       >
         <Image
           src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=983449&theme=light&t=1751407863720"
+          className={styles.ph}
           alt="Wallper - 4K&#0032;wallpapers&#0032;for&#0032;Mac&#0046;&#0032;Use&#0032;built&#0045;in&#0032;or&#0032;your&#0032;own&#0032;videos | Product Hunt"
-          width="250"
-          height="54"
+          width="100"
+          height="100"
         />
       </a>
       <motion.div
@@ -157,8 +158,6 @@ const Hero = () => {
                 className={styles.icon}
                 target="_blank"
                 rel="noopener noreferrer"
-                whileHover={{ scale: 1.2 }}
-                whileTap={{ scale: 0.95 }}
               >
                 {item.icons}
               </motion.a>
