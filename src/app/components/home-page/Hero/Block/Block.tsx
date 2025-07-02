@@ -21,20 +21,6 @@ export const Block = () => {
     "/gif/14.gif",
     "/gif/15.gif",
     "/gif/16.gif",
-    "/gif/17.gif",
-    "/gif/18.gif",
-    "/gif/19.gif",
-    "/gif/20.gif",
-    "/gif/21.gif",
-    "/gif/22.gif",
-    "/gif/23.gif",
-    "/gif/24.gif",
-    "/gif/25.gif",
-    "/gif/26.gif",
-    "/gif/27.gif",
-    "/gif/28.gif",
-    "/gif/29.gif",
-    "/gif/30.gif",
   ];
 
   return (
