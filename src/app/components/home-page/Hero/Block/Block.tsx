@@ -58,7 +58,6 @@ export const Block = () => {
               height={1080}
               quality={70}
               alt={`Mod ${index + 1}`}
-              unoptimized
               className={styles.image}
             />
           </motion.div>
