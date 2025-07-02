@@ -112,6 +112,11 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         {children}
+        <Script
+          src="https://app.rybbit.io/api/script.js"
+          data-site-id="1391"
+          strategy="afterInteractive"
+        />
         <Toaster />
         <Analytics />
       </body>
