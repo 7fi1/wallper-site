@@ -1,0 +1,105 @@
+.metrics {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-image: url("/bghero.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.container {
+  width: 100%;
+  max-width: 1300px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  border-left: 1px dashed rgba(255, 255, 255, 0.15);
+  border-right: 1px dashed rgba(255, 255, 255, 0.15);
+  background: radial-gradient(at bottom, #004e3db6, transparent 50%);
+}
+
+.block {
+  background-color: transparent;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  padding: 2rem;
+  box-sizing: border-box;
+  width: 25%;
+}
+
+.block h1 {
+  font-size: 1.25rem;
+  line-height: 1.4;
+  letter-spacing: -0.03em;
+  color: #fff;
+  margin-top: 1rem;
+  font-weight: 600;
+}
+
+.block span {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #888888;
+  max-width: 200px;
+  margin-top: 0.5rem;
+  text-wrap: balance;
+}
+
+.image {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
+  z-index: 1;
+  width: 120px;
+  aspect-ratio: 1 / 1;
+}
+
+.apple_image {
+  background-image: url("/cpu.png");
+}
+
+.usage_image {
+  background-image: url("/monitor.png");
+}
+
+.native_image {
+  background-image: url("/native.png");
+}
+
+.opensource_image {
+  background-image: url("/opensource.png");
+}
+
+.apple {
+  background: radial-gradient(at top left, #002f4e, transparent 70%);
+}
+.opensource {
+  background: radial-gradient(at bottom right, #111111, transparent 70%);
+}
+
+@media (max-width: 1000px) {
+  .block {
+    width: 50%;
+  }
+}
+
+@media (max-width: 600px) {
+  .image {
+    width: 100px;
+  }
+}
+
+@media (max-width: 500px) {
+  .block {
+    width: 100%;
+    aspect-ratio: inherit;
+  }
+}

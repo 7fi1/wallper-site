@@ -5,6 +5,29 @@ import { FaCircleXmark } from "react-icons/fa6";
 import PrimaryButton from "@/src/app/ui/primaryButton";
 import { useRouter } from "next/navigation";
 import { loadStripe } from "@stripe/stripe-js";
+import { motion } from "framer-motion";
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (i: number = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.1,
+      duration: 0.6,
+      ease: "easeOut",
+    },
+  }),
+};
+
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+};
 
 const FreeArray = [
   { text: "18 Wallpapers", available: true },
@@ -34,8 +57,15 @@ const Price = () => {
   return (
     <section className={styles.wrapper}>
       <div className={styles.price}>
-        <div className={styles.container}>
-          <div className={styles.text}>
+        <motion.div
+          className={styles.container}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={containerVariants}
+        >
+          {/* Заголовок и кнопка */}
+          <motion.div className={styles.text} variants={fadeInUp} custom={0}>
             <h1>Pricing</h1>
             <p>
               Get started for free. Switch to a paid plan when you&apos;re
@@ -55,36 +85,36 @@ const Price = () => {
                 router.push("/pro");
               }}
             />
-          </div>
+          </motion.div>
+
+          {/* Карточки */}
           <div className={styles.content}>
-            <div className={styles.block}>
+            {/* FREE PLAN */}
+            <motion.div className={styles.block} variants={fadeInUp} custom={1}>
               <h4>0$</h4>
               <h1>Free</h1>
               <ul>
                 {FreeArray.map((item, idx) => (
                   <div key={idx}>
-                    {item.text && (
-                      <li>
-                        {item.available ? (
-                          <FaCheckCircle
-                            color="#43fea4ab"
-                            className={styles.icon}
-                            size={16}
-                          />
-                        ) : (
-                          <FaCircleXmark
-                            color="#e5edfd7b"
-                            className={styles.icon}
-                            size={16}
-                          />
-                        )}
-                        {item.text}
-                      </li>
-                    )}
+                    <li>
+                      {item.available ? (
+                        <FaCheckCircle
+                          color="#43fea4ab"
+                          className={styles.icon}
+                          size={16}
+                        />
+                      ) : (
+                        <FaCircleXmark
+                          color="#e5edfd7b"
+                          className={styles.icon}
+                          size={16}
+                        />
+                      )}
+                      {item.text}
+                    </li>
                   </div>
                 ))}
               </ul>
-
               <PrimaryButton
                 text="Download"
                 buttonSize={40}
@@ -99,8 +129,10 @@ const Price = () => {
                   router.push("/download");
                 }}
               />
-            </div>
-            <div className={styles.block}>
+            </motion.div>
+
+            {/* PRO PLAN */}
+            <motion.div className={styles.block} variants={fadeInUp} custom={2}>
               <h4>
                 10$<h3 className={styles.label}>One time</h3>
               </h4>
@@ -108,28 +140,25 @@ const Price = () => {
               <ul>
                 {ProArray.map((item, idx) => (
                   <div key={idx}>
-                    {item.text && (
-                      <li>
-                        {item.available ? (
-                          <FaCheckCircle
-                            color="#43fea4ab"
-                            className={styles.icon}
-                            size={16}
-                          />
-                        ) : (
-                          <FaCircleXmark
-                            color="#e5edfd7b"
-                            className={styles.icon}
-                            size={16}
-                          />
-                        )}
-                        {item.text}
-                      </li>
-                    )}
+                    <li>
+                      {item.available ? (
+                        <FaCheckCircle
+                          color="#43fea4ab"
+                          className={styles.icon}
+                          size={16}
+                        />
+                      ) : (
+                        <FaCircleXmark
+                          color="#e5edfd7b"
+                          className={styles.icon}
+                          size={16}
+                        />
+                      )}
+                      {item.text}
+                    </li>
                   </div>
                 ))}
               </ul>
-
               <PrimaryButton
                 text="Buy for 9.99$"
                 buttonSize={40}
@@ -168,16 +197,15 @@ const Price = () => {
                   });
 
                   const data = await res.json();
-
                   const stripe = await stripePromise;
                   await stripe?.redirectToCheckout({
                     sessionId: data.sessionId,
                   });
                 }}
               />
-            </div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -2,21 +2,43 @@ import React from "react";
 import styles from "./Features.module.css";
 import { RiUploadCloud2Fill } from "react-icons/ri";
 import { MdPhotoLibrary } from "react-icons/md";
+import { motion } from "framer-motion";
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (i: number = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.1,
+      duration: 0.6,
+      ease: "easeOut",
+    },
+  }),
+};
 
 const Features = () => {
   return (
     <section className={styles.Features}>
-      <div className={styles.container}>
-        <div className={styles.title}>
+      <motion.div
+        className={styles.container}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        {/* Заголовок */}
+        <motion.div className={styles.title} variants={fadeInUp} custom={0}>
           <h4>A New Way to Experience Your Desktop</h4>
           <p className={styles.paragraph}>
             Transform your Mac into a living canvas. Upload, explore, and set
             stunning video wallpapers — from your own creations or our growing
             library.
           </p>
-        </div>
+        </motion.div>
+
+        {/* Блоки с иконками */}
         <div className={styles.holder}>
-          <div className={styles.block}>
+          <motion.div className={styles.block} variants={fadeInUp} custom={1}>
             <div className={styles.left}></div>
             <div className={styles.text}>
               <RiUploadCloud2Fill
@@ -31,8 +53,9 @@ const Features = () => {
               </p>
             </div>
             <div className={styles.light} />
-          </div>
-          <div className={styles.block}>
+          </motion.div>
+
+          <motion.div className={styles.block} variants={fadeInUp} custom={2}>
             <div className={styles.right}></div>
             <div className={styles.text}>
               <MdPhotoLibrary
@@ -48,9 +71,9 @@ const Features = () => {
               </p>
             </div>
             <div className={styles.light} />
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };

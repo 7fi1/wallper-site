@@ -9,7 +9,7 @@ import { useApplicationStore } from "@/src/store/ApplicationStore";
 import { useRouter } from "next/navigation";
 import { FaDiscord, FaGithub, FaReddit, FaTiktok } from "react-icons/fa6";
 import { Block } from "./Block/Block";
-import Image from "next/image";
+// import Image from "next/image";
 
 const Hero = () => {
   const stripePromise = loadStripe(
@@ -32,7 +32,7 @@ const Hero = () => {
 
   return (
     <section className={styles.top}>
-      <a
+      {/* <a
         href="https://www.producthunt.com/products/wallper-wallpaper-engine-for-macos?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-wallper"
         target="_blank"
         className={styles.link_hero}
@@ -44,7 +44,7 @@ const Hero = () => {
           width="100"
           height="100"
         />
-      </a>
+      </a> */}
       <motion.div
         className={styles.greed}
         initial={{ y: -50, opacity: 0 }}

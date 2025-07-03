@@ -5,6 +5,7 @@ import CountUp from "react-countup";
 import clsx from "clsx";
 import PrimaryButton from "@/src/app/ui/primaryButton";
 import { useRouter } from "next/navigation";
+import Metrics from "../Metrics/Metrics";
 
 const Statistic = () => {
   const { users, networkOut, fetchUserStats } = WallperStatsStore();
@@ -71,6 +72,8 @@ const Statistic = () => {
           <h1>Get started in seconds</h1>
           <span>Made for macOS</span>
         </div>
+        <Metrics />
+
         <div className={styles.wrap}>
           <div className={styles.stats}>
             {statistics.map((stat, index) => (

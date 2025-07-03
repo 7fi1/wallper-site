@@ -12,6 +12,7 @@ const Screen = () => {
           care to deliver a truly next-generation visual journey on your Mac.
         </p>
       </div>
+      {/* <Battery /> */}
       <div className={styles.container}>
         <div className={styles.video}>
           <motion.video
@@ -22,6 +23,14 @@ const Screen = () => {
             playsInline
             className={styles.video_player}
           />
+          <div className={styles.text}>
+            <h1>4K Video Wallpapers</h1>
+            <span>
+              Bring your desktop to life with stunning 4K video wallpapers —
+              ultra-smooth, high-performance playback that adds motion, depth,
+              and atmosphere to your Mac.
+            </span>
+          </div>
         </div>
       </div>
     </section>
