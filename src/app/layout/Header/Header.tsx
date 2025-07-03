@@ -43,7 +43,7 @@ const Header = () => {
         { name: "Download Wallper", link: "/download" },
         { name: "FAQ", link: "/faq" },
         { name: "Getting Started", link: "/" },
-        { name: "Pro", link: "/pro" },
+        { name: "Pricing", link: "/pro" },
       ],
       videoIdx: 0,
     },

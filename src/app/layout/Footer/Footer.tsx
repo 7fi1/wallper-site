@@ -102,7 +102,7 @@ const Footer = () => {
               <a href="/download">Download Wallper</a>
               <a href="/faq">FAQ</a>
               <a href="/">Getting Started</a>
-              <a href="/pro">Pro</a>
+              <a href="/pro">Pricing</a>
             </motion.div>
             <motion.div
               className={styles.block}
