@@ -67,7 +67,7 @@ const Header = () => {
       chevron: false,
     },
     {
-      name: "Pro",
+      name: "Pricing",
       link: "/pro",
       onClick: async () => {
         const metadata = {
