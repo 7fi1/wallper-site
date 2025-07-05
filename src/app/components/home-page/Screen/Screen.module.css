@@ -148,9 +148,9 @@
   left: 0;
   width: 100%;
   z-index: -1;
-  top: -1rem;
-  scale: 150%;
-  filter: brightness(100%);
+  scale: 110%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .text {

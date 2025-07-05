@@ -4,28 +4,28 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 
 export const Block = () => {
-  const gifs = [
-    "/gif/1.gif",
-    "/gif/2.gif",
-    "/gif/3.gif",
-    "/gif/4.gif",
-    "/gif/5.gif",
-    "/gif/6.gif",
-    "/gif/7.gif",
-    "/gif/8.gif",
-    "/gif/9.gif",
-    "/gif/10.gif",
-    "/gif/11.gif",
-    "/gif/12.gif",
-    "/gif/13.gif",
-    "/gif/14.gif",
-    "/gif/15.gif",
-    "/gif/16.gif",
+  const jpgs = [
+    "/jpg/1.jpg",
+    "/jpg/2.jpg",
+    "/jpg/3.jpg",
+    "/jpg/4.jpg",
+    "/jpg/5.jpg",
+    "/jpg/6.jpg",
+    "/jpg/7.jpg",
+    "/jpg/8.jpg",
+    "/jpg/9.jpg",
+    "/jpg/10.jpg",
+    "/jpg/11.jpg",
+    "/jpg/12.jpg",
+    "/jpg/13.jpg",
+    "/jpg/14.jpg",
+    "/jpg/15.jpg",
+    "/jpg/16.jpg",
   ];
 
   return (
     <div className={styles.gridContainer}>
-      {gifs.map((src, index) => {
+      {jpgs.map((src, index) => {
         const randomDelay = Math.random() * 0.6;
         const randomRotate = (Math.random() - 0.5) * 10; // rotate between -5 and +5 degrees
 

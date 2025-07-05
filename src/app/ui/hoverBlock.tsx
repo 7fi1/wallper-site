@@ -8,13 +8,10 @@ import { motion } from "framer-motion";
 const HoverBlock = ({
   isVisible,
   links,
-  videoIdx,
   onMouseEnter,
   onMouseLeave,
 }: HoverBloсkProps) => {
   const ref = useRef<HTMLDivElement>(null);
-
-  const videos = ["/video/green-bmw.mp4", "", "/video/legal.mp4"];
 
   if (!isVisible || typeof window === "undefined") return null;
 
@@ -36,17 +33,6 @@ const HoverBlock = ({
           </Link>
         ))}
       </div>
-      <motion.video
-        src={videos[videoIdx]}
-        autoPlay
-        muted
-        loop
-        playsInline
-        className={styles.video_player}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-      />
     </motion.div>,
     document.body
   );
