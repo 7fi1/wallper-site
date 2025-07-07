@@ -9,7 +9,7 @@ import { useApplicationStore } from "@/src/store/ApplicationStore";
 import { useRouter } from "next/navigation";
 import { FaDiscord, FaGithub, FaReddit, FaTiktok } from "react-icons/fa6";
 import { Block } from "./Block/Block";
-// import Image from "next/image";
+import Image from "next/image";
 
 const Hero = () => {
   const stripePromise = loadStripe(
@@ -45,6 +45,18 @@ const Hero = () => {
           height="100"
         />
       </a> */}
+
+      <Image
+        width="200"
+        height="100"
+        className={styles.link_hero}
+        alt="launch"
+        src="/Launch_SVG_Dark.svg"
+        onClick={() => {
+          router.push("https://peerlist.io/dimkat/project/wallper");
+        }}
+      />
+
       <motion.div
         className={styles.greed}
         initial={{ y: -50, opacity: 0 }}
