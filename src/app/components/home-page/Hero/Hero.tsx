@@ -46,7 +46,7 @@ const Hero = () => {
         />
       </a> */}
 
-      <Image
+      {/* <Image
         width="200"
         height="100"
         className={styles.link_hero}
@@ -55,7 +55,7 @@ const Hero = () => {
         onClick={() => {
           router.push("https://peerlist.io/dimkat/project/wallper");
         }}
-      />
+      /> */}
 
       <motion.div
         className={styles.greed}
