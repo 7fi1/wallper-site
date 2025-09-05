@@ -5,7 +5,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-04-30.basil",
 });
 
-export async function POST() {
+export async function POST(request: Request) {
   try {
     function generateCustomUUID() {
       const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -19,6 +19,11 @@ export async function POST() {
     }
 
     const uuid = generateCustomUUID();
+
+    const body = await request.json();
+
+    const couponCode = body.metadata.discount;
+    const couponId = process.env[`STRIPE_COUPON_${couponCode}`];
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
@@ -34,9 +39,11 @@ export async function POST() {
       ],
       mode: "payment",
       metadata: { license_uuid: uuid },
-      allow_promotion_codes: true,
       success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/success?k=${uuid}`,
       cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/cancel`,
+      ...(couponId
+        ? { discounts: [{ coupon: couponId }] }
+        : { allow_promotion_codes: true }),
     });
 
     if (!session) {

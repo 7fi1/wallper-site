@@ -6,6 +6,22 @@ const SECRET = new TextEncoder().encode(process.env.JWT_SECRET!);
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  if (pathname === "/ad20") {
+    const url = request.nextUrl.clone();
+    url.pathname = "/";
+
+    const res = NextResponse.redirect(url);
+
+    res.cookies.set("discount", "AD20:20", {
+      path: "/",
+      maxAge: 60 * 60 * 24,
+    });
+
+    return res;
+  }
+
+  // --- CASE 2: Админ-панель ---
   const isLoginPage = pathname === "/admin/login";
   const isAdminPage = pathname.startsWith("/admin");
 
@@ -38,5 +54,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/:path*"],
+  matcher: ["/admin/:path*", "/ad20"], // важно: добавляем сюда /ad20
 };

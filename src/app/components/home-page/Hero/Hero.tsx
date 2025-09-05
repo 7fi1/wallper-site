@@ -9,6 +9,7 @@ import { useApplicationStore } from "@/src/store/ApplicationStore";
 import { useRouter } from "next/navigation";
 import { FaDiscord, FaGithub, FaReddit, FaTiktok } from "react-icons/fa6";
 import { Block } from "./Block/Block";
+import { useAuthorDiscount } from "@/src/hooks/useAuthorDiscount";
 // import Image from "next/image";
 
 const Hero = () => {
@@ -29,6 +30,13 @@ const Hero = () => {
   useEffect(() => {
     fetchApplicationData();
   }, [fetchApplicationData]);
+
+  const discount = useAuthorDiscount();
+  const basePrice = 9.99;
+
+  const finalPrice = discount
+    ? basePrice * (1 - discount.percent / 100)
+    : basePrice;
 
   return (
     <section className={styles.top}>
@@ -109,7 +117,33 @@ const Hero = () => {
                 }}
               />
               <SecondaryButton
-                text="Pro for 9.99$"
+                text={
+                  <>
+                    Pro for{" "}
+                    {discount ? (
+                      <>
+                        <s>${basePrice.toFixed(2)}</s> ${finalPrice.toFixed(2)}{" "}
+                        <span
+                          style={{
+                            fontSize: "0.6rem",
+                            position: "absolute",
+                            background: "#ff4757",
+                            padding: "2px 4px",
+                            borderRadius: "8px",
+                            color: "#fff",
+                            top: "2px",
+                            marginLeft: "6px",
+                            marginTop: "-10px",
+                          }}
+                        >
+                          {discount.code}
+                        </span>
+                      </>
+                    ) : (
+                      <>${basePrice.toFixed(2)}</>
+                    )}
+                  </>
+                }
                 icon="FaChevronRight"
                 iconPosition="right"
                 iconSize={10}
@@ -127,6 +161,7 @@ const Hero = () => {
                       ? "mobile"
                       : "desktop",
                     referrer: document.referrer || "direct",
+                    discount: discount ? discount.code : null,
                   };
 
                   const res = await fetch("/api/checkout_session", {

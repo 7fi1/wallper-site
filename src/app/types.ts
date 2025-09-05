@@ -1,3 +1,5 @@
+import { JSX } from "react/jsx-runtime";
+
 export type PrimaryButtonProps = {
   text: string;
   icon?: string;
@@ -14,7 +16,7 @@ export type PrimaryButtonProps = {
 };
 
 export type SecondaryButtonProps = {
-  text: string;
+  text: string | JSX.Element;
   icon?: string;
   iconPosition?: "left" | "right";
   popupMessage?: string;
