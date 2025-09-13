@@ -5,7 +5,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-04-30.basil",
 });
 
-export async function POST(request: Request) {
+export async function POST() {
   try {
     function generateCustomUUID() {
       const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -19,8 +19,6 @@ export async function POST(request: Request) {
     }
 
     const uuid = generateCustomUUID();
-
-    // const couponId = process.env[`STRIPE_COUPON_${couponCode}`];
 
     const promoEnd = new Date("2025-09-17T21:59:59Z");
     const now = new Date();
