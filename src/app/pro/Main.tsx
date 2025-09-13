@@ -10,6 +10,9 @@ import { motion } from "framer-motion";
 import LicenseModal from "../components/Modals/LicenseModal";
 import VideosModal from "../components/Modals/VideosModal";
 import { useModalStore } from "@/src/store/ModalStore";
+import { useAuthorDiscount } from "@/src/hooks/useAuthorDiscount";
+
+export const basePrice = 9.99;
 
 export const Pro = () => {
   const stripePromise = loadStripe(
@@ -115,6 +118,11 @@ export const Pro = () => {
   const { isOpen, modalType } = useModalStore();
   const [opacity, setOpacity] = useState<number>(0);
 
+  const discount = useAuthorDiscount();
+  const finalPrice = discount
+    ? basePrice * (1 - discount.percent / 100)
+    : basePrice;
+
   return (
     <main className={styles.main}>
       {isOpen && (
@@ -189,7 +197,7 @@ export const Pro = () => {
               <span>Recommended</span>
             </div>
             <div className={styles.price}>
-              <h1>10$</h1>
+              <h1>{finalPrice.toFixed(0)}$</h1>
               <span>per license</span>
             </div>
             <div className={styles.video_count}>500+ 4K Wallpapers</div>

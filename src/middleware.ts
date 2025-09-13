@@ -7,6 +7,19 @@ const SECRET = new TextEncoder().encode(process.env.JWT_SECRET!);
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  const promoEnd = new Date("2025-09-17T21:59:59Z");
+  const now = new Date();
+
+  if (now < promoEnd) {
+    const res = NextResponse.next();
+    res.cookies.set("discount", "WALLPER10K:50", {
+      path: "/",
+      maxAge: 60 * 60 * 24,
+      sameSite: "lax",
+    });
+    return res;
+  }
+
   if (pathname === "/ad20") {
     const url = request.nextUrl.clone();
     url.pathname = "/";
@@ -54,5 +67,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/ad20"], // важно: добавляем сюда /ad20
+  matcher: ["/((?!_next|favicon.ico|robots.txt|sitemap.xml|api).*)"],
 };

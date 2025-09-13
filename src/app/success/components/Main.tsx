@@ -18,6 +18,7 @@ import { useModalStore } from "@/src/store/ModalStore";
 import LicenseModal from "../../components/Modals/LicenseModal";
 import VideosModal from "../../components/Modals/VideosModal";
 import { useApplicationStore } from "@/src/store/ApplicationStore";
+import { basePrice } from "../../components/home-page/Hero/Hero";
 
 export const Main = () => {
   const searchParams = useSearchParams();
@@ -63,7 +64,7 @@ export const Main = () => {
         if (typeof window !== "undefined" && typeof window.rdt === "function") {
           window.rdt("track", "Purchase", {
             currency: "USD",
-            value: 9.99,
+            value: basePrice,
           });
           console.log("✅ Reddit Pixel 'Purchase' fired");
         }

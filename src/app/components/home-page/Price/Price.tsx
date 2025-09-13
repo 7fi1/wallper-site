@@ -6,6 +6,8 @@ import PrimaryButton from "@/src/app/ui/primaryButton";
 import { useRouter } from "next/navigation";
 import { loadStripe } from "@stripe/stripe-js";
 import { motion } from "framer-motion";
+import { basePrice } from "../Hero/Hero";
+import { useAuthorDiscount } from "@/src/hooks/useAuthorDiscount";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
@@ -53,6 +55,11 @@ const stripePromise = loadStripe(
 
 const Price = () => {
   const router = useRouter();
+
+  const discount = useAuthorDiscount();
+  const finalPrice = discount
+    ? basePrice * (1 - discount.percent / 100)
+    : basePrice;
 
   return (
     <section className={styles.wrapper}>
@@ -134,7 +141,8 @@ const Price = () => {
             {/* PRO PLAN */}
             <motion.div className={styles.block} variants={fadeInUp} custom={2}>
               <h4>
-                10$<h3 className={styles.label}>One time</h3>
+                {finalPrice.toFixed(0)}$
+                <h3 className={styles.label}>One time</h3>
               </h4>
               <h1 className={styles.pro}>Pro</h1>
               <ul>
@@ -160,7 +168,7 @@ const Price = () => {
                 ))}
               </ul>
               <PrimaryButton
-                text="Buy for 9.99$"
+                text={`Buy for ${finalPrice.toFixed(0)}$`}
                 buttonSize={40}
                 fontSize={14}
                 widthButton="max-content"
@@ -170,24 +178,16 @@ const Price = () => {
                 iconSize={10}
                 fontWeight={500}
                 onClick={async () => {
-                  const isBrowser = typeof window !== "undefined";
                   const metadata = {
-                    license_uuid:
-                      typeof crypto !== "undefined" && crypto.randomUUID
-                        ? crypto.randomUUID()
-                        : Math.random().toString(36).substring(2, 15),
-                    user_timezone: isBrowser
-                      ? Intl.DateTimeFormat().resolvedOptions().timeZone
-                      : "",
-                    locale: isBrowser ? navigator.language : "",
-                    device_type: isBrowser
-                      ? /Mobi|Android/i.test(navigator.userAgent)
-                        ? "mobile"
-                        : "desktop"
+                    license_uuid: crypto.randomUUID(),
+                    user_timezone:
+                      Intl.DateTimeFormat().resolvedOptions().timeZone,
+                    locale: navigator.language,
+                    device_type: /Mobi|Android/i.test(navigator.userAgent)
+                      ? "mobile"
                       : "desktop",
-                    referrer: isBrowser
-                      ? document.referrer || "direct"
-                      : "direct",
+                    referrer: document.referrer || "direct",
+                    discount: discount ? discount.code : null,
                   };
 
                   const res = await fetch("/api/checkout_session", {
@@ -197,6 +197,7 @@ const Price = () => {
                   });
 
                   const data = await res.json();
+
                   const stripe = await stripePromise;
                   await stripe?.redirectToCheckout({
                     sessionId: data.sessionId,

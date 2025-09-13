@@ -12,6 +12,8 @@ import { Block } from "./Block/Block";
 import { useAuthorDiscount } from "@/src/hooks/useAuthorDiscount";
 // import Image from "next/image";
 
+export const basePrice = 9.99;
+
 const Hero = () => {
   const stripePromise = loadStripe(
     process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
@@ -32,7 +34,6 @@ const Hero = () => {
   }, [fetchApplicationData]);
 
   const discount = useAuthorDiscount();
-  const basePrice = 9.99;
 
   const finalPrice = discount
     ? basePrice * (1 - discount.percent / 100)

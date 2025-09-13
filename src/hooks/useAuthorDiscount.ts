@@ -16,6 +16,8 @@ export function useAuthorDiscount(cookieName: string = "discount") {
     if (raw) {
       const [code, percent] = raw.split(":");
       setDiscount({ code, percent: Number(percent) });
+
+      console.log(`✅ Discount code applied: ${code} (${percent}%)`);
     }
   }, [cookieName]);
 
