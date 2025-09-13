@@ -20,9 +20,6 @@ export async function POST(request: Request) {
 
     const uuid = generateCustomUUID();
 
-    const body = await request.json();
-
-    const couponCode = body.metadata.discount;
     // const couponId = process.env[`STRIPE_COUPON_${couponCode}`];
 
     const promoEnd = new Date("2025-09-17T21:59:59Z");
