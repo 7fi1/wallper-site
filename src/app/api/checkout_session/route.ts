@@ -24,7 +24,14 @@ export async function POST(request: Request) {
 
     const couponCode = body.metadata.discount;
     // const couponId = process.env[`STRIPE_COUPON_${couponCode}`];
-    const couponId = "ncLT6LyH";
+
+    const promoEnd = new Date("2025-09-17T21:59:59Z");
+    const now = new Date();
+    let couponId = null;
+
+    if (now < promoEnd) {
+      couponId = "ncLT6LyH";
+    }
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
