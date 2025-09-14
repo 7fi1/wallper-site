@@ -11,6 +11,7 @@ import {
   BatchGetItemCommandOutput,
 } from "@aws-sdk/client-dynamodb";
 import { NextResponse } from "next/server";
+import type { AttributeValue } from "@aws-sdk/client-dynamodb";
 
 const s3 = new S3Client({
   region: "eu-north-1",
@@ -55,7 +56,7 @@ async function batchGetAllStatusByIds(ids: string[]) {
 
   const keys = ids.map((id) => ({ id: { S: id } }));
   const batches = chunk(keys, BATCH_SIZE);
-  const allItems: any[] = [];
+  const allItems: Record<string, AttributeValue>[] = [];
 
   for (const Keys of batches) {
     let request = {
